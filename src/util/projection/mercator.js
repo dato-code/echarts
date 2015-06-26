@@ -5,7 +5,7 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function() {
+
     // 墨卡托投射
     function _mercator() {
         var radians = Math.PI / 180;
@@ -52,5 +52,4 @@ define(function() {
         return mercator;
     }
 
-    return _mercator;
-}); 
+    module.exports = _mercator;

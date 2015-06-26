@@ -1,4 +1,4 @@
-define(function() {
+
 
 var theme = {
     // 默认色板

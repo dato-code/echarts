@@ -63,7 +63,7 @@ function encodePolygon(coordinate, encodeOffsets) {
 }
 
 function addAMDWrapper(jsonStr) {
-    return ['define(function() {',
+    return ['',
                 '    return ' + jsonStr + ';',
             '});'].join('\n');
 }

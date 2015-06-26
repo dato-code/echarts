@@ -3,7 +3,7 @@
  * @module echarts/layout/TreeMap
  * @author loutongbing(loutongbing@126.com)
  */
-define(function (require) {
+
 
     function TreeMapLayout(opts) {
         /**
@@ -198,5 +198,4 @@ define(function (require) {
         return false;
     };
 
-    return TreeMapLayout;
-});
+    module.exports = TreeMapLayout;

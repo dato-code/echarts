@@ -20,8 +20,6 @@
  * @param       {Array}     opts.steps      自定义步长备选值，如 [10, 12, 15, 20, 25, 30, 40, 50, 60, 80] ，但必须 => [10, 99]
  * @return      {Object}    {min: 新最小值, max: 新最大值, secs: 分段数, step: 每段长, fix: 小数保留位数, pnts: [分段结果]}
  */
-define(function() {
-
 
 
 var mySteps     = [10, 20, 25, 50];
@@ -221,7 +219,7 @@ function getCeil(num, rounds) {
         i++;
     }
     if (!rounds[i]) {                                       // 如果没找到合适的预置项，一定是目标值大于全部的预置项
-        cNum   /= 10;                                       // 将目标值缩小 10 倍，重找一次定能命中
+        cNum   /= 10;                                       // 将目标值缩小 10 倍，重找一次定能命���
         num.e  += 1;
         i       = 0;
         while (cNum > rounds[i]) {
@@ -503,7 +501,7 @@ function bothLocked(min, max, section) {
     expFixTo(expMax, expSpan);
     span            = expMax.c - expMin.c;
     expSpan.c       = span;
-    
+
     for (var i      = trySecs.length; i--;) {
         section     = trySecs[i];
         step        = MATH_CEIL(span / section);
@@ -534,11 +532,4 @@ function bothLocked(min, max, section) {
     return makeResult(expMin.c, expMax.c, reference.secs, expSpan.e);
 }
 
-
-
-
-return smartSteps;
-});
-
-
-
+module.exports = smartSteps;

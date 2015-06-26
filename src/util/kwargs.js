@@ -1,4 +1,4 @@
-define(function (){
+
     function kwargs(func, defaults) {
         /*jshint maxlen : 200*/
         var removeComments = new RegExp('(\\/\\*[\\w\\\'\\,\\(\\)\\s\\r\\n\\*]*\\*\\/)|(\\/\\/[\\w\\s\\\'][^\\n\\r]*$)|(<![\\-\\-\\s\\w\\>\\/]*>)', 'gim');
@@ -44,5 +44,4 @@ define(function (){
     }
     // As function prototype
     // Function.prototype.kwargs = kwargs;
-    return kwargs;
-});
+    module.exports = kwargs;

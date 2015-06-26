@@ -5,13 +5,13 @@
  *
  * shape类：时间轴线
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
+
+    var Base = require('zrender/src/shape/Base');
     var IconShape = require('./Icon');
 
-    var dashedLineTo = require('zrender/shape/util/dashedLineTo');
-    var zrUtil = require('zrender/tool/util');
-    var matrix = require('zrender/tool/matrix');
+    var dashedLineTo = require('zrender/src/shape/util/dashedLineTo');
+    var zrUtil = require('zrender/src/tool/util');
+    var matrix = require('zrender/src/tool/matrix');
 
     function Chain(options) {
         Base.call(this, options);
@@ -50,7 +50,7 @@ define(function (require) {
             this.buildLinePath(ctx, style);
             ctx.stroke();
             ctx.restore();
-            
+
             this.brushSymbol(ctx, style);
 
             ctx.restore();
@@ -177,5 +177,4 @@ define(function (require) {
 
     zrUtil.inherits(Chain, Base);
 
-    return Chain;
-});
+    module.exports = Chain;

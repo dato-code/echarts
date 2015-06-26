@@ -4,9 +4,7 @@
  * @author Neil (杨骥, 511415343@qq.com)
  */
 
-define(
-    function (require) {
-        var zrMath = require('zrender/tool/math');
+        var zrMath = require('zrender/src/tool/math');
 
         /**
          * 极坐标转直角坐标
@@ -32,9 +30,7 @@ define(
             return [Math.sqrt(x * x + y * y), Math.atan(y / x)];
         }
 
-        return {
+        module.exports = {
             polar2cartesian : polar2cartesian,
             cartesian2polar : cartesian2polar
         };
-    }
-);

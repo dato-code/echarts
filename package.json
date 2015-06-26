@@ -12,6 +12,6 @@
         "zrender": "~2.0.9"
     },
     "repository": "git://github.com/ecomfe/echarts",
-    "main": "echarts",
+    "main": "src/echarts.js",
     "homepage": "http://echarts.baidu.com"
 }

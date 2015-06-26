@@ -5,13 +5,13 @@
  * @author clmtulip  (车丽美, clmtulip@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
 
     var eventRiverLayout = require('../layout/eventRiver');
 
     // 图形依赖
-    var PolygonShape = require('zrender/shape/Polygon');
+    var PolygonShape = require('zrender/src/shape/Polygon');
 
     // 组件依赖
     require('../component/axis');
@@ -47,11 +47,11 @@ define(function (require) {
             }
         }
     };
-    
+
     var ecData = require('../util/ecData');
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -63,7 +63,7 @@ define(function (require) {
      function EventRiver(ecTheme, messageCenter, zr, option, myChart) {
         // 图表基类
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
-         
+
          var self = this;
          self._ondragend = function () {
              self.isDragend = true;
@@ -73,14 +73,14 @@ define(function (require) {
 
      EventRiver.prototype = {
          type: ecConfig.CHART_TYPE_EVENTRIVER,
-         
+
          _buildShape: function() {
              var series = this.series;
              this.selectedMap = {};
-             
+
              // 数据预处理
              this._dataPreprocessing();
-            
+
              var legend = this.component.legend;
              // 调用布局算法计算事件在Y轴上的位置
              var eventRiverSeries = [];
@@ -98,16 +98,16 @@ define(function (require) {
                      eventRiverSeries.push(this.series[i]);
                  }
              }
-             
+
              eventRiverLayout(
                  eventRiverSeries,
                  this._intervalX,
                  this.component.grid.getArea()
              );
-             
+
              // 绘制事件河
              this._drawEventRiver();
-             
+
              this.addShapeList();
          },
 
@@ -166,13 +166,13 @@ define(function (require) {
 
              var legend = this.component.legend;
              var defaultColor = legend ? legend.getColor(serieName) : this.zr.getColor(seriesIndex);
-             
+
              // 多级控制
              var normal = this.deepMerge(queryTarget, 'itemStyle.normal') || {};
              var emphasis = this.deepMerge(queryTarget, 'itemStyle.emphasis') || {};
              var normalColor = this.getItemStyleColor(normal.color, seriesIndex, dataIndex, data)
                                || defaultColor;
-             
+
              var emphasisColor = this.getItemStyleColor(
                                      emphasis.color, seriesIndex, dataIndex, data
                                  )
@@ -180,9 +180,9 @@ define(function (require) {
                                      ? zrColor.lift(normalColor, -0.2)
                                      : normalColor
                                  );
-            
+
              var pts = this._calculateControlPoints(oneEvent);
-             
+
              var eventBubbleShape = {
                  zlevel: this.getZlevelBase(),
                  z: this.getZBase(),
@@ -204,9 +204,9 @@ define(function (require) {
                  draggable: 'vertical',
                  ondragend : this._ondragend
              };
-             
+
              eventBubbleShape = new PolygonShape(eventBubbleShape);
-             
+
              this.addLabel(eventBubbleShape, serie, data, oneEvent.name);
              ecData.pack(
                  eventBubbleShape,
@@ -223,22 +223,22 @@ define(function (require) {
          _calculateControlPoints: function(oneEvent) {
              var intervalX = this._intervalX;
              var posY = oneEvent.y;
-             
+
              var evolution = oneEvent.evolution;
              var n = evolution.length;
              if (n < 1) {
                  return;
              }
-             
+
              var time = [];
              var value = [];
              for (var i = 0; i < n; i++) {
                  time.push(evolution[i].timeScale);
                  value.push(evolution[i].valueScale);
              }
-             
+
              var pts = [];
-             
+
              // 从左向右绘制气泡的上半部分控制点
              // 第一个矩形的左端点
              pts.push([time[0], posY]);
@@ -259,10 +259,10 @@ define(function (require) {
              for (i = n - 1; i > 0; i--) {
                  pts.push([(time[i] + time[i - 1]) / 2.0, value[i - 1] / 2.0 + posY]);
              }
-             
+
              return pts;
          },
-         
+
         /**
          * 数据项被拖拽出去
          */
@@ -296,8 +296,6 @@ define(function (require) {
 
      zrUtil.inherits(EventRiver, ChartBase);
 
-     // 图表注册
      require('../chart').define('eventRiver', EventRiver);
 
-     return EventRiver;
-});
+     module.exports = EventRiver;

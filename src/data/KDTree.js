@@ -4,7 +4,7 @@
  * @module echarts/data/KDTree
  * @author Yi Shen(https://github.com/pissang)
  */
-define(function (require) {
+
 
     var quickSelect = require('./quickSelect');
 
@@ -36,7 +36,7 @@ define(function (require) {
         this.dimension = dimension;
         this.root = this._buildTree(points, 0, points.length - 1, 0);
 
-        // Use one stack to avoid allocation 
+        // Use one stack to avoid allocation
         // each time searching the nearest point
         this._stack = [];
         // Again avoid allocating a new array
@@ -66,7 +66,7 @@ define(function (require) {
         axis = (axis + 1) % this.dimension;
         if (right > left) {
             node.left = this._buildTree(points, left, medianIndex - 1, axis);
-            node.right = this._buildTree(points, medianIndex + 1, right, axis);   
+            node.right = this._buildTree(points, medianIndex + 1, right, axis);
         }
 
         return node;
@@ -140,7 +140,7 @@ define(function (require) {
         // Insert to the right position
         // Sort from small to large
         for (var i = found - 1; i > 0; i--) {
-            if (dist >= nearestNList[i - 1].dist) {                
+            if (dist >= nearestNList[i - 1].dist) {
                 break;
             }
             else {
@@ -243,5 +243,4 @@ define(function (require) {
         return output;
     };
 
-    return KDTree;
-});
+    module.exports = KDTree;

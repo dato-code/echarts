@@ -5,13 +5,13 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
-    
+
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var RectangleShape = require('zrender/shape/Rectangle');
-    
+    var TextShape = require('zrender/src/shape/Text');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
+
     var ecConfig = require('../config');
     // 图表标题
     ecConfig.title = {
@@ -46,11 +46,11 @@ define(function (require) {
             color: '#aaa'          // 副标题文字颜色
         }
     };
-    
-    var zrUtil = require('zrender/tool/util');
-    var zrArea = require('zrender/tool/area');
-    var zrColor = require('zrender/tool/color');
-    
+
+    var zrUtil = require('zrender/src/tool/util');
+    var zrArea = require('zrender/src/tool/area');
+    var zrColor = require('zrender/src/tool/color');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -59,10 +59,10 @@ define(function (require) {
      */
     function Title(ecTheme, messageCenter, zr, option, myChart) {
         Base.call(this, ecTheme, messageCenter, zr, option, myChart);
-        
+
         this.refresh(option);
     }
-    
+
     Title.prototype = {
         type: ecConfig.COMPONENT_TYPE_TITLE,
         _buildShape: function () {
@@ -92,12 +92,12 @@ define(function (require) {
             var subtarget = this.titleOption.subtarget;
             var font = this.getFont(this.titleOption.textStyle);
             var subfont = this.getFont(this.titleOption.subtextStyle);
-            
+
             var x = this._itemGroupLocation.x;
             var y = this._itemGroupLocation.y;
             var width = this._itemGroupLocation.width;
             var height = this._itemGroupLocation.height;
-            
+
             var textShape = {
                 zlevel: this.getZlevelBase(),
                 z: this.getZBase(),
@@ -126,7 +126,7 @@ define(function (require) {
                     }
                 };
             }
-            
+
             var subtextShape = {
                 zlevel: this.getZlevelBase(),
                 z: this.getZBase(),
@@ -159,17 +159,17 @@ define(function (require) {
             switch (this.titleOption.x) {
                 case 'center' :
                     textShape.style.x = subtextShape.style.x = x + width / 2;
-                    textShape.style.textAlign = subtextShape.style.textAlign 
+                    textShape.style.textAlign = subtextShape.style.textAlign
                                               = 'center';
                     break;
                 case 'left' :
                     textShape.style.x = subtextShape.style.x = x;
-                    textShape.style.textAlign = subtextShape.style.textAlign 
+                    textShape.style.textAlign = subtextShape.style.textAlign
                                               = 'left';
                     break;
                 case 'right' :
                     textShape.style.x = subtextShape.style.x = x + width;
-                    textShape.style.textAlign = subtextShape.style.textAlign 
+                    textShape.style.textAlign = subtextShape.style.textAlign
                                               = 'right';
                     break;
                 default :
@@ -178,9 +178,9 @@ define(function (require) {
                     textShape.style.x = subtextShape.style.x = x;
                     break;
             }
-            
+
             if (this.titleOption.textAlign) {
-                textShape.style.textAlign = subtextShape.style.textAlign 
+                textShape.style.textAlign = subtextShape.style.textAlign
                                           = this.titleOption.textAlign;
             }
 
@@ -217,7 +217,7 @@ define(function (require) {
             var subtext = this.titleOption.subtext;
             var font = this.getFont(this.titleOption.textStyle);
             var subfont = this.getFont(this.titleOption.subtextStyle);
-            
+
             var totalWidth = Math.max(
                     zrArea.getTextWidth(text, font),
                     zrArea.getTextWidth(subtext, subfont)
@@ -278,7 +278,7 @@ define(function (require) {
                 height: totalHeight
             };
         },
-        
+
         /**
          * 刷新
          */
@@ -295,17 +295,14 @@ define(function (require) {
                     this.titleOption.subtextStyle
                 );
             }
-            
+
             this.clear();
             this._buildShape();
         }
     };
-    
+
     zrUtil.inherits(Title, Base);
-    
+
     require('../component').define('title', Title);
-    
-    return Title;
-});
 
-
+    module.exports = Title;

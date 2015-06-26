@@ -5,7 +5,7 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function() {
+
     /**
      * 打包私有数据
      *
@@ -87,7 +87,7 @@ define(function() {
                 break;
         }
     }
-    
+
     /**
      * 私有数据克隆，把source拷贝到target上
      * @param {shape} source 源
@@ -106,10 +106,9 @@ define(function() {
         };
     }
 
-    return {
+    module.exports = {
         pack : pack,
         set : set,
         get : get,
         clone : clone
     };
-});

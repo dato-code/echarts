@@ -3,7 +3,7 @@
  * @module echarts/layout/eventRiver
  * @author clmtulip  (车丽美, clmtulip@gmail.com)
  */
-define(function(require) {
+
     function eventRiverLayout(series, intervalX, area) {
         var space = 5;
         var scale = intervalX;
@@ -13,7 +13,7 @@ define(function(require) {
             var y = b.importance;
             return ((x > y) ? -1 : ((x < y) ? 1 : 0));
         }
-        
+
         /**
          * 查询数组中元素的index
          */
@@ -28,7 +28,7 @@ define(function(require) {
             }
             return -1;
         }
-        
+
         // step 0. calculate event importance and sort descending
         for (var i = 0; i < series.length; i++) {
             for (var j = 0; j < series[i].data.length; j++) {
@@ -43,7 +43,7 @@ define(function(require) {
             }
             series[i].data.sort(importanceSort);
         }
-        
+
         // step 1. 计算每个group的重要值importance，并按递减顺序排序
         for (var i = 0; i < series.length; i++) {
             if (series[i].weight == null) {
@@ -57,7 +57,7 @@ define(function(require) {
         }
         // 根据importance对groups进行递减排序
         series.sort(importanceSort);
-        
+
         // step 3. set bubble positions in group order, then in event order
         // 找到包含所有事件的时间段，即最小和最大时间点
         var minTime = Number.MAX_VALUE;
@@ -73,7 +73,7 @@ define(function(require) {
         }
         // console.log('minTime: ' + minTime);
         // console.log('maxTime: ' + maxTime);
-        
+
         // 建立线段树根节点
         var root = segmentTreeBuild(Math.floor(minTime), Math.ceil(maxTime));
 
@@ -104,9 +104,9 @@ define(function(require) {
                     e.y = curMaxY + e.value[k] / 2 + space;
                 }
                 series[i].y = e.y;
-                
+
                 totalMaxY = Math.max(totalMaxY, e.y + e.value[mxIndex] / 2);
-                
+
                 // 确定位置后更新线段树
                 for (k = 0; k < e.time.length - 1; k++) {
                     segmentTreeInsert(root, e.time[k], e.time[k+1], e.y + e.value[k] / 2);
@@ -114,13 +114,13 @@ define(function(require) {
                 segmentTreeInsert(root, e.time[k], e.time[k] + scale, e.y + e.value[k] / 2);
             }
         }
-        
+
         // 映射到显示区域内
         scaleY(series, area, totalMaxY, space);
     }
-    
+
     /**
-     * 映射到显示区域内 
+     * 映射到显示区域内
      * @param {Object} series
      * @param {Object} area
      */
@@ -137,7 +137,7 @@ define(function(require) {
                     evolutionList[k].valueScale *= yScale * 1;
                 }
             }
-            
+
         }
     }
 
@@ -149,13 +149,13 @@ define(function(require) {
             'rightChild': null,
             'maxValue': 0
         };
-        
+
         if (left + 1 < right) {
             var mid = Math.round( (left + right) / 2);
             root.leftChild = segmentTreeBuild(left, mid);
             root.rightChild = segmentTreeBuild(mid, right);
         }
-        
+
         return root;
     }
 
@@ -166,7 +166,7 @@ define(function(require) {
 
         var mid = Math.round( (root.left + root.right) / 2);
         var result = 0;
-        
+
         if (left == root.left && right == root.right) {
             result = root.maxValue;
         }
@@ -198,7 +198,7 @@ define(function(require) {
         var mid = Math.round( (root.left + root.right) / 2);
         root.maxValue = root.maxValue > value ? root.maxValue : value;
 
-        if (Math.floor(left * 10) == Math.floor(root.left * 10) 
+        if (Math.floor(left * 10) == Math.floor(root.left * 10)
             && Math.floor(right * 10) == Math.floor(root.right * 10)
         ) {
             return;
@@ -214,6 +214,5 @@ define(function(require) {
             segmentTreeInsert(root.rightChild, mid, right, value);
         }
     }
-    
-    return eventRiverLayout;
-});
+
+    module.exports = eventRiverLayout;

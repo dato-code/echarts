@@ -29,10 +29,10 @@
        // 事件属性，详见shape.Base
    }
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
-    var LineShape = require('zrender/shape/Line');
-    var zrUtil = require('zrender/tool/util');
+
+    var Base = require('zrender/src/shape/Base');
+    var LineShape = require('zrender/src/shape/Line');
+    var zrUtil = require('zrender/src/tool/util');
 
     function Cross(options) {
         Base.call(this, options);
@@ -71,5 +71,4 @@ define(function (require) {
 
     zrUtil.inherits(Cross, Base);
 
-    return Cross;
-});
+    module.exports = Cross;

@@ -1,10 +1,10 @@
 /**
  * Numpy like n-dimensional array proccessing class
  * http://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html
- * 
+ *
  * @author pissang (https://github.com/pissang/)
  */
-define(function (require) {
+
 
 'use strict';
 
@@ -147,7 +147,7 @@ var NDArray = function (array) {
 NDArray.prototype = {
     /**
      * Initialize from a normal js array.
-     * 
+     *
      * @param  {Array} input
      * @return {NDArray} this
      */
@@ -177,7 +177,7 @@ NDArray.prototype = {
 
     /**
      * Initialize from the given shape description.
-     * @param  {Array} shape 
+     * @param  {Array} shape
      * @return {NDArray} this
      */
     initFromShape : function (shape) {
@@ -191,7 +191,7 @@ NDArray.prototype = {
                 var data = this._array;
                 for (var i = 0; i < size; i++) {
                     data[i] = 0;
-                }   
+                }
             } else {
                 this._array = new ArrayConstructor[this._dtype](size);
             }
@@ -329,7 +329,7 @@ NDArray.prototype = {
     },
 
     /**
-     * Returns a new array with axes transposed.    
+     * Returns a new array with axes transposed.
      * @param  {Array} [axes]
      * @param  {NDArray} [out]
      * @return {NDArray}
@@ -437,14 +437,14 @@ NDArray.prototype = {
             var size = shape[axis];
             // strides in orginal array
             var stride = strides[axis];
-            // strides in transposed array 
+            // strides in transposed array
             var transposedStride = transposedStrides[axis];
 
             if (axis < dim-1) {
                 for (var i = 0; i < size; i++) {
                     transpose(
-                        axis+1, 
-                        offset + stride * i, 
+                        axis+1,
+                        offset + stride * i,
                         transposedOffset + transposedStride * i
                     );
                 }
@@ -471,7 +471,7 @@ NDArray.prototype = {
      * @param {Number} [axis]
      *        The axis along which to repeat values.
      *        By default, use the flattened input array,
-     *        and return a flat output array. 
+     *        and return a flat output array.
      * @param {NDArray} [out]
      * @return {NDArray}
      */
@@ -533,10 +533,10 @@ NDArray.prototype = {
     },
 
     /**
-     * Preprocess for array calculation 
+     * Preprocess for array calculation
      * max, min, argmax, argmin, sum, ptp, val, mean
      * Which will reduce one axis if the axis is given
-     * 
+     *
      * @param  {Number} axis
      * @param  {NDArray} out
      * @param  {Function} funcWithAxis
@@ -565,7 +565,7 @@ NDArray.prototype = {
 
             if (!out) {
                 out = new NDArray(this._dtype);
-                out.initFromShape(shape);   
+                out.initFromShape(shape);
             }
             var data = out._array;
 
@@ -645,9 +645,9 @@ NDArray.prototype = {
      *     [4, 9]
      * >>> max(1)
      *     [9, 8]
-     *     
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     *
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     max : kwargs((function () {
@@ -684,12 +684,12 @@ NDArray.prototype = {
             );
         };
     })()),
-    
+
 
     /**
      * Return the minimum of an array or minimum along an axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     min : kwargs((function () {
@@ -729,8 +729,8 @@ NDArray.prototype = {
 
     /**
      * Return indices of the maximum values along an axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     argmax : kwargs((function () {
@@ -774,8 +774,8 @@ NDArray.prototype = {
 
     /**
      * Indices of the minimum values along an axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     argmin : kwargs((function () {
@@ -819,8 +819,8 @@ NDArray.prototype = {
 
     /**
      * Return the sum of the array elements over the given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     sum : kwargs((function () {
@@ -855,8 +855,8 @@ NDArray.prototype = {
 
     /**
      * Return the product of the array elements over the given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     prod : kwargs((function () {
@@ -891,8 +891,8 @@ NDArray.prototype = {
 
     /**
      * Returns the average of the array elements along given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     mean : kwargs((function () {
@@ -930,8 +930,8 @@ NDArray.prototype = {
 
     /**
      * Return the variance of the array elements over the given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     'var' : kwargs((function () {
@@ -978,12 +978,12 @@ NDArray.prototype = {
             );
         };
     })()),
-    
+
     /**
      * Return the standard derivatione of the array elements
      * over the given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     std : kwargs((function () {
@@ -1030,11 +1030,11 @@ NDArray.prototype = {
             );
         };
     })()),
-    
+
     /**
      * Peak to peak (maximum - minimum) value along a given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     ptp : kwargs((function () {
@@ -1081,7 +1081,7 @@ NDArray.prototype = {
     })()),
 
     /**
-     * 
+     *
      * @param {Number} [axis=-1]
      * @param {string} [order='ascending']
      *        'ascending' | 'descending'
@@ -1135,7 +1135,7 @@ NDArray.prototype = {
     }, {axis : -1, order : 'ascending'}),
 
     /**
-     * 
+     *
      * @param {Number} [axis=-1]
      * @param {string} [order='ascending']
      *        'ascending' | 'descending'
@@ -1201,8 +1201,8 @@ NDArray.prototype = {
 
     /**
      * Return the cumulative sum of the elements along the given axis.
-     * @param  {Number} [axis] 
-     * @param  {NDArray} out  
+     * @param  {Number} [axis]
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     cumsum : kwargs((function () {
@@ -1238,7 +1238,7 @@ NDArray.prototype = {
     /**
      * Return the cumulative product of the elements along the given axis.
      * @param  {Number} [axis]
-     * @param  {NDArray} out  
+     * @param  {NDArray} out
      * @return {NDArray}
      */
     cumprod : kwargs((function () {
@@ -1273,7 +1273,7 @@ NDArray.prototype = {
 
     /**
      * Dot product of two arrays.
-     * 
+     *
      * @param  {NDArray|Number} b
      * @param  {NDArray}        [out]
      * @return {NDArray|Number}
@@ -1322,7 +1322,7 @@ NDArray.prototype = {
      */
     add : function (rightOperand, out) {
         return this.binaryOperation(
-            this, rightOperand, E_ADD, out 
+            this, rightOperand, E_ADD, out
         );
     },
 
@@ -1442,7 +1442,7 @@ NDArray.prototype = {
             }
         }
         var outData = out._array;
-        
+
         var diffAxis;
         var isLoLarger;
         var loData;
@@ -1625,7 +1625,7 @@ NDArray.prototype = {
     floor : function () {
         return this._mathAdapter(Math.floor);
     },
-    
+
     /**
      * @return {NDArray} this
      */
@@ -1753,11 +1753,11 @@ NDArray.prototype = {
         } else {
             return data[0];
         }
-            
+
     },
 
     /**
-     * 
+     *
      * @param {string} index
      *        index syntax can be an integer 1, 2, 3
      *        Or more complex range indexing
@@ -1839,7 +1839,7 @@ NDArray.prototype = {
     /**
      * Insert values along the given axis before the given indices.
      * @param  {Number|Array} obj
-     *         Object that defines the index or indices before 
+     *         Object that defines the index or indices before
      *         which values is inserted.
      * @param  {Number|Array|NDArray} values
      *         Values to insert
@@ -1871,7 +1871,7 @@ NDArray.prototype = {
                 obj[i] = axisSize + obj[i];
             }
             if (obj[i] > axisSize) {
-                throw new Error(indexOutofBoundsErrorMsg(obj[i]));   
+                throw new Error(indexOutofBoundsErrorMsg(obj[i]));
             }
             if (obj[i] < prev) {
                 throw new Error('Index must be in ascending order');
@@ -2026,7 +2026,7 @@ NDArray.prototype = {
 
     _parseRanges : function (index) {
         var rangesStr = index.split(/\s*,\s*/);
-        
+
         // Parse range of each axis
         var ranges = [];
         var shape = [];
@@ -2105,7 +2105,7 @@ NDArray.prototype = {
 };
 
 /**
- * 
+ *
  * @param  {Number} [min=0]
  * @param  {Number} max
  * @param  {Number} [step=1]
@@ -2145,10 +2145,10 @@ NDArray.range = kwargs(function (min, max, step, dtype) {
 });
 
 /**
- * 
- * @param  {Array}  shape 
- * @param  {String} [dtype] 
- * @return {NDArray}       
+ *
+ * @param  {Array}  shape
+ * @param  {String} [dtype]
+ * @return {NDArray}
  */
 NDArray.zeros = kwargs(function (shape, dtype) {
     var ret = new NDArray(dtype);
@@ -2159,7 +2159,7 @@ NDArray.zeros = kwargs(function (shape, dtype) {
 /**
  * Python like array indexing
  * http://www.python.org/dev/peps/pep-0204/
- * 
+ *
  * @param   {string} index
  *          index can be a simple integer 1,2,3,
  *          or a range 2:10, 2:10:1
@@ -2289,7 +2289,7 @@ function arrayEqual(arr1, arr2) {
 }
 
 function broadcastErrorMsg(shape1, shape2) {
-    return 'Shape (' 
+    return 'Shape ('
             + shape1.toString() + ') (' + shape2.toString()
             +') could not be broadcast together';
 }
@@ -2302,6 +2302,4 @@ function indexOutofBoundsErrorMsg(idx) {
     return 'Index ' + idx + ' out of bounds';
 }
 
-return NDArray;
-
-});
+module.exports = NDArray;

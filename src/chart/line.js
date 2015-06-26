@@ -5,18 +5,18 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
-    
+
     // 图形依赖
-    var PolylineShape = require('zrender/shape/Polyline');
+    var PolylineShape = require('zrender/src/shape/Polyline');
     var IconShape = require('../util/shape/Icon');
     var HalfSmoothPolygonShape = require('../util/shape/HalfSmoothPolygon');
     // 组件依赖
     require('../component/axis');
     require('../component/grid');
     require('../component/dataZoom');
-    
+
     var ecConfig = require('../config');
     // 折线图默认参数
     ecConfig.line = {
@@ -67,9 +67,9 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
-    
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -83,7 +83,7 @@ define(function (require) {
 
         this.refresh(option);
     }
-    
+
     Line.prototype = {
         type: ecConfig.CHART_TYPE_LINE,
         /**
@@ -133,7 +133,7 @@ define(function (require) {
                         data = serie.data[i];
                         value = this.getDataFromOption(data, '-');
                         curPLMap[seriesIndex] = curPLMap[seriesIndex] || [];
-                        xMarkMap[seriesIndex] = xMarkMap[seriesIndex] 
+                        xMarkMap[seriesIndex] = xMarkMap[seriesIndex]
                                                 || {
                                                     min: Number.POSITIVE_INFINITY,
                                                     max: Number.NEGATIVE_INFINITY,
@@ -165,7 +165,7 @@ define(function (require) {
                         }
                         else if (value < 0){
                             // 负向堆积
-                            lastYN += m > 0 
+                            lastYN += m > 0
                                       ? valueAxis.getCoordSize(value)
                                       : (valueAxis.getCoord(value) - baseYN);
                             y = lastYN;
@@ -173,7 +173,7 @@ define(function (require) {
                         curPLMap[seriesIndex].push(
                             [x, y, i, categoryAxis.getNameByIndex(i), x, baseYP]
                         );
-                        
+
                         if (xMarkMap[seriesIndex].min > value) {
                             xMarkMap[seriesIndex].min = value;
                             xMarkMap[seriesIndex].minY = y;
@@ -216,7 +216,7 @@ define(function (require) {
                     }
                 }
             }
-            
+
             // 把剩余未完成的curPLMap全部添加到finalPLMap中
             for (var sId in curPLMap) {
                 if (curPLMap[sId].length > 0) {
@@ -225,9 +225,9 @@ define(function (require) {
                     curPLMap[sId] = [];
                 }
             }
-            
+
             this._calculMarkMapXY(xMarkMap, locationMap, 'y');
-            
+
             this._buildBorkenLine(seriesArray, this.finalPLMap, categoryAxis, 'horizontal');
         },
 
@@ -270,7 +270,7 @@ define(function (require) {
                         data = serie.data[i];
                         value = this.getDataFromOption(data, '-');
                         curPLMap[seriesIndex] = curPLMap[seriesIndex] || [];
-                        xMarkMap[seriesIndex] = xMarkMap[seriesIndex] 
+                        xMarkMap[seriesIndex] = xMarkMap[seriesIndex]
                                                 || {
                                                     min: Number.POSITIVE_INFINITY,
                                                     max: Number.NEGATIVE_INFINITY,
@@ -310,7 +310,7 @@ define(function (require) {
                         curPLMap[seriesIndex].push(
                             [x, y, i, categoryAxis.getNameByIndex(i), baseXP, y]
                         );
-                        
+
                         if (xMarkMap[seriesIndex].min > value) {
                             xMarkMap[seriesIndex].min = value;
                             xMarkMap[seriesIndex].minX = x;
@@ -362,20 +362,20 @@ define(function (require) {
                     curPLMap[sId] = [];
                 }
             }
-            
+
             this._calculMarkMapXY(xMarkMap, locationMap, 'x');
-            
+
             this._buildBorkenLine(seriesArray, this.finalPLMap, categoryAxis, 'vertical');
         },
 
         /**
-         * 构建双数值轴折线图 
+         * 构建双数值轴折线图
          */
         _buildOther: function(seriesArray, maxDataLength, locationMap, xMarkMap) {
             var series = this.series;
             var curPLMap = {};   // 正在记录的point list(PL)
             var xAxis;
-            
+
             for (var j = 0, k = locationMap.length; j < k; j++) {
                 for (var m = 0, n = locationMap[j].length; m < n; m++) {
                     var seriesIndex = locationMap[j][m];
@@ -383,9 +383,9 @@ define(function (require) {
                     xAxis = this.component.xAxis.getAxis(serie.xAxisIndex || 0);
                     var yAxis = this.component.yAxis.getAxis(serie.yAxisIndex || 0);
                     var baseY = yAxis.getCoord(0);
-                    
+
                     curPLMap[seriesIndex] = curPLMap[seriesIndex] || [];
-                    xMarkMap[seriesIndex] = xMarkMap[seriesIndex] 
+                    xMarkMap[seriesIndex] = xMarkMap[seriesIndex]
                                             || {
                                                 min0: Number.POSITIVE_INFINITY,
                                                 min1: Number.POSITIVE_INFINITY,
@@ -398,21 +398,21 @@ define(function (require) {
                                                 average0: 0,
                                                 average1: 0
                                             };
-                    
+
                     for (var i = 0, l = serie.data.length; i < l; i++) {
                         var data = serie.data[i];
                         var value = this.getDataFromOption(data, '-');
                         if (!(value instanceof Array)) {
                             continue;
                         }
-                        
+
                         var x = xAxis.getCoord(value[0]);
                         var y = yAxis.getCoord(value[1]);
                         curPLMap[seriesIndex].push(
                             // x, y, dataIndex, name, 填充用
                             [x, y, i, value[0], x, baseY]
                         );
-                        
+
                         if (xMarkMap[seriesIndex].min0 > value[0]) {
                             xMarkMap[seriesIndex].min0 = value[0];
                             xMarkMap[seriesIndex].minY0 = y;
@@ -425,7 +425,7 @@ define(function (require) {
                         }
                         xMarkMap[seriesIndex].sum0 += value[0];
                         xMarkMap[seriesIndex].counter0++;
-                        
+
                         if (xMarkMap[seriesIndex].min1 > value[1]) {
                             xMarkMap[seriesIndex].min1 = value[1];
                             xMarkMap[seriesIndex].minY1 = y;
@@ -441,7 +441,7 @@ define(function (require) {
                     }
                 }
             }
-            
+
             // 把剩余未完成的curPLMap全部添加到finalPLMap中
             for (var sId in curPLMap) {
                 if (curPLMap[sId].length > 0) {
@@ -450,12 +450,12 @@ define(function (require) {
                     curPLMap[sId] = [];
                 }
             }
-            
+
             this._calculMarkMapXY(xMarkMap, locationMap, 'xy');
-            
+
             this._buildBorkenLine(seriesArray, this.finalPLMap, xAxis, 'other');
         },
-        
+
         /**
          * 生成折线和折线上的拐点
          */
@@ -463,7 +463,7 @@ define(function (require) {
             var orient = curOrient == 'other' ? 'horizontal' : curOrient;
             var series = this.series;
             var data;
-            
+
             // 堆积层叠需求，反顺序构建
             for (var sIdx = seriesArray.length - 1; sIdx >= 0; sIdx--) {
                 var seriesIndex = seriesArray[sIdx];
@@ -531,7 +531,7 @@ define(function (require) {
                                 miterLimit: lineWidth,
                                 pointList: singlePL,
                                 strokeColor: lineColor
-                                             || normalColor 
+                                             || normalColor
                                              || defaultColor,
                                 lineWidth: lineWidth,
                                 lineType: lineType,
@@ -559,15 +559,15 @@ define(function (require) {
                             _seriesIndex: seriesIndex,
                             _orient: orient
                         });
-                        
+
                         ecData.pack(
                             polylineShape,
                             series[seriesIndex], seriesIndex,
                             0, i, series[seriesIndex].name
                         );
-                        
+
                         this.shapeList.push(polylineShape);
-                        
+
                         if (isFill) {
                             var halfSmoothPolygonShape = new HalfSmoothPolygonShape({
                                 zlevel: this.getZlevelBase(),
@@ -610,7 +610,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         _getBbox: function(seriesIndex, orient) {
             var bbox = this.component.grid.getBbox();
             var xMarkMap = this.xMarkMap[seriesIndex];
@@ -636,7 +636,7 @@ define(function (require) {
             }
             return bbox;
         },
-        
+
         _isLarge: function(orient, singlePL) {
             if (singlePL.length < 2) {
                 return false;
@@ -647,9 +647,9 @@ define(function (require) {
                        : (Math.abs(singlePL[0][1] - singlePL[1][1]) < 0.5);
             }
         },
-        
+
         /**
-         * 大规模pointList优化 
+         * 大规模pointList优化
          */
         _getLargePointList: function(orient, singlePL, filter) {
             var total;
@@ -659,7 +659,7 @@ define(function (require) {
             else {
                 total = this.component.grid.getHeight();
             }
-            
+
             var len = singlePL.length;
             var newList = [];
 
@@ -779,23 +779,23 @@ define(function (require) {
             var series = this.series;
             var serie = series[seriesIndex];
             var data = serie.data[dataIndex];
-            
+
             var itemShape = this.getSymbolShape(
-                serie, seriesIndex, data, dataIndex, name, 
+                serie, seriesIndex, data, dataIndex, name,
                 x, y,
-                this._sIndex2ShapeMap[seriesIndex], 
+                this._sIndex2ShapeMap[seriesIndex],
                 this._sIndex2ColorMap[seriesIndex],
                 '#fff',
                 orient === 'vertical' ? 'horizontal' : 'vertical' // 翻转
             );
             itemShape.zlevel = this.getZlevelBase();
             itemShape.z = this.getZBase() + 1;
-            
+
             if (this.deepQuery([data, serie, this.option], 'calculable')) {
                 this.setCalculable(itemShape);
                 itemShape.draggable = true;
             }
-            
+
             return itemShape;
         },
 
@@ -805,14 +805,14 @@ define(function (require) {
             var xMarkMap = this.xMarkMap[seriesIndex];
             var xAxis = this.component.xAxis.getAxis(serie.xAxisIndex);
             var yAxis = this.component.yAxis.getAxis(serie.yAxisIndex);
-            
+
             if (mpData.type
                 && (mpData.type === 'max' || mpData.type === 'min' || mpData.type === 'average')
             ) {
                 // 特殊值内置支持
-                var valueIndex = mpData.valueIndex != null 
-                                 ? mpData.valueIndex 
-                                 : xMarkMap.maxX0 != null 
+                var valueIndex = mpData.valueIndex != null
+                                 ? mpData.valueIndex
+                                 : xMarkMap.maxX0 != null
                                    ? '1' : '';
                 return [
                     xMarkMap[mpData.type + 'X' + valueIndex],
@@ -821,18 +821,18 @@ define(function (require) {
                     xMarkMap[mpData.type + valueIndex]
                 ];
             }
-            
+
             return [
                 typeof mpData.xAxis != 'string' && xAxis.getCoordByIndex
                     ? xAxis.getCoordByIndex(mpData.xAxis || 0)
                     : xAxis.getCoord(mpData.xAxis || 0),
-                
+
                 typeof mpData.yAxis != 'string' && yAxis.getCoordByIndex
                     ? yAxis.getCoordByIndex(mpData.yAxis || 0)
                     : yAxis.getCoord(mpData.yAxis || 0)
             ];
         },
-        
+
         /**
          * 刷新
          */
@@ -841,11 +841,11 @@ define(function (require) {
                 this.option = newOption;
                 this.series = newOption.series;
             }
-            
+
             this.backupShapeList();
             this._buildShape();
         },
-        
+
         ontooltipHover: function (param, tipShape) {
             var seriesIndex = param.seriesIndex;
             var dataIndex = param.dataIndex;
@@ -875,7 +875,7 @@ define(function (require) {
         },
 
         /**
-         * 动态数据增加动画 
+         * 动态数据增加动画
          */
         addDataAnimation: function (params, done) {
             var series = this.series;
@@ -913,7 +913,7 @@ define(function (require) {
                         dx = Math.abs(pointList[0][0] - pointList[1][0]);
                         dy = Math.abs(pointList[0][1] - pointList[1][1]);
                         isHorizontal = this.shapeList[i]._orient === 'horizontal';
-                            
+
                         if (aniMap[seriesIndex][2]) {
                             // 队头加入删除末尾
                             if (this.shapeList[i].type === 'half-smooth-polygon') {
@@ -941,20 +941,20 @@ define(function (require) {
                             isHorizontal ? (x = -dx, y = 0) : (x = 0, y = dy);
                         }
                         this.shapeList[i].style.controlPointList = null;
-                        
+
                         this.zr.modShape(this.shapeList[i]);
                     }
                     else {
                         // 拐点动画
-                        if (aniMap[seriesIndex][2] 
-                            && this.shapeList[i]._dataIndex 
+                        if (aniMap[seriesIndex][2]
+                            && this.shapeList[i]._dataIndex
                                 === series[seriesIndex].data.length - 1
                         ) {
                             // 队头加入删除末尾
                             this.zr.delShape(this.shapeList[i].id);
                             continue;
                         }
-                        else if (!aniMap[seriesIndex][2] 
+                        else if (!aniMap[seriesIndex][2]
                                  && this.shapeList[i]._dataIndex === 0
                         ) {
                             // 队尾加入删除头部
@@ -988,25 +988,25 @@ define(function (require) {
         var y = style.y;
         var width = style.width;
         var height = style.height;
-        
+
         var dy = height / 2;
-        
+
         if (style.symbol.match('empty')) {
             ctx.fillStyle = '#fff';
         }
         style.brushType = 'both';
-        
+
         var symbol = style.symbol.replace('empty', '').toLowerCase();
         if (symbol.match('star')) {
             dy = (symbol.replace('star','') - 0) || 5;
             y -= 1;
             symbol = 'star';
-        } 
+        }
         else if (symbol === 'rectangle' || symbol === 'arrow') {
             x += (width - height) / 2;
             width = height;
         }
-        
+
         var imageLocation = '';
         if (symbol.match('image')) {
             imageLocation = symbol.replace(
@@ -1017,7 +1017,7 @@ define(function (require) {
             width = height = height + 2;
         }
         symbol = IconShape.prototype.iconLibrary[symbol];
-        
+
         if (symbol) {
             var x2 = style.x;
             var y2 = style.y;
@@ -1048,11 +1048,9 @@ define(function (require) {
         }
     }
     IconShape.prototype.iconLibrary['legendLineIcon'] = legendLineIcon;
-    
+
     zrUtil.inherits(Line, ChartBase);
-    
-    // 图表注册
+
     require('../chart').define('line', Line);
-    
-    return Line;
-});
+
+    module.exports =  Line;

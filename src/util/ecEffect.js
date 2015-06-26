@@ -5,20 +5,20 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ecData = require('../util/ecData');
-    
-    var CircleShape = require('zrender/shape/Circle');
-    var ImageShape = require('zrender/shape/Image');
-    var curveTool = require('zrender/tool/curve');
+
+    var CircleShape = require('zrender/src/shape/Circle');
+    var ImageShape = require('zrender/src/shape/Image');
+    var curveTool = require('zrender/src/tool/curve');
     var IconShape = require('../util/shape/Icon');
     var SymbolShape = require('../util/shape/Symbol');
-    var ShapeBundle = require('zrender/shape/ShapeBundle');
-    var Polyline = require('zrender/shape/Polyline');
-    var vec2 = require('zrender/tool/vector');
+    var ShapeBundle = require('zrender/src/shape/ShapeBundle');
+    var Polyline = require('zrender/src/shape/Polyline');
+    var vec2 = require('zrender/src/tool/vector');
 
-    var canvasSupported = require('zrender/tool/env').canvasSupported;
-    
+    var canvasSupported = require('zrender/src/tool/env').canvasSupported;
+
     function point(zr, effectList, shape, zlevel) {
         var effect = shape.effect;
         var color = effect.color || shape.style.strokeColor || shape.style.color;
@@ -56,11 +56,11 @@ define(function (require) {
 
             if (canvasSupported) {  // 提高性能，换成image
                 effectShape.style.image = zr.shapeToImage(
-                    effectShape, 
-                    effectShape.style.width + shadowBlur * 2 + 2, 
+                    effectShape,
+                    effectShape.style.width + shadowBlur * 2 + 2,
                     effectShape.style.height + shadowBlur * 2 + 2
                 ).style.image;
-                
+
                 effectShape = new ImageShape({
                     zlevel : effectShape.zlevel,
                     style : effectShape.style,
@@ -77,14 +77,14 @@ define(function (require) {
                 hoverable : false
             });
         }
-        
+
         ecData.clone(shape, effectShape);
-        
+
         // 改变坐标，不能移到前面
         effectShape.position = shape.position;
         effectList.push(effectShape);
         zr.addShape(effectShape);
-        
+
         var devicePixelRatio = shape.type !== 'image' ? (window.devicePixelRatio || 1) : 1;
         var offset = (effectShape.style.width / devicePixelRatio - shape.style._width) / 2;
         effectShape.style.x = shape.style._x - offset;
@@ -95,24 +95,24 @@ define(function (require) {
         }
 
         var duration = (effect.period + Math.random() * 10) * 100;
-        
+
         zr.modShape(
-            shape.id, 
+            shape.id,
             { invisible : true}
         );
-        
+
         var centerX = effectShape.style.x + (effectShape.style.width) / 2 / devicePixelRatio;
         var centerY = effectShape.style.y + (effectShape.style.height) / 2 / devicePixelRatio;
 
         if (effect.type === 'scale') {
             // 放大效果
             zr.modShape(
-                effectShape.id, 
+                effectShape.id,
                 {
                     scale : [0.1, 0.1, centerX, centerY]
                 }
             );
-            
+
             zr.animate(effectShape.id, '', effect.loop)
                 .when(
                     duration,
@@ -146,9 +146,9 @@ define(function (require) {
                 })
                 .start();
         }
-        
+
     }
-    
+
     function largePoint(zr, effectList, shape, zlevel) {
         var effect = shape.effect;
         var color = effect.color || shape.style.strokeColor || shape.style.color;
@@ -176,14 +176,14 @@ define(function (require) {
             draggable : false,
             hoverable : false
         });
-        
+
         effectList.push(effectShape);
         zr.addShape(effectShape);
         zr.modShape(
-            shape.id, 
+            shape.id,
             { invisible : true}
         );
-        
+
         var duration = Math.round(effect.period * 100);
         var clip1 = {};
         var clip2 = {};
@@ -202,10 +202,10 @@ define(function (require) {
                 .delay(Math.random() * duration * i)
                 //.delay(duration / 15 * (15 - i + 1))
                 .start();
-            
+
         }
     }
-    
+
     function line(zr, effectList, shape, zlevel, isLarge) {
         var effect = shape.effect;
         var shapeStyle = shape.style;
@@ -253,7 +253,7 @@ define(function (require) {
         var effectDone = function () {
             if (! isLarge) {
                 shape.effect.show = false;
-                zr.delShape(effectShape.id);   
+                zr.delShape(effectShape.id);
             }
             effectShape.effectAnimator = null;
         };
@@ -305,7 +305,7 @@ define(function (require) {
                     }
                     else {
                         x = (p1[0] - p0[0]) * t + p0[0];
-                        y = (p1[1] - p0[1]) * t + p0[1];   
+                        y = (p1[1] - p0[1]) * t + p0[1];
                     }
                 }
                 effectShape.style.x = x;
@@ -435,10 +435,9 @@ define(function (require) {
         }
     }
 
-    return {
+    module.exports = {
         point : point,
         largePoint : largePoint,
         line : line,
         largeLine: largeLine
     };
-});

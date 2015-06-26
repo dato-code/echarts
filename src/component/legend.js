@@ -5,17 +5,17 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
-    
+
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var RectangleShape = require('zrender/shape/Rectangle');
-    var SectorShape = require('zrender/shape/Sector');
-    //var BeziercurveShape = require('zrender/shape/Beziercurve');
+    var TextShape = require('zrender/src/shape/Text');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var SectorShape = require('zrender/src/shape/Sector');
+    //var BeziercurveShape = require('zrender/src/shape/Beziercurve');
     var IconShape = require('../util/shape/Icon');
     var CandleShape = require('../util/shape/Candle');
-    
+
     var ecConfig = require('../config');
      // 图例
     ecConfig.legend = {
@@ -47,8 +47,8 @@ define(function (require) {
         // data: [],               // 图例内容（详见legend.data，数组中每一项代表一个item
     };
 
-    var zrUtil = require('zrender/tool/util');
-    var zrArea = require('zrender/tool/area');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrArea = require('zrender/src/tool/area');
 
     /**
      * 构造函数
@@ -61,9 +61,9 @@ define(function (require) {
             console.error('option.legend.data has not been defined.');
             return;
         }
-        
+
         Base.call(this, ecTheme, messageCenter, zr, option, myChart);
-        
+
         var self = this;
         self._legendSelected = function (param) {
             self.__legendSelected(param);
@@ -71,15 +71,15 @@ define(function (require) {
         self._dispatchHoverLink = function(param) {
             return self.__dispatchHoverLink(param);
         };
-        
+
         this._colorIndex = 0;
         this._colorMap = {};
         this._selectedMap = {};
         this._hasDataMap = {};
-        
+
         this.refresh(option);
     }
-    
+
     Legend.prototype = {
         type: ecConfig.COMPONENT_TYPE_LEGEND,
         _buildShape: function () {
@@ -133,7 +133,7 @@ define(function (require) {
                     textStyle
                 );
                 dataFont = this.getFont(dataTextStyle);
-                
+
                 itemName = this._getName(data[i]);
                 formattedName = this._getFormatterName(itemName);
                 if (itemName === '') { // 别帮我代码优化
@@ -150,7 +150,7 @@ define(function (require) {
                     continue;
                 }
                 itemType = data[i].icon || this._getSomethingByName(itemName).type;
-                
+
                 color = this.getColor(itemName);
 
                 if (this.legendOption.orient === 'horizontal') {
@@ -169,7 +169,7 @@ define(function (require) {
                         && (itemHeight
                             // 分行的最后一个不用算itemGap
                             + (i === dataLength - 1 || data[i + 1] === '' ? 0 : itemGap)
-                           ) 
+                           )
                            >= zrHeight - lastY
                     ) {
                         this.legendOption.x === 'right'
@@ -222,7 +222,7 @@ define(function (require) {
 
                 textShape._name = itemName;
                 textShape = new TextShape(textShape);
-                
+
                 if (this.legendOption.selectedMode) {
                     itemShape.onclick = textShape.onclick = this._legendSelected;
                     itemShape.onmouseover =  textShape.onmouseover = this._dispatchHoverLink;
@@ -241,7 +241,7 @@ define(function (require) {
                     lastY += itemHeight + itemGap;
                 }
             }
-        
+
             if (this.legendOption.orient === 'horizontal'
                 && this.legendOption.x === 'center'
                 && lastY != this._itemGroupLocation.y
@@ -250,7 +250,7 @@ define(function (require) {
                 this._mLineOptimize();
             }
         },
-        
+
         _getName: function(data) {
             return typeof data.name != 'undefined' ? data.name : data;
         },
@@ -274,7 +274,7 @@ define(function (require) {
             var itemName = this._getName(data);
             return this._getFormatterName(itemName);
         },
-        
+
         // 多行橫排居中优化
         _mLineOptimize: function () {
             var lineOffsetArray = []; // 每行宽度
@@ -283,7 +283,7 @@ define(function (require) {
                 if (this.shapeList[i].style.x === lastX) {
                     lineOffsetArray.push(
                         (
-                            this._itemGroupLocation.width 
+                            this._itemGroupLocation.width
                             - (
                                 this.shapeList[i - 1].style.x
                                 + zrArea.getTextWidth(
@@ -298,7 +298,7 @@ define(function (require) {
                 else if (i === l - 1) {
                     lineOffsetArray.push(
                         (
-                            this._itemGroupLocation.width 
+                            this._itemGroupLocation.width
                             - (
                                 this.shapeList[i].style.x
                                 + zrArea.getTextWidth(
@@ -361,7 +361,7 @@ define(function (require) {
             var padding = this.reformCssArray(this.legendOption.padding);
             var zrWidth = this.zr.getWidth() - padding[1] - padding[3];
             var zrHeight = this.zr.getHeight() - padding[0] - padding[2];
-            
+
             var temp = 0; // 宽高计算，用于多行判断
             var maxWidth = 0; // 垂直布局有用
             if (this.legendOption.orient === 'horizontal') {
@@ -377,7 +377,7 @@ define(function (require) {
                     }
                     var tempTextWidth = zrArea.getTextWidth(
                         this._getFormatterNameFromData(data[i]),
-                        data[i].textStyle 
+                        data[i].textStyle
                         ? this.getFont(zrUtil.merge(
                             data[i].textStyle || {},
                             textStyle
@@ -404,7 +404,7 @@ define(function (require) {
                         maxWidth,
                         zrArea.getTextWidth(
                             this._getFormatterNameFromData(data[i]),
-                            data[i].textStyle 
+                            data[i].textStyle
                             ? this.getFont(zrUtil.merge(
                                   data[i].textStyle || {},
                                   textStyle
@@ -458,7 +458,7 @@ define(function (require) {
                     x = this.parsePercent(this.legendOption.x, zrWidth);
                     break;
             }
-            
+
             var y;
             switch (this.legendOption.y) {
                 case 'top' :
@@ -507,7 +507,7 @@ define(function (require) {
                 }
 
                 if (
-                    series[i].type === ecConfig.CHART_TYPE_PIE 
+                    series[i].type === ecConfig.CHART_TYPE_PIE
                     || series[i].type === ecConfig.CHART_TYPE_RADAR
                     || series[i].type === ecConfig.CHART_TYPE_CHORD
                     || series[i].type === ecConfig.CHART_TYPE_FORCE
@@ -537,7 +537,7 @@ define(function (require) {
                 dataIndex: -1
             };
         },
-        
+
         _getItemShapeByType: function (x, y, width, height, color, itemType, defaultColor) {
             var highlightColor = color === '#ccc' ? defaultColor : color;
             var itemShape = {
@@ -561,7 +561,7 @@ define(function (require) {
                 hoverable: this.legendOption.selectedMode,
                 clickable: this.legendOption.selectedMode
             };
-            
+
             var imageLocation;
             if (itemType.match('image')) {
                 var imageLocation = itemType.replace(
@@ -589,7 +589,7 @@ define(function (require) {
                     itemShape.style.color = this.deepQuery(
                         [this.ecTheme, ecConfig], 'k.itemStyle.normal.color'
                     ) || '#fff';
-                    itemShape.style.strokeColor = color != '#ccc' 
+                    itemShape.style.strokeColor = color != '#ccc'
                         ? (
                             this.deepQuery(
                                 [this.ecTheme, ecConfig], 'k.itemStyle.normal.lineStyle.color'
@@ -626,9 +626,9 @@ define(function (require) {
                 this.myChart
             );
         },
-        
+
         /**
-         * 产生hover link事件 
+         * 产生hover link事件
          */
         __dispatchHoverLink : function(param) {
             this.messageCenter.dispatch(
@@ -641,7 +641,7 @@ define(function (require) {
             );
             return;
         },
-        
+
         /**
          * 刷新
          */
@@ -650,7 +650,7 @@ define(function (require) {
                 this.option = newOption || this.option;
                 this.option.legend = this.reformOption(this.option.legend);
                 this.legendOption = this.option.legend;
-                
+
                 var data = this.legendOption.data || [];
                 var itemName;
                 var something;
@@ -671,7 +671,7 @@ define(function (require) {
                     something = this._getSomethingByName(itemName);
                     if (!something.series) {
                         this._hasDataMap[itemName] = false;
-                    } 
+                    }
                     else {
                         this._hasDataMap[itemName] = true;
                         if (something.data
@@ -684,7 +684,7 @@ define(function (require) {
                         else {
                             queryTarget = [something.series];
                         }
-                        
+
                         color = this.getItemStyleColor(
                             this.deepQuery(queryTarget, 'itemStyle.normal.color'),
                             something.seriesIndex,
@@ -694,16 +694,16 @@ define(function (require) {
                         if (color && something.type != ecConfig.CHART_TYPE_K) {
                             this.setColor(itemName, color);
                         }
-                        this._selectedMap[itemName] = 
+                        this._selectedMap[itemName] =
                             this._selectedMap[itemName] != null
-                            ? this._selectedMap[itemName] : true; 
+                            ? this._selectedMap[itemName] : true;
                     }
                 }
             }
             this.clear();
             this._buildShape();
         },
-        
+
         getRelatedAmount: function(name) {
             var amount = 0;
             var series = this.option.series;
@@ -715,7 +715,7 @@ define(function (require) {
                 }
 
                 if (
-                    series[i].type === ecConfig.CHART_TYPE_PIE 
+                    series[i].type === ecConfig.CHART_TYPE_PIE
                     || series[i].type === ecConfig.CHART_TYPE_RADAR
                     || series[i].type === ecConfig.CHART_TYPE_CHORD
                     || series[i].type === ecConfig.CHART_TYPE_FORCE
@@ -744,7 +744,7 @@ define(function (require) {
             }
             return this._colorMap[legendName];
         },
-        
+
         hasColor: function (legendName) {
             return this._colorMap[legendName] ? this._colorMap[legendName] : false;
         },
@@ -771,7 +771,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
          * 特殊图形元素回调设置
          * @param {Object} name
@@ -789,7 +789,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
          * 特殊图形元素回调设置
          * @param {Object} name
@@ -818,11 +818,11 @@ define(function (require) {
                 return true;
             }
         },
-        
+
         getSelectedMap: function () {
             return this._selectedMap;
         },
-        
+
         setSelected: function(itemName, selectStatus) {
             if (this.legendOption.selectedMode === 'single') {
                 for (var k in this._selectedMap) {
@@ -840,7 +840,7 @@ define(function (require) {
                 this.myChart
             );
         },
-        
+
         /**
          * 图例选择
          */
@@ -856,14 +856,14 @@ define(function (require) {
             return;
         }
     };
-    
+
     var legendIcon = {
         line: function (ctx, style) {
             var dy = style.height / 2;
             ctx.moveTo(style.x,     style.y + dy);
             ctx.lineTo(style.x + style.width,style.y + dy);
         },
-        
+
         pie: function (ctx, style) {
             var x = style.x;
             var y = style.y;
@@ -878,7 +878,7 @@ define(function (require) {
                 endAngle: 135
             });
         },
-        
+
         eventRiver: function (ctx, style) {
             var x = style.x;
             var y = style.y;
@@ -894,7 +894,7 @@ define(function (require) {
             );
             ctx.lineTo(x, y + height);
         },
-        
+
         k: function (ctx, style) {
             var x = style.x;
             var y = style.y;
@@ -906,14 +906,14 @@ define(function (require) {
                 width: width - 6
             });
         },
-        
+
         bar: function (ctx, style) {
             var x = style.x;
             var y = style.y +1;
             var width = style.width;
             var height = style.height - 2;
             var r = 3;
-            
+
             ctx.moveTo(x + r, y);
             ctx.lineTo(x + width - r, y);
             ctx.quadraticCurveTo(
@@ -930,11 +930,11 @@ define(function (require) {
             ctx.lineTo(x, y + r);
             ctx.quadraticCurveTo(x, y, x + r, y);
         },
-        
+
         force: function (ctx, style) {
             IconShape.prototype.iconLibrary.circle(ctx, style);
         },
-        
+
         radar: function (ctx, style) {
             var n = 6;
             var x = style.x + style.width / 2;
@@ -945,7 +945,7 @@ define(function (require) {
             var deg = -Math.PI / 2;
             var xStart = x + r * Math.cos(deg);
             var yStart = y + r * Math.sin(deg);
-            
+
             ctx.moveTo(xStart, yStart);
             deg += dStep;
             for (var i = 0, end = n - 1; i < end; i ++) {
@@ -957,16 +957,13 @@ define(function (require) {
     };
     legendIcon.chord = legendIcon.pie;
     legendIcon.map = legendIcon.bar;
-    
+
     for (var k in legendIcon) {
         IconShape.prototype.iconLibrary['legendicon' + k] = legendIcon[k];
     }
-    
+
     zrUtil.inherits(Legend, Base);
-    
+
     require('../component').define('legend', Legend);
-    
-    return Legend;
-});
 
-
+    module.exports = Legend;

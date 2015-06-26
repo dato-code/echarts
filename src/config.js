@@ -5,7 +5,6 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function() {
     // 请原谅我这样写，这显然可以直接返回个对象，但那样的话outline就显示不出来了~~
     var config = {
         // 图表类型
@@ -47,7 +46,7 @@ define(function() {
 
         // 全图默认背景
         backgroundColor: 'rgba(0,0,0,0)',
-        
+
         // 默认色板
         color: ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
                 '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
@@ -74,7 +73,7 @@ define(function() {
             itemStyle: {
                 normal: {
                     // color: 各异，
-                    // borderColor: 各异,        // 标注边线颜色，优先于color 
+                    // borderColor: 各异,        // 标注边线颜色，优先于color
                     borderWidth: 2,             // 标注边线线宽，单位px，默认为1
                     label: {
                         show: true,
@@ -96,7 +95,7 @@ define(function() {
                 }
             }
         },
-        
+
         markLine: {
             clickable: true,
             // 标线起始和结束的symbol介绍类型，如果都一样，可以直接传string
@@ -126,7 +125,7 @@ define(function() {
             itemStyle: {
                 normal: {
                     // color: 各异,               // 标线主色，线色，symbol主色
-                    // borderColor: 随color,     // 标线symbol边框颜色，优先于color 
+                    // borderColor: 随color,     // 标线symbol边框颜色，优先于color
                     borderWidth: 1.5,           // 标线symbol边框线宽，单位px，默认为2
                     label: {
                         show: true,
@@ -227,5 +226,4 @@ define(function() {
         animationEasing: 'ExponentialOut'    //BounceOut
     };
 
-    return config;
-});
+    module.exports = config;

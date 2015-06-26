@@ -78,7 +78,7 @@ define(function __echartsForceLayoutWorker(require) {
         };
     }
     else {
-        vec2 = require('zrender/tool/vector');
+        vec2 = require('zrender/src/tool/vector');
     }
     var ArrayCtor = typeof(Float32Array) == 'undefined' ? Array : Float32Array;
 
@@ -185,7 +185,7 @@ define(function __echartsForceLayoutWorker(require) {
             var cy = (bbox[1] + bbox[3]) / 2;
             var w = (bbox[2] - bbox[0]) / 2;
             var h = (bbox[3] - bbox[1]) / 2;
-            
+
             var xi = node.position[0] >= cx ? 1 : 0;
             var yi = node.position[1] >= cy ? 1 : 0;
 
@@ -502,7 +502,7 @@ define(function __echartsForceLayoutWorker(require) {
     ForceLayout.prototype.applyRegionToNodeRepulsion = (function() {
         var v = vec2.create();
         return function applyRegionToNodeRepulsion(region, node) {
-            if (region.node) { // Region is a leaf 
+            if (region.node) { // Region is a leaf
                 this.applyNodeToNodeRepulsion(region.node, node, true);
             }
             else {
@@ -535,7 +535,7 @@ define(function __echartsForceLayoutWorker(require) {
             if (na.mass === 0 && nb.mass === 0) {
                 return;
             }
-            
+
             vec2.sub(v, na.position, nb.position);
             var d2 = v[0] * v[0] + v[1] * v[1];
 
@@ -629,7 +629,7 @@ define(function __echartsForceLayoutWorker(require) {
                 v[0] *= this.height / this.width;
             }
             var d = vec2.len(v) / 100;
-            
+
             if (this.strongGravity) {
                 vec2.scaleAndAdd(node.force, node.force, v, d * this.gravity * node.mass);
             }
@@ -712,7 +712,7 @@ define(function __echartsForceLayoutWorker(require) {
     /* jshint ignore:start */
     if (inWorker) {
         var forceLayout = null;
-        
+
         self.onmessage = function(e) {
             // Position read back
             if (e.data instanceof ArrayBuffer) {
@@ -777,5 +777,4 @@ define(function __echartsForceLayoutWorker(require) {
     }
     /* jshint ignore:end */
 
-    return ForceLayout;
-});
+    module.exports = ForceLayout;

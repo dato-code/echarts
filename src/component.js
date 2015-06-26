@@ -5,7 +5,6 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (/*require*/) {     // component
     var self = {};
 
     var _componentLibrary = {};     // echart组件库
@@ -27,6 +26,5 @@ define(function (/*require*/) {     // component
     self.get = function (name) {
         return _componentLibrary[name];
     };
-    
-    return self;
-});
+
+    module.exports = self;

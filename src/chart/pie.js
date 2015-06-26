@@ -5,15 +5,15 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var RingShape = require('zrender/shape/Ring');
-    var CircleShape = require('zrender/shape/Circle');
-    var SectorShape = require('zrender/shape/Sector');
-    var PolylineShape = require('zrender/shape/Polyline');
+    var TextShape = require('zrender/src/shape/Text');
+    var RingShape = require('zrender/src/shape/Ring');
+    var CircleShape = require('zrender/src/shape/Circle');
+    var SectorShape = require('zrender/src/shape/Sector');
+    var PolylineShape = require('zrender/src/shape/Polyline');
 
     var ecConfig = require('../config');
     // 饼图默认参数
@@ -77,9 +77,9 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrMath = require('zrender/tool/math');
-    var zrColor = require('zrender/tool/color');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrMath = require('zrender/src/tool/math');
+    var zrColor = require('zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -1135,8 +1135,6 @@ define(function (require) {
 
     zrUtil.inherits(Pie, ChartBase);
 
-    // 图表注册
     require('../chart').define('pie', Pie);
 
-    return Pie;
-});
+    module.exports =  Pie;

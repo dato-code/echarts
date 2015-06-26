@@ -3,26 +3,26 @@
  * @desc
  * @author  clmtulip(车丽美, clmtulip@gmail.com) liyong(liyong1239@163.com)
  */
-define(function (require) {
+
     var ChartBase = require('./base');
 
-    var TextShape = require('zrender/shape/Text');
+    var TextShape = require('zrender/src/shape/Text');
     var CloudLayout = require('../layout/WordCloud');
 
     require('../component/grid');
     require('../component/dataRange');
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
 
     ecConfig.wordCloud = {
         zlevel: 0,
         z: 2,
         clickable: true,
-        
+
         center: ['50%', '50%'],
-        
+
         size: ['40%', '40%'],
 
         // 字体旋转角度, 随机从指定数组中取
@@ -53,7 +53,7 @@ define(function (require) {
     function Cloud(ecTheme, messageCenter, zr, option, myChart) {
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
-        this.refresh(option); 
+        this.refresh(option);
     }
 
     Cloud.prototype = {
@@ -99,7 +99,7 @@ define(function (require) {
         },
 
         _initSerie: function (serie) {
-            
+
             var textStyle = serie.itemStyle.normal.textStyle;
 
             var size = [
@@ -245,8 +245,7 @@ define(function (require) {
 
     zrUtil.inherits(Cloud, ChartBase);
 
-    // 图表注册
     require('../chart').define('wordCloud', Cloud);
 
-    return Cloud;
-});
+
+    module.exports = Cloud;

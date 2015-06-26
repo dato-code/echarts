@@ -5,12 +5,12 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
     var ecConfig = require('../config');
-    var zrUtil = require('zrender/tool/util');
-    
+    var zrUtil = require('zrender/src/tool/util');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -22,7 +22,7 @@ define(function (require) {
         Base.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.dom = myChart.dom;
-        
+
         // dataview dom & css
         this._tDom = document.createElement('div');
         this._textArea = document.createElement('textArea');
@@ -33,7 +33,7 @@ define(function (require) {
         // 缓存一些高宽数据
         this._zrHeight = zr.getHeight();
         this._zrWidth = zr.getWidth();
-    
+
         this._tDom.className = 'echarts-dataview';
         this.hide();
         this.dom.firstChild.appendChild(this._tDom);
@@ -58,7 +58,7 @@ define(function (require) {
             this._tDom.attachEvent('onmouseup', this._stop);
         }
     }
-    
+
     DataView.prototype = {
         type : ecConfig.COMPONENT_TYPE_DATAVIEW,
         _lang : ['Data View', 'close', 'refresh'],
@@ -215,7 +215,7 @@ define(function (require) {
                     else {
                         itemName = '';
                     }
-                    
+
                     if (series[i].type == ecConfig.CHART_TYPE_SCATTER) {
                         data = this.getDataFromOption(data).join(', ');
                     }
@@ -252,7 +252,7 @@ define(function (require) {
             }
 
             this.hide();
-            
+
             var self = this;
             setTimeout(
                 function (){
@@ -447,10 +447,9 @@ define(function (require) {
             this._tDom = null;
         }
     };
-    
+
     zrUtil.inherits(DataView, Base);
-    
+
     require('../component').define('dataView', DataView);
-    
-    return DataView;
-});
+
+    module.exports = DataView;

@@ -27,9 +27,9 @@
        // 事件属性，详见shape.Base
    }
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
-    var zrUtil = require('zrender/tool/util');
+
+    var Base = require('zrender/src/shape/Base');
+    var zrUtil = require('zrender/src/tool/util');
 
     function GaugePointer(options) {
         Base.call(this, options);
@@ -96,5 +96,4 @@ define(function (require) {
 
     zrUtil.inherits(GaugePointer, Base);
 
-    return GaugePointer;
-});
+    module.exports = GaugePointer;

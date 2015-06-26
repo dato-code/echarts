@@ -2,7 +2,7 @@
  * @file    主要功能
  * @author  clmtulip(车丽美, clmtulip@gmail.com) liyong(liyong1239@163.com)
  */
-define(function (require) {
+
     function ZeroArray(option) {
         this.defaultOption = {type: 'RECT'};
         this._init(option);
@@ -119,5 +119,4 @@ define(function (require) {
         }
     };
 
-    return ZeroArray;
-});
+    module.exports = ZeroArray;

@@ -1,4 +1,4 @@
-define(function() {
+
 var theme = {
     backgroundColor: '#F2F2E6',
     // 默认色板

@@ -44,11 +44,11 @@
        }
    }
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
-    var smoothBezier = require('zrender/shape/util/smoothBezier');
-    var zrUtil = require('zrender/tool/util');
-    
+
+    var Base = require('zrender/src/shape/Base');
+    var smoothBezier = require('zrender/src/shape/util/smoothBezier');
+    var zrUtil = require('zrender/src/tool/util');
+
     function HalfSmoothPolygon(options) {
         Base.call(this, options);
     }
@@ -87,9 +87,9 @@ define(function (require) {
                 ctx.lineTo(pointList[l - 2][0], pointList[l - 2][1]);
                 ctx.lineTo(pointList[l - 1][0], pointList[l - 1][1]);
                 ctx.lineTo(pointList[0][0], pointList[0][1]);
-            } 
+            }
             else {
-                require('zrender/shape/Polygon').prototype.buildPath(
+                require('zrender/src/shape/Polygon').prototype.buildPath(
                     ctx, style
                 );
             }
@@ -98,6 +98,5 @@ define(function (require) {
     };
 
     zrUtil.inherits(HalfSmoothPolygon, Base);
-    
-    return HalfSmoothPolygon;
-});
+
+    module.exports = HalfSmoothPolygon;

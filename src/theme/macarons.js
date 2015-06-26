@@ -1,5 +1,3 @@
-define(function() {
-
 var theme = {
     // 默认色板
     color: [
@@ -16,7 +14,7 @@ var theme = {
             color: '#008acd'          // 主标题文字颜色
         }
     },
-    
+
     // 值域
     dataRange: {
         itemWidth: 15,
@@ -141,7 +139,7 @@ var theme = {
         symbol: 'emptyCircle',  // 拐点图形类型
         symbolSize: 3           // 拐点图形大小
     },
-    
+
     // K线图默认参数
     k: {
         itemStyle: {
@@ -155,7 +153,7 @@ var theme = {
             }
         }
     },
-    
+
     // 散点图默认参数
     scatter: {
         symbol: 'circle',    // 图形类型
@@ -189,7 +187,7 @@ var theme = {
             }
         }
     },
-    
+
     force : {
         itemStyle: {
             normal: {
@@ -226,7 +224,7 @@ var theme = {
     gauge : {
         axisLine: {            // 坐标轴线
             lineStyle: {       // 属性lineStyle控制线条样式
-                color: [[0.2, '#2ec7c9'],[0.8, '#5ab1ef'],[1, '#d87a80']], 
+                color: [[0.2, '#2ec7c9'],[0.8, '#5ab1ef'],[1, '#d87a80']],
                 width: 10
             }
         },
@@ -247,11 +245,10 @@ var theme = {
             width : 5
         }
     },
-    
+
     textStyle: {
         fontFamily: '微软雅黑, Arial, Verdana, sans-serif'
     }
 };
 
-    return theme;
-});
+    module.exports = theme;

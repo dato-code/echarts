@@ -6,7 +6,7 @@
  * @module echarts/data/quickSelect
  * @author Yi Shen(https://github.com/pissang)
  */
-define(function (require) {
+
 
     function defaultCompareFunc(a, b) {
         return a - b;
@@ -74,6 +74,5 @@ define(function (require) {
         }
         return select(list, left, right, nth, compareFunc);
     }
-    
-    return quickSelect;
-});
+
+    module.exports = quickSelect;

@@ -5,12 +5,12 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/shape/Rectangle');
-    var PolygonShape = require('zrender/shape/Polygon');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var PolygonShape = require('zrender/src/shape/Polygon');
     var IconShape = require('../util/shape/Icon');
 
     var ecConfig = require('../config');
@@ -42,7 +42,7 @@ define(function (require) {
     };
 
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/tool/util');
+    var zrUtil = require('zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -537,7 +537,7 @@ define(function (require) {
                 brushType: 'fill',
                 color : 'rgba(0,0,0,0)'
                 /*
-                color : require('zrender/tool/color').alpha(
+                color : require('zrender/src/tool/color').alpha(
                             this._fillerShae.style.color, 0
                         )
                 */
@@ -1240,5 +1240,4 @@ define(function (require) {
 
     require('../component').define('dataZoom', DataZoom);
 
-    return DataZoom;
-});
+    module.exports = DataZoom;

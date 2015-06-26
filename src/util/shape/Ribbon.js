@@ -31,14 +31,14 @@
  * @property {string} [textBaseline] 默认根据textPosition自动设置，附加文本垂直对齐。
  *                                可以是top, bottom, middle, alphabetic, hanging, ideographic
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
-    var PathProxy = require('zrender/shape/util/PathProxy');
-    var zrUtil = require('zrender/tool/util');
-    var area = require('zrender/tool/area');
+
+    var Base = require('zrender/src/shape/Base');
+    var PathProxy = require('zrender/src/shape/util/PathProxy');
+    var zrUtil = require('zrender/src/tool/util');
+    var area = require('zrender/src/tool/area');
 
     // var _ctx = zrUtil.getContext();
-    
+
     function RibbonShape(options) {
         Base.call(this, options);
 
@@ -46,9 +46,9 @@ define(function (require) {
     }
 
     RibbonShape.prototype = {
-        
+
         type : 'ribbon',
-        
+
         buildPath : function (ctx, style) {
 
             var clockWise = style.clockWise || false;
@@ -75,9 +75,9 @@ define(function (require) {
             path.moveTo(sx0, sy0);
             path.arc(cx, cy, style.r, s0, s1, !clockWise);
             path.bezierCurveTo(
-                (cx - sx1) * 0.70 + sx1, 
+                (cx - sx1) * 0.70 + sx1,
                 (cy - sy1) * 0.70 + sy1,
-                (cx - tx0) * 0.70 + tx0, 
+                (cx - tx0) * 0.70 + tx0,
                 (cy - ty0) * 0.70 + ty0,
                 tx0, ty0
             );
@@ -91,12 +91,12 @@ define(function (require) {
             path.bezierCurveTo(
                 (cx - tx1) * 0.70 + tx1,
                 (cy - ty1) * 0.70 + ty1,
-                (cx - sx0) * 0.70 + sx0, 
+                (cx - sx0) * 0.70 + sx0,
                 (cy - sy0) * 0.70 + sy0,
                 sx0, sy0
             );
         },
-        
+
         getRect : function (style) {
             if (style.__rect) {
                 return style.__rect;
@@ -122,6 +122,5 @@ define(function (require) {
     };
 
     zrUtil.inherits(RibbonShape, Base);
-    
-    return RibbonShape;
-});
+
+    module.exports = RibbonShape;

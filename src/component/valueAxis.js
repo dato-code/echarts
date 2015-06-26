@@ -5,13 +5,13 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var LineShape = require('zrender/shape/Line');
-    var RectangleShape = require('zrender/shape/Rectangle');
+    var TextShape = require('zrender/src/shape/Text');
+    var LineShape = require('zrender/src/shape/Line');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
 
     var ecConfig = require('../config');
     // 数值型坐标轴默认参数
@@ -73,7 +73,7 @@ define(function (require) {
     };
 
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/tool/util');
+    var zrUtil = require('zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -941,8 +941,6 @@ define(function (require) {
 
     zrUtil.inherits(ValueAxis, Base);
 
-    require('../component').define('valueAxis', ValueAxis);
+    require('../component').define('valueAxis', valueAxis);
 
-    return ValueAxis;
-});
-
+    module.exports = ValueAxis;

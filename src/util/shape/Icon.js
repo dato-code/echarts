@@ -31,9 +31,9 @@
        // 事件属性，详见shape.Base
    }
  */
-define(function (require) {
-    var zrUtil = require('zrender/tool/util');
-    
+
+    var zrUtil = require('zrender/src/tool/util');
+
     function _iconMark(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -109,7 +109,7 @@ define(function (require) {
 
         ctx.moveTo(x,               y + 3 * dy);
         ctx.lineTo(x + 6 * dx,      y + 3 * dy);
-        
+
         ctx.moveTo(x + 3 * dx,      y);
         ctx.lineTo(x + 3 * dx,      y + 6 * dy);
 
@@ -119,7 +119,7 @@ define(function (require) {
         ctx.lineTo(x + style.width, y + 3 * dy);
         ctx.lineTo(x + 8 * dx,      y + 3 * dy);
     }
-    
+
     function _iconDataZoomReset(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -129,27 +129,27 @@ define(function (require) {
         ctx.moveTo(x + 6 * dx,      y);
         ctx.lineTo(x + 2 * dx,      y + 3 * dy);
         ctx.lineTo(x + 6 * dx,      y + 6 * dy);
-        
+
         ctx.moveTo(x + 2 * dx,      y + 3 * dy);
         ctx.lineTo(x + 14 * dx,     y + 3 * dy);
         ctx.lineTo(x + 14 * dx,     y + 11 * dy);
-        
+
         ctx.moveTo(x + 2 * dx,      y + 5 * dy);
         ctx.lineTo(x + 2 * dx,      y + 13 * dy);
         ctx.lineTo(x + 14 * dx,     y + 13 * dy);
-        
+
         ctx.moveTo(x + 10 * dx,     y + 10 * dy);
         ctx.lineTo(x + 14 * dx,     y + 13 * dy);
         ctx.lineTo(x + 10 * dx,     y + style.height);
     }
-    
+
     function _iconRestore(ctx, style) {
         var x = style.x;
         var y = style.y;
         var dx = style.width / 16;
         var dy = style.height / 16;
         var r = style.width / 2;
-        
+
         ctx.lineWidth = 1.5;
 
         ctx.arc(x + r, y + r, r - dx, 0, Math.PI * 2 / 3);
@@ -203,7 +203,7 @@ define(function (require) {
         ctx.lineTo(x + 12 * dx,       y + 9 * dy);
         ctx.lineTo(x + 12 * dx,       y + 14 * dy);
     }
-    
+
     function _iconPieChart(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -214,14 +214,14 @@ define(function (require) {
         ctx.moveTo(x + r + 3, y + r - 3);
         ctx.arc(x + r + 3, y + r - 3, r - 1, 0, -Math.PI / 2, true);
         ctx.lineTo(x + r + 3, y + r - 3);
-      
+
         ctx.moveTo(x + r, y);
         ctx.lineTo(x + r, y + r);
         ctx.arc(x + r, y + r, r, -Math.PI / 2, Math.PI * 2, true);
         ctx.lineTo(x + r, y + r);
         ctx.lineWidth = 1.5;
     }
-    
+
     function _iconFunnelChart(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -232,23 +232,23 @@ define(function (require) {
         ctx.lineTo(x + 15 * dx,     y + 2 * dy);
         ctx.lineTo(x + 14 * dx,     y + 3 * dy);
         ctx.lineTo(x + 2 * dx,      y + 3 * dy);
-        
+
         ctx.moveTo(x + 3 * dx,      y + 6 * dy);
         ctx.lineTo(x + 13 * dx,     y + 6 * dy);
         ctx.lineTo(x + 12 * dx,     y + 7 * dy);
         ctx.lineTo(x + 4 * dx,      y + 7 * dy);
-        
+
         ctx.moveTo(x + 5 * dx,      y + 10 * dy);
         ctx.lineTo(x + 11 * dx,      y + 10 * dy);
         ctx.lineTo(x + 10 * dx,      y + 11 * dy);
         ctx.lineTo(x + 6 * dx,      y + 11 * dy);
-        
+
         ctx.moveTo(x + 7 * dx,      y + 14 * dy);
         ctx.lineTo(x + 9 * dx,      y + 14 * dy);
         ctx.lineTo(x + 8 * dx,      y + 15 * dy);
         ctx.lineTo(x + 7 * dx,      y + 15 * dy);
     }
-    
+
     function _iconForceChart(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -260,22 +260,22 @@ define(function (require) {
 
         ctx.moveTo(x + dx + r, y + dy + r);
         ctx.arc(x + dx, y + dy, r, Math.PI / 4, Math.PI * 3);
-        
+
         ctx.lineTo(x + 7 * dx - r, y + 6 * dy - r);
         ctx.arc(x + 7 * dx, y + 6 * dy, r, Math.PI / 4 * 5, Math.PI * 4);
         ctx.arc(x + 7 * dx, y + 6 * dy, r / 2, Math.PI / 4 * 5, Math.PI * 4);
-        
+
         ctx.moveTo(x + 7 * dx - r / 2, y + 6 * dy + r);
         ctx.lineTo(x + dx + r, y + 14 * dy - r);
         ctx.arc(x + dx, y + 14 * dy, r, -Math.PI / 4, Math.PI * 2);
-        
+
         ctx.moveTo(x + 7 * dx + r / 2, y + 6 * dy);
         ctx.lineTo(x + 14 * dx - r, y + 10 * dy - r / 2);
         ctx.moveTo(x + 16 * dx, y + 10 * dy);
         ctx.arc(x + 14 * dx, y + 10 * dy, r, 0, Math.PI * 3);
         ctx.lineWidth = 1.5;
     }
-    
+
     function _iconChordChart(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -285,7 +285,7 @@ define(function (require) {
 
         ctx.moveTo(x + width, y + height / 2);
         ctx.arc(x + r, y + r, r, 0, Math.PI * 2);
-        
+
         ctx.arc(x + r, y, r, Math.PI / 4, Math.PI / 5 * 4);
         ctx.arc(x, y + r, r, -Math.PI / 3, Math.PI / 3);
         ctx.arc(x + width, y + height, r, Math.PI, Math.PI / 2 * 3);
@@ -304,7 +304,7 @@ define(function (require) {
             ctx.rect(x, y + dy * len + delta, width, 2);
         }
     }
-    
+
     function _iconTiledChart(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -317,7 +317,7 @@ define(function (require) {
             ctx.rect(x + dx * len + delta, y, 2, height);
         }
     }
-    
+
     function _iconDataView(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -341,7 +341,7 @@ define(function (require) {
         ctx.moveTo(x + 3 * dx, y + 12 * dx);
         ctx.lineTo(x + 9 * dx, y + 12 * dx);
     }
-    
+
     function _iconSave(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -358,14 +358,14 @@ define(function (require) {
         ctx.lineTo(x + 4 * dx,    y + 8 * dy);
         ctx.lineTo(x + 12 * dx,   y + 8 * dy);
         ctx.lineTo(x + 12 * dx,   y);
-        
+
         ctx.moveTo(x + 6 * dx,    y + 11 * dy);
         ctx.lineTo(x + 6 * dx,    y + 13 * dy);
         ctx.lineTo(x + 10 * dx,   y + 13 * dy);
         ctx.lineTo(x + 10 * dx,   y + 11 * dy);
         ctx.lineTo(x + 6 * dx,    y + 11 * dy);
     }
-    
+
     function _iconCross(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -373,34 +373,34 @@ define(function (require) {
         var height = style.height;
         ctx.moveTo(x, y + height / 2);
         ctx.lineTo(x + width, y + height / 2);
-        
+
         ctx.moveTo(x + width / 2, y);
         ctx.lineTo(x + width / 2, y + height);
     }
-    
+
     function _iconCircle(ctx, style) {
         var width = style.width / 2;
         var height = style.height / 2;
         var r = Math.min(width, height);
         ctx.moveTo(
-            style.x + width + r, 
+            style.x + width + r,
             style.y + height
         );
         ctx.arc(
-            style.x + width, 
-            style.y + height, 
+            style.x + width,
+            style.y + height,
             r,
-            0, 
+            0,
             Math.PI * 2
         );
         ctx.closePath();
     }
-    
+
     function _iconRectangle(ctx, style) {
         ctx.rect(style.x, style.y, style.width, style.height);
         ctx.closePath();
     }
-    
+
     function _iconTriangle(ctx, style) {
         var width = style.width / 2;
         var height = style.height / 2;
@@ -413,7 +413,7 @@ define(function (require) {
         ctx.lineTo(x, y - symbolSize);
         ctx.closePath();
     }
-    
+
     function _iconDiamond(ctx, style) {
         var width = style.width / 2;
         var height = style.height / 2;
@@ -427,7 +427,7 @@ define(function (require) {
         ctx.lineTo(x, y - symbolSize);
         ctx.closePath();
     }
-    
+
     function _iconArrow(ctx, style) {
         var x = style.x;
         var y = style.y;
@@ -439,9 +439,9 @@ define(function (require) {
         ctx.lineTo(x + 8 * dx,  y);
         ctx.closePath();
     }
-    
+
     function _iconStar(ctx, style) {
-        var StarShape = require('zrender/shape/Star');
+        var StarShape = require('zrender/src/shape/Star');
         var width = style.width / 2;
         var height = style.height / 2;
         StarShape.prototype.buildPath(ctx, {
@@ -451,9 +451,9 @@ define(function (require) {
             n : style.n || 5
         });
     }
-    
+
     function _iconHeart(ctx, style) {
-        var HeartShape = require('zrender/shape/Heart');
+        var HeartShape = require('zrender/src/shape/Heart');
         HeartShape.prototype.buildPath(ctx, {
             x : style.x + style.width / 2,
             y : style.y + style.height * 0.2,
@@ -461,9 +461,9 @@ define(function (require) {
             b : style.height * 0.8
         });
     }
-    
+
     function _iconDroplet(ctx, style) {
-        var DropletShape = require('zrender/shape/Droplet');
+        var DropletShape = require('zrender/src/shape/Droplet');
         DropletShape.prototype.buildPath(ctx, {
             x : style.x + style.width * 0.5,
             y : style.y + style.height * 0.5,
@@ -471,7 +471,7 @@ define(function (require) {
             b : style.height * 0.8
         });
     }
-    
+
     function _iconPin(ctx, style) {
         var x = style.x;
         var y = style.y - style.height / 2 * 1.5;
@@ -479,18 +479,18 @@ define(function (require) {
         var height = style.height / 2;
         var r = Math.min(width, height);
         ctx.arc(
-            x + width, 
-            y + height, 
+            x + width,
+            y + height,
             r,
-            Math.PI / 5 * 4, 
+            Math.PI / 5 * 4,
             Math.PI / 5
         );
         ctx.lineTo(x + width, y + height + r * 1.5);
         ctx.closePath();
     }
-    
+
     function _iconImage(ctx, style, refreshNextFrame) {
-        var ImageShape = require('zrender/shape/Image');
+        var ImageShape = require('zrender/src/shape/Image');
         this._imageShape = this._imageShape || new ImageShape({
             style: {}
         });
@@ -499,9 +499,9 @@ define(function (require) {
         }
         this._imageShape.brush(ctx, false, refreshNextFrame);
     }
-    
-    var Base = require('zrender/shape/Base');
-    
+
+    var Base = require('zrender/src/shape/Base');
+
     function Icon(options) {
         Base.call(this, options);
     }
@@ -525,7 +525,7 @@ define(function (require) {
             tiledChart : _iconTiledChart,
             dataView : _iconDataView,
             saveAsImage : _iconSave,
-            
+
             cross : _iconCross,
             circle : _iconCircle,
             rectangle : _iconRectangle,
@@ -543,7 +543,7 @@ define(function (require) {
             style = style || {};
             var iconType = style.iconType || this.style.iconType;
             if (iconType === 'image') {
-                var ImageShape = require('zrender/shape/Image');
+                var ImageShape = require('zrender/src/shape/Image');
                 ImageShape.prototype.brush.call(this, ctx, isHighlight, refreshNextFrame);
 
             } else {
@@ -564,7 +564,7 @@ define(function (require) {
                     default:
                         ctx.fill();
                 }
-                
+
                 this.drawText(ctx, style, this.style);
 
                 this.afterBrush(ctx);
@@ -599,11 +599,11 @@ define(function (require) {
             if (style.__rect) {
                 return style.__rect;
             }
-            
+
             // pin比较特殊，让尖端在目标x,y上
             style.__rect = {
                 x : Math.round(style.x),
-                y : Math.round(style.y - (style.iconType == 'pin' 
+                y : Math.round(style.y - (style.iconType == 'pin'
                                          ? (style.height / 2 * 1.5) : 0)
                                ),
                 width : style.width,
@@ -611,7 +611,7 @@ define(function (require) {
                     style.iconType === 'pin' ? 1.25 : 1
                 )
             };
-            
+
             return style.__rect;
         },
 
@@ -635,6 +635,5 @@ define(function (require) {
     };
 
     zrUtil.inherits(Icon, Base);
-    
-    return Icon;
-});
+
+    module.exports = Icon;

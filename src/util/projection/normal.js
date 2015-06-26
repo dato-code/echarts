@@ -1,21 +1,21 @@
 /**
  * echarts地图一般投射算法
  * modify from GeoMap v0.5.3 https://github.com/x6doooo/GeoMap
- * 
+ *
  * @desc echarts基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据统计图表。
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function() {
+
     function getBbox(json, specialArea) {
         specialArea = specialArea || {};
         if (!json.srcSize) {
             parseSrcSize(json, specialArea);
         }
-        
+
         return json.srcSize;
     }
-    
+
     function parseSrcSize(json, specialArea) {
         specialArea = specialArea || {};
         convertorParse.xmin = 360;
@@ -61,7 +61,7 @@ define(function() {
         //调整俄罗斯东部到地图右侧与俄罗斯相连
         formatPoint: function (p) {
             return [
-                ((p[0] < -168.5 && p[1] > 63.8) ? p[0] + 360 : p[0]) + 168.5, 
+                ((p[0] < -168.5 && p[1] > 63.8) ? p[0] + 360 : p[0]) + 168.5,
                 90 - p[1]
             ];
         },
@@ -125,7 +125,7 @@ define(function() {
             return str;
         }
     };
-    
+
     var convertorParse = {
         formatPoint: convertor.formatPoint,
 
@@ -177,7 +177,7 @@ define(function() {
         if (!json.srcSize) {
             parseSrcSize(json, specialArea);
         }
-        
+
         transform.offset = {
             x: json.srcSize.left,
             y: json.srcSize.top,
@@ -187,7 +187,7 @@ define(function() {
 
         convertor.scale = transform.scale;
         convertor.offset = transform.offset;
-        
+
         var shapes = json.features;
         var geometries;
         var pathArray = [];
@@ -201,7 +201,7 @@ define(function() {
             }
             if (shape.type == 'Feature') {
                 pushApath(shape.geometry, shape);
-            } 
+            }
             else if (shape.type == 'GeometryCollection') {
                 geometries = shape.geometries;
                 for (var j = 0, len2 = geometries.length; j < len2; j++) {
@@ -210,7 +210,7 @@ define(function() {
                 }
             }
         }
-        
+
         var shapeType;
         var shapeCoordinates;
         var str;
@@ -256,13 +256,13 @@ define(function() {
             x = p.x * 1;
             y = p.y * 1;
         }
-        
+
         x = x / obj.scale.x + obj.offset.x - 168.5;
         x = x > 180 ? x - 360 : x;
         y = 90 - (y / obj.scale.y + obj.offset.y);
         return [x, y];
     }
-    
+
     /**
      * 经纬度转平面坐标
      * @param {Array | Object} p
@@ -274,11 +274,10 @@ define(function() {
                ? convertor.makePoint([p[0] * 1, p[1] * 1])
                : convertor.makePoint([p.x * 1, p.y * 1]);
     }
-    
-    return {
+
+    module.exports = {
         getBbox: getBbox,
         geoJson2Path: geoJson2Path,
         pos2geo: pos2geo,
         geo2pos: geo2pos
     };
-}); 

@@ -5,17 +5,17 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var PathShape = require('zrender/shape/Path');
-    var CircleShape = require('zrender/shape/Circle');
-    var RectangleShape = require('zrender/shape/Rectangle');
-    var LineShape = require('zrender/shape/Line');
-    var PolygonShape = require('zrender/shape/Polygon');
-    var EllipseShape = require('zrender/shape/Ellipse');
+    var TextShape = require('zrender/src/shape/Text');
+    var PathShape = require('zrender/src/shape/Path');
+    var CircleShape = require('zrender/src/shape/Circle');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var LineShape = require('zrender/src/shape/Line');
+    var PolygonShape = require('zrender/src/shape/Polygon');
+    var EllipseShape = require('zrender/src/shape/Ellipse');
     // 组件依赖
     require('../component/dataRange');
     require('../component/roamController');
@@ -75,9 +75,9 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrConfig = require('zrender/config');
-    var zrEvent = require('zrender/tool/event');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrConfig = require('zrender/src/config');
+    var zrEvent = require('zrender/src/tool/event');
 
     var _mapParams = require('../util/mapData/params').params;
     var _textFixed = require('../util/mapData/textFixed');
@@ -1636,8 +1636,6 @@ define(function (require) {
 
     zrUtil.inherits(Map, ChartBase);
 
-    // 图表注册
     require('../chart').define('map', Map);
 
-    return Map;
-});
+    module.exports = Map;

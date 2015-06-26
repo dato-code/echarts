@@ -5,14 +5,14 @@
  * @author Neil (杨骥, 511415343@qq.com)
  */
 
- define(function (require) {
+
     var ChartBase = require('./base');
-    
+
      // 图形依赖
-    var PolygonShape = require('zrender/shape/Polygon');
+    var PolygonShape = require('zrender/src/shape/Polygon');
      // 组件依赖
     require('../component/polar');
-    
+
     var ecConfig = require('../config');
     // 雷达图默认参数
     ecConfig.radar = {
@@ -45,9 +45,9 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
-    
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -63,7 +63,7 @@
 
         this.refresh(option);
     }
-    
+
     Radar.prototype = {
         type : ecConfig.CHART_TYPE_RADAR,
         /**
@@ -75,7 +75,7 @@
             this._queryTarget;
             this._dropBoxList = [];
             this._radarDataCounter = 0;
-            
+
             var series = this.series;
             var legend = this.component.legend;
             var serieName;
@@ -85,12 +85,12 @@
                     this.legendHoverLink = series[i].legendHoverLink || this.legendHoverLink;
                     serieName = this.serie.name || '';
                     // 系列图例开关
-                    this.selectedMap[serieName] = 
+                    this.selectedMap[serieName] =
                         legend ? legend.isSelected(serieName) : true;
-                    
+
                     if (this.selectedMap[serieName]) {
                         this._queryTarget = [this.serie, this.option];
-    
+
                         // 添加可拖拽提示框，多系列共用一个极坐标，第一个优先
                         if (this.deepQuery(this._queryTarget, 'calculable')) {
                             this._addDropBox(i);
@@ -116,17 +116,17 @@
             var name;
             var pointList;
             var calculable = this.deepQuery(this._queryTarget, 'calculable');
-           
+
             for (var i = 0; i < data.length; i++) {
                 name = data[i].name || '';
-                
+
                 // 图例开关
-                this.selectedMap[name] = legend 
+                this.selectedMap[name] = legend
                     ? legend.isSelected(name) : true;
                 if (!this.selectedMap[name]) {
                     continue;
                 }
-                
+
                  // 默认颜色策略
                 if (legend) {
                     // 有图例则从图例中获取颜色定义
@@ -172,16 +172,16 @@
             var value;
             for (var i = 0, l = dataArr.value.length; i < l; i++) {
                 value = this.getDataFromOption(dataArr.value[i]);
-                vector = value != '-' 
+                vector = value != '-'
                          ? polar.getVector(polarIndex, i, value)
                          : false;
                 if (vector) {
                     pointList.push(vector);
-                } 
+                }
             }
             return pointList;
         },
-        
+
         /**
          * 添加拐点
          * @param {Array<Array<number>>} pointList 点集
@@ -199,7 +199,7 @@
                     this.deepMerge(
                         [series[seriesIndex].data[dataIndex], series[seriesIndex]]
                     ),
-                    seriesIndex, 
+                    seriesIndex,
                     series[seriesIndex].data[dataIndex].value[i], i,
                     polar.getIndicatorText(polarIndex, i),
                     pointList[i][0],    // x
@@ -211,7 +211,7 @@
                 );
                 itemShape.zlevel = this.getZlevelBase();
                 itemShape.z = this.getZBase() + 1;
-                
+
                 ecData.set(itemShape, 'data', series[seriesIndex].data[dataIndex]);
                 ecData.set(itemShape, 'value', series[seriesIndex].data[dataIndex].value);
                 ecData.set(itemShape, 'dataIndex', dataIndex);
@@ -219,7 +219,7 @@
                 this.shapeList.push(itemShape);
             }
         },
-        
+
         /**
          * 添加数据图形
          * @param {Array<Array<number>>} pointList 点集
@@ -228,7 +228,7 @@
          * @param {number} serieIndex
          * @param {number} dataIndex
          * @param {boolean} calcalable
-         */ 
+         */
         _addDataShape : function (
             pointList, defaultColor, data,
             seriesIndex, dataIndex, calculable
@@ -262,9 +262,9 @@
                 style : {
                     pointList   : pointList,
                     brushType   : nIsAreaFill ? 'both' : 'stroke',
-                    color       : nAreaColor 
-                                  || nColor 
-                                  || (typeof defaultColor === 'string' 
+                    color       : nAreaColor
+                                  || nColor
+                                  || (typeof defaultColor === 'string'
                                       ? zrColor.alpha(defaultColor,0.5) : defaultColor),
                     strokeColor : nColor || defaultColor,
                     lineWidth   : nLineWidth,
@@ -274,15 +274,15 @@
                     brushType   : this.deepQuery(
                                       queryTarget,
                                       'itemStyle.emphasis.areaStyle'
-                                  ) || nIsAreaFill 
+                                  ) || nIsAreaFill
                                   ? 'both' : 'stroke',
                     color       : this.deepQuery(
                                       queryTarget,
                                       'itemStyle.emphasis.areaStyle.color'
-                                  ) 
-                                  || nAreaColor 
-                                  || nColor 
-                                  || (typeof defaultColor === 'string' 
+                                  )
+                                  || nAreaColor
+                                  || nColor
+                                  || (typeof defaultColor === 'string'
                                       ? zrColor.alpha(defaultColor,0.5) : defaultColor),
                     strokeColor : this.getItemStyleColor(
                                        this.deepQuery(
@@ -310,15 +310,15 @@
                 data,                   // 数据
                 dataIndex,              // 数据索引
                 data.name,              // 数据名称
-                // 附加指标信息 
+                // 附加指标信息
                 this.component.polar.getIndicator(series[seriesIndex].polarIndex)
             );
             if (calculable) {
                 shape.draggable = true;
                 this.setCalculable(shape);
             }
-            
-            shape = new PolygonShape(shape); 
+
+            shape = new PolygonShape(shape);
             this.shapeList.push(shape);
         },
 
@@ -335,7 +335,7 @@
                 var shape = this.component.polar.getDropBox(polarIndex);
                 shape.zlevel = this.getZlevelBase();
                 shape.z = this.getZBase();
-                
+
                 this.setCalculable(shape);
                 ecData.pack(shape, series, index, undefined, -1);
                 this.shapeList.push(shape);
@@ -420,7 +420,7 @@
                 for (var i = 0 ; i < value.length; i++) {
                     data.value[i] = accMath.accAdd(data.value[i], value[i]);
                 }
-                
+
                 legend && legend.add(
                     data.name,
                     dragged.style.color || dragged.style.strokeColor
@@ -444,16 +444,14 @@
                 this.option = newOption;
                 this.series = newOption.series;
             }
-            
+
             this.backupShapeList();
             this._buildShape();
         }
     };
-    
+
     zrUtil.inherits(Radar, ChartBase);
-    
-    // 图表注册
+
     require('../chart').define('radar', Radar);
-    
-    return Radar;
-});
+
+    module.exports =  Radar;

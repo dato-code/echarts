@@ -1,14 +1,14 @@
 /**
  * echarts地图一般投射算法
  * modify from GeoMap v0.5.3 https://github.com/x6doooo/GeoMap
- * 
+ *
  * @desc echarts基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据统计图表。
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function(require) {
 
-    var PathShape = require('zrender/shape/Path');
+
+    var PathShape = require('zrender/src/shape/Path');
     function toFloat(str) {
         return parseFloat(str || 0);
     }
@@ -31,7 +31,7 @@ define(function(require) {
             height: height
         };
     }
-    
+
     function geoJson2Path(root, transform) {
         var scale = [transform.scale.x, transform.scale.y];
         var elList = [];
@@ -69,7 +69,7 @@ define(function(require) {
         var point = p instanceof Array ? [p[0] * 1, p[1] * 1] : [p.x * 1, p.y * 1];
         return [point[0] / obj.scale.x, point[1] / obj.scale.y];
     }
-    
+
     /**
      * 经纬度转平面坐标
      * @param {Array | Object} p
@@ -131,7 +131,7 @@ define(function(require) {
                 shapeType: 'path',
                 path: path,
                 cp: [
-                    (rect.x + rect.width / 2) * scale[0], 
+                    (rect.x + rect.width / 2) * scale[0],
                     (rect.y + rect.height / 2) * scale[1]
                 ]
             };
@@ -150,7 +150,7 @@ define(function(require) {
                 width: width,
                 height: height,
                 cp: [
-                    (x + width / 2) * scale[0], 
+                    (x + width / 2) * scale[0],
                     (y + height / 2) * scale[1]
                 ]
             };
@@ -169,7 +169,7 @@ define(function(require) {
                 xEnd: x2,
                 yEnd: y2,
                 cp: [
-                    (x1 + x2) * 0.5 * scale[0], 
+                    (x1 + x2) * 0.5 * scale[0],
                     (y1 + y2) * 0.5 * scale[1]
                 ]
             };
@@ -220,7 +220,7 @@ define(function(require) {
 
                 for (var i = 0; i < points.length; i++) {
                     var p = points[i];
-                    
+
                     min[0] = Math.min(p[0], min[0]);
                     min[1] = Math.min(p[1], min[1]);
 
@@ -244,11 +244,10 @@ define(function(require) {
             return obj;
         }
     };
-    
-    return {
+
+    module.exports = {
         getBbox: getBbox,
         geoJson2Path: geoJson2Path,
         pos2geo: pos2geo,
         geo2pos: geo2pos
     };
-}); 

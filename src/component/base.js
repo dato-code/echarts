@@ -5,13 +5,13 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
     var ecQuery = require('../util/ecQuery');
     var number = require('../util/number');
-    var zrUtil = require('zrender/tool/util');
-    
+    var zrUtil = require('zrender/src/tool/util');
+
     function Base(ecTheme, messageCenter, zr, option, myChart){
         this.ecTheme = ecTheme;
         this.messageCenter = messageCenter;
@@ -23,9 +23,9 @@ define(function (require) {
 
         this.shapeList = [];
         this.effectList = [];
-        
+
         var self = this;
-        
+
         self._onlegendhoverlink = function(param) {
             if (self.legendHoverLink) {
                 var targetName = param.target;
@@ -35,8 +35,8 @@ define(function (require) {
                            || self.type == ecConfig.CHART_TYPE_FUNNEL
                            ? ecData.get(self.shapeList[i], 'name')
                            : (ecData.get(self.shapeList[i], 'series') || {}).name;
-                    if (name == targetName 
-                        && !self.shapeList[i].invisible 
+                    if (name == targetName
+                        && !self.shapeList[i].invisible
                         && !self.shapeList[i].__animating
                     ) {
                         self.zr.addHoverShape(self.shapeList[i]);
@@ -53,7 +53,7 @@ define(function (require) {
      * 基类方法
      */
     Base.prototype = {
-        canvasSupported: require('zrender/tool/env').canvasSupported,
+        canvasSupported: require('zrender/src/tool/env').canvasSupported,
         _getZ : function(zWhat) {
             if (this[zWhat] != null) {
                 return this[zWhat];
@@ -75,7 +75,7 @@ define(function (require) {
         getZlevelBase: function () {
             return this._getZ('zlevel');
         },
-        
+
         /**
          * 获取z基数配置
          */
@@ -102,7 +102,7 @@ define(function (require) {
             this.zlevel = opt.zlevel;
             return opt;
         },
-        
+
         /**
          * css类属性数组补全，如padding，margin等~
          */
@@ -125,7 +125,7 @@ define(function (require) {
                 return [p, p, p, p];
             }
         },
-        
+
         getShapeById: function(id) {
             for (var i = 0, l = this.shapeList.length; i < l; i++) {
                 if (this.shapeList[i].id === id) {
@@ -134,7 +134,7 @@ define(function (require) {
             }
             return null;
         },
-        
+
         /**
          * 获取自定义和默认配置合并后的字体设置
          */
@@ -160,7 +160,7 @@ define(function (require) {
                        ecConfig.textStyle
                    );
         },
-        
+
         getItemStyleColor: function (itemColor, seriesIndex, dataIndex, data) {
             return typeof itemColor === 'function'
                    ? itemColor.call(
@@ -173,8 +173,8 @@ define(function (require) {
                         }
                    )
                    : itemColor;
-            
-        }, 
+
+        },
 
         /**
          * @parmas {object | number} data 目标data
@@ -183,7 +183,7 @@ define(function (require) {
         getDataFromOption: function (data, defaultData) {
             return data != null ? (data.value != null ? data.value : data) : defaultData;
         },
-        
+
         // 亚像素优化
         subPixelOptimize: function (position, lineWidth) {
             if (lineWidth % 2 === 1) {
@@ -195,7 +195,7 @@ define(function (require) {
             }
             return position;
         },
-        
+
         // 默认resize
         resize: function () {
             this.refresh && this.refresh();
@@ -228,16 +228,15 @@ define(function (require) {
             );
             this.onafterDispose && this.onafterDispose();
         },
-        
+
         query: ecQuery.query,
         deepQuery: ecQuery.deepQuery,
         deepMerge: ecQuery.deepMerge,
-        
+
         parsePercent: number.parsePercent,
         parseCenter: number.parseCenter,
         parseRadius: number.parseRadius,
         numAddCommas: number.addCommas
     };
-    
-    return Base;
-});
+
+    module.exports = Base;

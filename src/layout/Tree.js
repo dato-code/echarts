@@ -3,9 +3,9 @@
  * @module echarts/layout/Tree
  * @author pissang(http://github.com/pissang)
  */
-define(function (require) {
 
-    var vec2 = require('zrender/tool/vector');
+
+    var vec2 = require('zrender/src/tool/vector');
 
     function TreeLayout(opts) {
 
@@ -86,5 +86,4 @@ define(function (require) {
         }
     };
 
-    return TreeLayout;
-});
+    module.exports = TreeLayout;

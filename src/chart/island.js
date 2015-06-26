@@ -5,12 +5,12 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
-    
+
     // 图形依赖
-    var CircleShape = require('zrender/shape/Circle');
-    
+    var CircleShape = require('zrender/src/shape/Circle');
+
     var ecConfig = require('../config');
     ecConfig.island = {
         zlevel: 0,                  // 一级层叠
@@ -20,9 +20,9 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrEvent = require('zrender/tool/event');
-    
+    var zrUtil = require('zrender/src/tool/util');
+    var zrEvent = require('zrender/src/tool/event');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -68,7 +68,7 @@ define(function (require) {
             zrEvent.stop(event);
         };
     }
-    
+
     Island.prototype = {
         type: ecConfig.CHART_TYPE_ISLAND,
         /**
@@ -78,7 +78,7 @@ define(function (require) {
          * @param {Object} srcShape 源目标，合入目标后删除
          */
         _combine: function (tarShape, srcShape) {
-            var zrColor = require('zrender/tool/color');
+            var zrColor = require('zrender/src/tool/color');
             var accMath = require('../util/accMath');
             var value = accMath.accAdd(
                             ecData.get(tarShape, 'value'),
@@ -106,12 +106,12 @@ define(function (require) {
             if (newOption) {
                 newOption.island = this.reformOption(newOption.island);
                 this.option = newOption;
-    
+
                 this._nameConnector = this.option.nameConnector;
                 this._valueConnector = this.option.valueConnector;
             }
         },
-        
+
         getOption: function () {
             return this.option;
         },
@@ -240,11 +240,9 @@ define(function (require) {
             return;
         }
     };
-    
+
     zrUtil.inherits(Island, ChartBase);
-    
-    // 图表注册
+
     require('../chart').define('island', Island);
-    
-    return Island;
-});
+
+    module.exports =  Island;

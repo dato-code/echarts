@@ -5,13 +5,13 @@
  * @author Loutongbing (娄同兵, loutongbing@126.com)
  */
 
-define(function (require) {
+
     var ChartBase = require('./base');
     // 图形依赖
 
-    var TextShape = require('zrender/shape/Text');
-    var CircleShape = require('zrender/shape/Circle');
-    var PathShape = require('zrender/shape/Path');
+    var TextShape = require('zrender/src/shape/Text');
+    var CircleShape = require('zrender/src/shape/Circle');
+    var PathShape = require('zrender/src/shape/Path');
 
     var ecConfig = require('../config');
     // 维恩图默认参数
@@ -22,7 +22,7 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
+    var zrUtil = require('zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -39,7 +39,7 @@ define(function (require) {
 
         this.refresh(option);
     }
-    
+
     Venn.prototype = {
         type : ecConfig.CHART_TYPE_VENN,
         /**
@@ -427,8 +427,6 @@ define(function (require) {
 
     zrUtil.inherits(Venn, ChartBase);
 
-    // 图表注册
     require('../chart').define('venn', Venn);
 
-    return Venn;
-});
+    module.exports = Venn;

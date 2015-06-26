@@ -5,7 +5,7 @@
  *         Ievgenii (@Ievgeny, ievgeny@zoomdata.com)
  */
 
-define(function(require) {
+
 
     // Reference
     var number = require('./number');
@@ -451,5 +451,4 @@ define(function(require) {
         return val > -EPSILON && val < EPSILON;
     }
 
-    return smartLogSteps;
-});
+    module.exports = smartLogSteps;

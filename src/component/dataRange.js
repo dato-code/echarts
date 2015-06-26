@@ -5,12 +5,12 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var RectangleShape = require('zrender/shape/Rectangle');
+    var TextShape = require('zrender/src/shape/Text');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
     var HandlePolygonShape = require('../util/shape/HandlePolygon');
 
     var ecConfig = require('../config');
@@ -61,10 +61,10 @@ define(function (require) {
         }
     };
 
-    var zrUtil = require('zrender/tool/util');
-    var zrEvent = require('zrender/tool/event');
-    var zrArea = require('zrender/tool/area');
-    var zrColor = require('zrender/tool/color');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrEvent = require('zrender/src/tool/event');
+    var zrArea = require('zrender/src/tool/area');
+    var zrColor = require('zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -298,7 +298,7 @@ define(function (require) {
                 }
             }
 
-            var zrColor = require('zrender/tool/color');
+            var zrColor = require('zrender/src/tool/color');
             var per = 1 / (this.dataRangeOption.color.length - 1);
             var colorList = [];
             for (var i = 0, l = this.dataRangeOption.color.length; i < l; i++) {
@@ -1653,7 +1653,4 @@ define(function (require) {
 
     require('../component').define('dataRange', DataRange);
 
-    return DataRange;
-});
-
-
+    module.exports = DataRange;

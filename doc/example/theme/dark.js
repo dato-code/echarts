@@ -1,4 +1,4 @@
-define(function() {
+
 
 var theme = {
     // 全图默认背景

@@ -1,5 +1,3 @@
-define(function() {
-
 var theme = {
     // 默认色板
     color: [
@@ -293,5 +291,4 @@ var theme = {
     }
 };
 
-    return theme;
-});
+    module.exports = theme;

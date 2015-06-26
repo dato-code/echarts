@@ -5,13 +5,13 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     var ChartBase = require('./base');
-    
+
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var LineShape = require('zrender/shape/Line');
-    var PolygonShape = require('zrender/shape/Polygon');
+    var TextShape = require('zrender/src/shape/Text');
+    var LineShape = require('zrender/src/shape/Line');
+    var PolygonShape = require('zrender/src/shape/Polygon');
 
     var ecConfig = require('../config');
     // 漏斗图默认参数
@@ -70,10 +70,10 @@ define(function (require) {
 
     var ecData = require('../util/ecData');
     var number = require('../util/number');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
-    var zrArea = require('zrender/tool/area');
-    
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
+    var zrArea = require('zrender/src/tool/area');
+
     /**
      * 构造函数
      * @param {Object} messageCenter echart消息中心
@@ -86,7 +86,7 @@ define(function (require) {
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         this.refresh(option);
     }
-    
+
     Funnel.prototype = {
         type: ecConfig.CHART_TYPE_FUNNEL,
         /**
@@ -99,7 +99,7 @@ define(function (require) {
             this._paramsMap = {};
             this._selected = {};
             this.selectedMap = {};
-            
+
             var serieName;
             for (var i = 0, l = series.length; i < l; i++) {
                 if (series[i].type === ecConfig.CHART_TYPE_FUNNEL) {
@@ -118,7 +118,7 @@ define(function (require) {
 
             this.addShapeList();
         },
-        
+
         /**
          * 构建单个仪表盘
          *
@@ -133,7 +133,7 @@ define(function (require) {
                 location: location,
                 data: data
             };
-            
+
             var itemName;
             var total = 0;
             var selectedData = [];
@@ -154,7 +154,7 @@ define(function (require) {
             var funnelCase = this._buildFunnelCase(seriesIndex);
             var align = serie.funnelAlign;
             var gap = serie.gap;
-            var height = total > 1 
+            var height = total > 1
                          ? (location.height - (total - 1) * gap) / total : location.height;
             var width;
             var lastY = location.y;
@@ -188,13 +188,13 @@ define(function (require) {
                     polygon = this._buildItem(
                         seriesIndex, selectedData[i]._index,
                         legend // color
-                            ? legend.getColor(itemName) 
+                            ? legend.getColor(itemName)
                             : this.zr.getColor(selectedData[i]._index),
                         x, lastY, lastWidth, width, height, align
                     );
                     lastY += height + gap;
                     lastPolygon = polygon.style.pointList;
-                    
+
                     pointList.unshift([lastPolygon[0][0] - 10, lastPolygon[0][1]]); // 左
                     pointList.push([lastPolygon[1][0] + 10, lastPolygon[1][1]]);    // 右
                     if (i === 0) {
@@ -215,7 +215,7 @@ define(function (require) {
                     lastWidth = width;
                 }
             }
-            
+
             if (funnelCase) {
                 pointList.unshift([lastPolygon[3][0] - 10, lastPolygon[3][1]]); // 左
                 pointList.push([lastPolygon[2][0] + 10, lastPolygon[2][1]]);    // 右
@@ -232,7 +232,7 @@ define(function (require) {
                 funnelCase.style.pointList = pointList;
             }
         },
-        
+
         _buildFunnelCase: function(seriesIndex) {
             var serie = this.series[seriesIndex];
             if (this.deepQuery([serie, this.option], 'calculable')) {
@@ -261,7 +261,7 @@ define(function (require) {
                 return funnelCase;
             }
         },
-        
+
         _getLocation: function (seriesIndex) {
             var gridOption = this.series[seriesIndex];
             var zrWidth = this.zr.getWidth();
@@ -283,7 +283,7 @@ define(function (require) {
                 centerX: x + width / 2
             };
         },
-        
+
         _mapData: function(seriesIndex) {
             var serie = this.series[seriesIndex];
             var funnelData = zrUtil.clone(serie.data);
@@ -305,10 +305,10 @@ define(function (require) {
             if (serie.sort != 'none') {
                 funnelData.sort(serie.sort === 'descending' ? numDescending : numAscending);
             }
-            
+
             return funnelData;
         },
-        
+
         /**
          * 构建单个扇形及指标
          */
@@ -319,7 +319,7 @@ define(function (require) {
             var series = this.series;
             var serie = series[seriesIndex];
             var data = serie.data[dataIndex];
-            
+
             // 漏斗
             var polygon = this.getPolygon(
                     seriesIndex, dataIndex, defaultColor,
@@ -360,7 +360,7 @@ define(function (require) {
             if (!this._needLabelLine(serie, data,false)) {
                 labelLine.invisible = true;
             }
-            
+
             var polygonHoverConnect = [];
             var labelHoverConnect = [];
             if (this._needLabelLine(serie, data, true)) {
@@ -373,12 +373,12 @@ define(function (require) {
             }
             polygon.hoverConnect = polygonHoverConnect;
             label.hoverConnect = labelHoverConnect;
-            
+
             return polygon;
         },
 
         /**
-         * 根据值计算宽度 
+         * 根据值计算宽度
          */
         _getItemWidth: function (seriesIndex, value) {
             var serie = this.series[seriesIndex];
@@ -389,7 +389,7 @@ define(function (require) {
             var maxSize = number.parsePercent(serie.maxSize, location.width);
             return (value - min) * (maxSize - minSize) / (max - min) + minSize;
         },
-        
+
         /**
          * 构建扇形
          */
@@ -407,13 +407,13 @@ define(function (require) {
 
             var normalColor = this.getItemStyleColor(normal.color, seriesIndex, dataIndex, data)
                               || defaultColor;
-            
+
             var emphasisColor = this.getItemStyleColor(emphasis.color, seriesIndex, dataIndex, data)
                 || (typeof normalColor === 'string'
                     ? zrColor.lift(normalColor, -0.2)
                     : normalColor
                 );
-            
+
             var  xLB;
             switch (align) {
                 case 'left':
@@ -448,7 +448,7 @@ define(function (require) {
                     strokeColor: emphasis.borderColor
                 }
             };
-            
+
             if (this.deepQuery([data, serie, this.option], 'calculable')) {
                 this.setCalculable(polygon);
                 polygon.draggable = true;
@@ -482,7 +482,7 @@ define(function (require) {
             var textFont = this.getFont(textStyle);
             var textAlign;
             var textColor = defaultColor;
-            labelControl.position = labelControl.position 
+            labelControl.position = labelControl.position
                                     || itemStyle.normal.label.position;
             if (labelControl.position === 'inner'
                 || labelControl.position === 'inside'
@@ -490,7 +490,7 @@ define(function (require) {
             ) {
                 // 内部
                 textAlign = align;
-                textColor = 
+                textColor =
                     Math.max(topWidth, bottomWidth) / 2 > zrArea.getTextWidth(text, textFont)
                     ? '#fff' : zrColor.reverse(defaultColor);
             }
@@ -502,7 +502,7 @@ define(function (require) {
                 // 右侧显示，默认 labelControl.position === 'outer' || 'right)
                 textAlign = 'left';
             }
-            
+
             var textShape = {
                 zlevel: this.getZlevelBase(),
                 z: this.getZBase() + 1,
@@ -519,7 +519,7 @@ define(function (require) {
                     textFont: textFont
                 }
             };
-            
+
             //----------高亮
             status = 'emphasis';
             // label配置
@@ -530,13 +530,13 @@ define(function (require) {
             text = this.getLabelText(seriesIndex, dataIndex, status);
             textFont = this.getFont(textStyle);
             textColor = defaultColor;
-            if (labelControl.position === 'inner' 
+            if (labelControl.position === 'inner'
                 || labelControl.position === 'inside'
                 || labelControl.position === 'center'
             ) {
                 // 内部
                 textAlign = align;
-                textColor = 
+                textColor =
                     Math.max(topWidth, bottomWidth) / 2 > zrArea.getTextWidth(text, textFont)
                     ? '#fff' : zrColor.reverse(defaultColor);
             }
@@ -548,7 +548,7 @@ define(function (require) {
                 // 右侧显示，默认 labelControl.position === 'outer' || 'right)
                 textAlign = 'left';
             }
-            
+
             textShape.highlightStyle = {
                 x: this._getLabelPoint(
                        labelControl.position, x, location,
@@ -560,7 +560,7 @@ define(function (require) {
                 textFont: textFont,
                 brushType: 'fill'
             };
-            
+
             return new TextShape(textShape);
         },
 
@@ -575,7 +575,7 @@ define(function (require) {
                 [data, serie],
                 'itemStyle.' + status + '.label.formatter'
             );
-            
+
             if (formatter) {
                 if (typeof formatter === 'function') {
                     return formatter.call(
@@ -598,7 +598,7 @@ define(function (require) {
                                          .replace('{a0}', serie.name)
                                          .replace('{b0}', data.name)
                                          .replace('{c0}', data.value);
-    
+
                     return formatter;
                 }
             }
@@ -606,7 +606,7 @@ define(function (require) {
                 return data.name;
             }
         },
-        
+
         /**
          * 需要显示则会有返回构建好的shape，否则返回undefined
          */
@@ -628,9 +628,9 @@ define(function (require) {
             var labelLineControl = itemStyle[status].labelLine;
             var lineLength = itemStyle[status].labelLine.length;
             var lineStyle = labelLineControl.lineStyle || {};
-            
+
             var labelControl = itemStyle[status].label;
-            labelControl.position = labelControl.position 
+            labelControl.position = labelControl.position
                                     || itemStyle.normal.label.position;
 
             var lineShape = {
@@ -650,7 +650,7 @@ define(function (require) {
                     lineWidth: lineStyle.width
                 }
             };
-            
+
             status = 'emphasis';
             // labelLine配置
             labelLineControl = itemStyle[status].labelLine || labelLineControl;
@@ -659,7 +659,7 @@ define(function (require) {
 
             labelControl = itemStyle[status].label || labelControl;
             labelControl.position = labelControl.position;
-            
+
             lineShape.highlightStyle = {
                 xEnd: this._getLabelPoint(
                           labelControl.position, x, location,
@@ -669,10 +669,10 @@ define(function (require) {
                 lineType: lineStyle.type,
                 lineWidth: lineStyle.width
             };
-            
+
             return new LineShape(lineShape);
         },
-        
+
         _getLabelPoint: function(position, x, location, topWidth, bottomWidth, lineLength, align) {
             position = (position === 'inner' || position === 'inside') ? 'center' : position;
             switch (position) {
@@ -691,7 +691,7 @@ define(function (require) {
                             ? (location.centerX - Math.max(topWidth, bottomWidth) / 2 - lineLength)
                             : align == 'right'
                                 // 右对齐布局
-                                ? (x 
+                                ? (x
                                     - (topWidth < bottomWidth ? (bottomWidth - topWidth) : 0)
                                     - lineLength
                                 )
@@ -716,10 +716,10 @@ define(function (require) {
                     }
             }
         },
-        
+
         _getLabelLineStartPoint: function(x, location, topWidth, bottomWidth, align) {
             return align == 'center'
-                   ? location.centerX 
+                   ? location.centerX
                    : topWidth < bottomWidth
                      ? (x + Math.min(topWidth, bottomWidth) / 2)
                      : (x + Math.max(topWidth, bottomWidth) / 2);
@@ -754,7 +754,7 @@ define(function (require) {
                 +'.labelLine.show'
             );
         },
-        
+
         /**
          * 刷新
          */
@@ -763,16 +763,15 @@ define(function (require) {
                 this.option = newOption;
                 this.series = newOption.series;
             }
-            
+
             this.backupShapeList();
             this._buildShape();
         }
     };
-    
+
     zrUtil.inherits(Funnel, ChartBase);
-    
-    // 图表注册
+
     require('../chart').define('funnel', Funnel);
-    
-    return Funnel;
-});
+
+
+    module.exports = Funnel;

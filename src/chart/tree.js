@@ -5,14 +5,14 @@
  * @author Loutongbing (娄同兵, loutongbing@126.com)
  */
 
-define(function (require) {
+
     var ChartBase = require('./base');
     var GOLDEN_SECTION = 0.618;
     // 图形依赖
     var IconShape = require('../util/shape/Icon');
-    var ImageShape = require('zrender/shape/Image');
-    var LineShape = require('zrender/shape/Line');
-    var BezierCurveShape = require('zrender/shape/BezierCurve');
+    var ImageShape = require('zrender/src/shape/Image');
+    var LineShape = require('zrender/src/shape/Line');
+    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
     // 布局依赖
     var TreeLayout = require('../layout/Tree');
     // 数据依赖
@@ -54,9 +54,9 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrConfig = require('zrender/config');
-    var zrEvent = require('zrender/tool/event');
-    var zrUtil = require('zrender/tool/util');
+    var zrConfig = require('zrender/src/config');
+    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -588,7 +588,7 @@ define(function (require) {
                     series[i] = this.reformOption(series[i]);
 
                     var seriesName = series[i].name || '';
-                    this.selectedMap[seriesName] = 
+                    this.selectedMap[seriesName] =
                         legend ? legend.isSelected(seriesName) : true;
                     if (!this.selectedMap[seriesName]) {
                         continue;
@@ -611,8 +611,6 @@ define(function (require) {
 
     zrUtil.inherits(Tree, ChartBase);
 
-    // 图表注册
     require('../chart').define('tree', Tree);
 
-    return Tree;
-});
+    module.exports =  Tree;

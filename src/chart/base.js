@@ -5,15 +5,15 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-define(function (require) {
+
     // 图形依赖
-    var ImageShape = require('zrender/shape/Image');
+    var ImageShape = require('zrender/src/shape/Image');
     var IconShape = require('../util/shape/Icon');
     var MarkLineShape = require('../util/shape/MarkLine');
     var SymbolShape = require('../util/shape/Symbol');
-    var PolylineShape = require('zrender/shape/Polyline');
-    var ShapeBundle = require('zrender/shape/ShapeBundle');
-    
+    var PolylineShape = require('zrender/src/shape/Polyline');
+    var ShapeBundle = require('zrender/src/shape/ShapeBundle');
+
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
     var ecAnimation = require('../util/ecAnimation');
@@ -22,14 +22,14 @@ define(function (require) {
     var ComponentBase = require('../component/base');
     var EdgeBundling = require('../layout/EdgeBundling');
 
-    var zrUtil = require('zrender/tool/util');
-    var zrArea = require('zrender/tool/area');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrArea = require('zrender/src/tool/area');
 
     // Some utility functions
     function isCoordAvailable(coord) {
         return coord.x != null && coord.y != null;
     }
-    
+
     function Base(ecTheme, messageCenter, zr, option, myChart) {
 
         ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
@@ -41,25 +41,25 @@ define(function (require) {
             onclick: function () {
                 self.isClick = true;
             },
-            
+
             ondragover: function (param) {
                 // 返回触发可计算特性的图形提示
                 var calculableShape = param.target;
                 calculableShape.highlightStyle = calculableShape.highlightStyle || {};
-                
+
                 // 备份特出特性
                 var highlightStyle = calculableShape.highlightStyle;
                 var brushType = highlightStyle.brushTyep;
                 var strokeColor = highlightStyle.strokeColor;
                 var lineWidth = highlightStyle.lineWidth;
-                
+
                 highlightStyle.brushType = 'stroke';
                 highlightStyle.strokeColor = self.ecTheme.calculableColor
                                              || ecConfig.calculableColor;
                 highlightStyle.lineWidth = calculableShape.type === 'icon' ? 30 : 10;
 
                 self.zr.addHoverShape(calculableShape);
-                
+
                 setTimeout(function (){
                     // 复位
                     if (highlightStyle) {
@@ -69,26 +69,26 @@ define(function (require) {
                     }
                 },20);
             },
-            
+
             ondrop: function (param) {
                 // 排除一些非数据的拖拽进入
                 if (ecData.get(param.dragged, 'data') != null) {
                     self.isDrop = true;
                 }
             },
-            
+
             ondragend: function () {
                 self.isDragend = true;
             }
         };
     }
-    
+
     /**
      * 基类方法
      */
     Base.prototype = {
         /**
-         * 图形拖拽特性 
+         * 图形拖拽特性
          */
         setCalculable: function (shape) {
             shape.dragEnableTime = this.ecTheme.DRAG_ENABLE_TIME || ecConfig.DRAG_ENABLE_TIME;
@@ -123,7 +123,7 @@ define(function (require) {
                     this.isDrop = false;
                     return;
                 }
-                
+
                 data = {
                     value: ecData.get(dragged, 'value'),
                     name: ecData.get(dragged, 'name')
@@ -154,7 +154,7 @@ define(function (require) {
                 data = series[seriesIndex].data[dataIndex] || '-';
                 if (data.value != null) {
                     if (data.value != '-') {
-                        series[seriesIndex].data[dataIndex].value = 
+                        series[seriesIndex].data[dataIndex].value =
                             accMath.accAdd(
                                 series[seriesIndex].data[dataIndex].value,
                                 ecData.get(dragged, 'value')
@@ -164,11 +164,11 @@ define(function (require) {
                         series[seriesIndex].data[dataIndex].value =
                             ecData.get(dragged, 'value');
                     }
-                    
+
                     if (this.type === ecConfig.CHART_TYPE_FUNNEL
                         || this.type === ecConfig.CHART_TYPE_PIE
                     ) {
-                        legend && legend.getRelatedAmount(data.name) === 1 
+                        legend && legend.getRelatedAmount(data.name) === 1
                                && this.component.legend.del(data.name);
                         data.name += this.option.nameConnector + ecData.get(dragged, 'name');
                         legend && legend.add(
@@ -179,7 +179,7 @@ define(function (require) {
                 }
                 else {
                     if (data != '-') {
-                        series[seriesIndex].data[dataIndex] = 
+                        series[seriesIndex].data[dataIndex] =
                             accMath.accAdd(
                                 series[seriesIndex].data[dataIndex],
                                 ecData.get(dragged, 'value')
@@ -202,7 +202,7 @@ define(function (require) {
             setTimeout(function(){
                 self.zr.trigger('mousemove', param.event);
             }, 300);
-            
+
             return;
         },
 
@@ -234,7 +234,7 @@ define(function (require) {
             else {
                 series[seriesIndex].data[dataIndex] = '-';
             }
-            
+
             // 别status = {}赋值啊！！
             status.dragOut = true;
             status.needRefresh = true;
@@ -259,7 +259,7 @@ define(function (require) {
             }
             return;
         },
-        
+
         /**
          * 折线图、柱形图公用方法
          */
@@ -270,7 +270,7 @@ define(function (require) {
 
             this.selectedMap = {};
             this.xMarkMap = {};
-            
+
             var series = this.series;
             // 水平垂直双向series索引 ，position索引到seriesIndex
             var _position2sIndexMap = {
@@ -314,7 +314,7 @@ define(function (require) {
 
             this.addShapeList();
         },
-        
+
         /**
          * 构建单个方向上的折线图、柱形图公用方法
          *
@@ -341,12 +341,12 @@ define(function (require) {
                     this._buildOther(seriesArray, maxDataLength, locationMap, this.xMarkMap);
                     break;
             }
-            
+
             for (var i = 0, l = seriesArray.length; i < l; i++) {
                 this.buildMark(seriesArray[i]);
             }
         },
-        
+
         /**
          * 数据整形，折线图、柱形图公用方法
          * 数组位置映射到系列索引
@@ -367,16 +367,16 @@ define(function (require) {
             for (var i = 0, l = seriesArray.length; i < l; i++) {
                 serie = series[seriesArray[i]];
                 serieName = serie.name;
-                
+
                 this._sIndex2ShapeMap[seriesArray[i]] = this._sIndex2ShapeMap[seriesArray[i]]
                                                         || this.query(serie,'symbol')
                                                         || this._symbol[i % this._symbol.length];
-                      
+
                 if (legend){
                     this.selectedMap[serieName] = legend.isSelected(serieName);
-                    
+
                     this._sIndex2ColorMap[seriesArray[i]] = legend.getColor(serieName);
-                        
+
                     iconShape = legend.getItemShape(serieName);
                     if (iconShape) {
                         // 回调legend，换一个更形象的icon
@@ -392,12 +392,12 @@ define(function (require) {
                             style.y += 1;
                             style.width -= 2;
                             style.height -= 2;
-                            style.strokeColor 
-                                = highlightStyle.strokeColor 
+                            style.strokeColor
+                                = highlightStyle.strokeColor
                                 = serie.itemStyle.normal.barBorderColor;
                             highlightStyle.lineWidth = 3;
                         }
-                        
+
                         legend.setItemShape(serieName, iconShape);
                     }
                 }
@@ -445,7 +445,7 @@ define(function (require) {
                 maxDataLength: maxDataLength
             };
         },
-        
+
         _calculMarkMapXY : function(xMarkMap, locationMap, xy) {
             var series = this.series;
             for (var j = 0, k = locationMap.length; j < k; j++) {
@@ -460,7 +460,7 @@ define(function (require) {
                             tarMark['average' + valueIndex] =
                                 tarMark['sum' + valueIndex] / tarMark['counter' + valueIndex];
                         }
-                        
+
                         var x = this.component.xAxis.getAxis(series[seriesIndex].xAxisIndex || 0)
                                 .getCoord(tarMark['average' + valueIndex]);
                         tarMark['averageLine' + valueIndex] = [
@@ -475,14 +475,14 @@ define(function (require) {
                             [tarMark['maxX' + valueIndex], grid.getYend()],
                             [tarMark['maxX' + valueIndex], grid.getY()]
                         ];
-                        
+
                         tarMark.isHorizontal = false;
                     }
-                    
+
                     valueIndex = xy == 'xy' ? 1 : '';
                     if (xy.indexOf('y') != '-1') {
                         if (tarMark['counter' + valueIndex] > 0) {
-                            tarMark['average' + valueIndex] = 
+                            tarMark['average' + valueIndex] =
                                 tarMark['sum' + valueIndex] / tarMark['counter' + valueIndex];
                         }
                         var y = this.component.yAxis.getAxis(series[seriesIndex].yAxisIndex || 0)
@@ -499,15 +499,15 @@ define(function (require) {
                             [grid.getX(), tarMark['maxY' + valueIndex]],
                             [grid.getXend(), tarMark['maxY' + valueIndex]]
                         ];
-                        
+
                         tarMark.isHorizontal = true;
                     }
                 }
             }
         },
-        
+
         /**
-         * 添加文本 
+         * 添加文本
          */
         addLabel: function (tarShape, serie, data, name, orient) {
             // 多级控制
@@ -517,7 +517,7 @@ define(function (require) {
 
             var nTextStyle = nLabel.textStyle || {};
             var eTextStyle = eLabel.textStyle || {};
-            
+
             if (nLabel.show) {
                 var style = tarShape.style;
                 style.text = this._getLabelText(
@@ -546,10 +546,10 @@ define(function (require) {
                 highlightStyle.textAlign = eTextStyle.align;
                 highlightStyle.textBaseline = eTextStyle.baseline;
             }
-            
+
             return tarShape;
         },
-        
+
         /**
          * 根据lable.format计算label text
          */
@@ -565,9 +565,9 @@ define(function (require) {
                     'itemStyle.normal.label.formatter'
                 );
             }
-            
+
             var value = this.getDataFromOption(data, '-');
-            
+
             if (formatter) {
                 if (typeof formatter === 'function') {
                     return formatter.call(
@@ -589,7 +589,7 @@ define(function (require) {
                                          .replace('{a0}', serie.name)
                                          .replace('{b0}', name)
                                          .replace('{c0}', this.numAddCommas(value));
-    
+
                     return formatter;
                 }
             }
@@ -604,9 +604,9 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
-         * 标线标注 
+         * 标线标注
          */
         buildMark: function (seriesIndex) {
             var serie = this.series[seriesIndex];
@@ -615,7 +615,7 @@ define(function (require) {
                 serie.markPoint && this._buildMarkPoint(seriesIndex);
             }
         },
-        
+
         /**
          * 标注逻辑
          */
@@ -640,9 +640,9 @@ define(function (require) {
                         || (zrArea.getTextWidth(pos[3], this.getFont()) / 2 + 5);
                 }
             }
-            
+
             var shapeList = this._markPoint(seriesIndex, markPoint);
-            
+
             for (var i = 0, l = shapeList.length; i < l; i++) {
                 var tarShape = shapeList[i];
                 tarShape.zlevel = this.getZlevelBase();
@@ -661,7 +661,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
          * 标线逻辑
          */
@@ -682,8 +682,8 @@ define(function (require) {
                     markLine.data[i][0].value = mlData.type !== 'average'
                                                 ? pos[3]
                                                 : +pos[3].toFixed(
-                                                      markLine.precision != null 
-                                                      ? markLine.precision 
+                                                      markLine.precision != null
+                                                      ? markLine.precision
                                                       : this.deepQuery(
                                                             [this.ecTheme, ecConfig],
                                                             'markLine.precision'
@@ -707,7 +707,7 @@ define(function (require) {
                 markLine.data[i][1].x = mlData[1].x != null ? mlData[1].x : pos[1][0];
                 markLine.data[i][1].y = mlData[1].y != null ? mlData[1].y : pos[1][1];
             }
-            
+
             var shapeList = this._markLine(seriesIndex, markLine);
 
             var isLarge = markLine.large;
@@ -759,7 +759,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
          * 标注多级控制构造
          */
@@ -775,11 +775,11 @@ define(function (require) {
             );
 
             mpOption.name = serie.name;
-                   
+
             var pList = [];
             var data = mpOption.data;
             var itemShape;
-            
+
             var dataRange = component.dataRange;
             var legend = component.legend;
             var color;
@@ -804,7 +804,7 @@ define(function (require) {
                     // 值域
                     if (dataRange) {
                         color = isNaN(value) ? color : dataRange.getColor(value);
-                        
+
                         queryTarget = [data[i], mpOption];
                         nColor = this.deepQuery(queryTarget, 'itemStyle.normal.color')
                                  || color;
@@ -815,9 +815,9 @@ define(function (require) {
                             continue;
                         }
                     }
-                    
+
                     color = color == null ? this.zr.getColor(seriesIndex) : color;
-                    
+
                     // 标准化一些参数
                     data[i].tooltip = data[i].tooltip
                                       || mpOption.tooltip
@@ -827,7 +827,7 @@ define(function (require) {
 
                     // 复用getSymbolShape
                     itemShape = this.getSymbolShape(
-                        mpOption, seriesIndex,      // 系列 
+                        mpOption, seriesIndex,      // 系列
                         data[i], i, data[i].name,   // 数据
                         this.parsePercent(data[i].x, zrWidth),   // 坐标
                         this.parsePercent(data[i].y, zrHeight),  // 坐标
@@ -836,7 +836,7 @@ define(function (require) {
                         'horizontal'                // 走向，用于默认文字定位
                     );
                     itemShape._mark = 'point';
-                    
+
                     effect = this.deepMerge(
                         [data[i], mpOption],
                         'effect'
@@ -844,11 +844,11 @@ define(function (require) {
                     if (effect.show) {
                         itemShape.effect = effect;
                     }
-                    
+
                     if (serie.type === ecConfig.CHART_TYPE_MAP) {
                         itemShape._geo = this.getMarkGeo(data[i]);
                     }
-                    
+
                     // 重新pack一下数据
                     ecData.pack(
                         itemShape,
@@ -868,15 +868,15 @@ define(function (require) {
             }
             return pList;
         },
-        
+
         /**
          * 标线多级控制构造
          */
         _markLine: (function () {
             function normalizeOptionValue(mlOption, key) {
                 mlOption[key] = mlOption[key] instanceof Array
-                          ? mlOption[key].length > 1 
-                            ? mlOption[key] 
+                          ? mlOption[key].length > 1
+                            ? mlOption[key]
                             : [mlOption[key][0], mlOption[key][0]]
                           : [mlOption[key], mlOption[key]];
             }
@@ -962,12 +962,12 @@ define(function (require) {
                 }
 
                 mlOption.name = serie.name;
-  
+
                 var shapeList = [];
 
                 for (var i = 0, l = edges.length; i < l; i++) {
                     var edge = edges[i];
-                    var rawEdge = edge.rawEdge || edge; 
+                    var rawEdge = edge.rawEdge || edge;
                     var mlData = rawEdge.rawData;
                     var value = mlData.value != null ? mlData.value : '';
 
@@ -981,7 +981,7 @@ define(function (require) {
                         rawEdge.color
                     );
                     itemShape._mark = 'line';
-                    
+
                     var effect = this.deepMerge(
                         [mlData[0], mlData[1], mlOption],
                         'effect'
@@ -990,20 +990,20 @@ define(function (require) {
                         itemShape.effect = effect;
                         itemShape.effect.large = mlOption.large;
                     }
-                    
+
                     if (serie.type === ecConfig.CHART_TYPE_MAP) {
                         itemShape._geo = [
                             this.getMarkGeo(mlData[0]),
                             this.getMarkGeo(mlData[1])
                         ];
                     }
-                    
+
                     // 重新pack一下数据
                     ecData.pack(
                         itemShape,
                         serie, seriesIndex,
                         mlData[0], i,
-                        mlData[0].name 
+                        mlData[0].name
                             // 不要帮我代码规范
                             + (mlData[1].name !== '' ? (' > ' + mlData[1].name) : ''),
                         value
@@ -1014,17 +1014,17 @@ define(function (require) {
                 return shapeList;
             };
         })(),
-        
+
         getMarkCoord: function () {
             // 无转换位置
             return [0, 0];
         },
-        
+
         /**
-         * symbol构造器 
+         * symbol构造器
          */
         getSymbolShape: function (
-            serie, seriesIndex,     // 系列 
+            serie, seriesIndex,     // 系列
             data, dataIndex, name,  // 数据
             x, y,                   // 坐标
             symbol, color,          // 默认symbol和color，来自legend或dataRange全局分配
@@ -1033,7 +1033,7 @@ define(function (require) {
         ) {
             var queryTarget = [data, serie];
             var value = this.getDataFromOption(data, '-');
-            
+
             symbol = this.deepQuery(queryTarget, 'symbol') || symbol;
             var symbolSize = this.deepQuery(queryTarget, 'symbolSize');
             symbolSize = typeof symbolSize === 'function'
@@ -1043,7 +1043,7 @@ define(function (require) {
                 symbolSize = [symbolSize, symbolSize];
             }
             var symbolRotate = this.deepQuery(queryTarget, 'symbolRotate');
-            
+
             var normal = this.deepMerge(
                 queryTarget,
                 'itemStyle.normal'
@@ -1067,7 +1067,7 @@ define(function (require) {
 
             var nColor = this.getItemStyleColor(normal.color, seriesIndex, dataIndex, data);
             var eColor = this.getItemStyleColor(emphasis.color, seriesIndex, dataIndex, data);
-            
+
             var width = symbolSize[0];
             var height = symbolSize[1];
             var itemShape = new IconShape({
@@ -1078,17 +1078,17 @@ define(function (require) {
                     width: width * 2,
                     height: height * 2,
                     brushType: 'both',
-                    color: symbol.match('empty') 
-                           ? emptyColor 
+                    color: symbol.match('empty')
+                           ? emptyColor
                            : (nColor || color),
                     strokeColor: normal.borderColor || nColor || color,
                     lineWidth: nBorderWidth
                 },
                 highlightStyle: {
-                    color: symbol.match('empty') 
-                           ? emptyColor 
+                    color: symbol.match('empty')
+                           ? emptyColor
                            : (eColor || nColor || color),
-                    strokeColor: emphasis.borderColor 
+                    strokeColor: emphasis.borderColor
                                  || normal.borderColor
                                  || eColor
                                  || nColor
@@ -1106,24 +1106,24 @@ define(function (require) {
                     clickable: this.deepQuery(queryTarget, 'clickable')
                 });
             }
-            
+
             if (symbolRotate != null) {
                 itemShape.rotation = [
                     symbolRotate * Math.PI / 180, x, y
                 ];
             }
-            
+
             if (symbol.match('star')) {
                 itemShape.style.iconType = 'star';
-                itemShape.style.n = 
+                itemShape.style.n =
                     (symbol.replace('empty', '').replace('star','') - 0) || 5;
             }
-            
+
             if (symbol === 'none') {
                 itemShape.invisible = true;
                 itemShape.hoverable = false;
             }
-            
+
             /*
             if (this.deepQuery([data, serie, option], 'calculable')) {
                 this.setCalculable(itemShape);
@@ -1132,21 +1132,21 @@ define(function (require) {
             */
 
             itemShape = this.addLabel(
-                itemShape, 
-                serie, data, name, 
+                itemShape,
+                serie, data, name,
                 orient
             );
-            
+
             if (symbol.match('empty')) {
                 if (itemShape.style.textColor == null) {
                     itemShape.style.textColor = itemShape.style.strokeColor;
                 }
                 if (itemShape.highlightStyle.textColor == null) {
-                    itemShape.highlightStyle.textColor = 
+                    itemShape.highlightStyle.textColor =
                         itemShape.highlightStyle.strokeColor;
                 }
             }
-            
+
             ecData.pack(
                 itemShape,
                 serie, seriesIndex,
@@ -1156,18 +1156,18 @@ define(function (require) {
 
             itemShape._x = x;
             itemShape._y = y;
-            
+
             itemShape._dataIndex = dataIndex;
             itemShape._seriesIndex = seriesIndex;
 
             return itemShape;
         },
-        
+
         /**
-         * 标线构造器 
+         * 标线构造器
          */
         getMarkLineShape: function (
-            mlOption,               // 系列 
+            mlOption,               // 系列
             seriesIndex,            // 系列索引
             data,                   // 数据
             dataIndex,              // 数据索引
@@ -1208,17 +1208,17 @@ define(function (require) {
                 'itemStyle.emphasis'
             );
             emphasis.color = this.getItemStyleColor(emphasis.color, seriesIndex, dataIndex, data);
-            
+
             var nlineStyle = normal.lineStyle;
             var elineStyle = emphasis.lineStyle;
-            
+
             var nBorderWidth = nlineStyle.width;
             if (nBorderWidth == null) {
                 nBorderWidth = normal.borderWidth;
             }
             var eBorderWidth = elineStyle.width;
             if (eBorderWidth == null) {
-                eBorderWidth = emphasis.borderWidth != null 
+                eBorderWidth = emphasis.borderWidth != null
                                ? emphasis.borderWidth
                                : (nBorderWidth + 2);
             }
@@ -1263,9 +1263,9 @@ define(function (require) {
                     color: emphasis.color|| normal.color || color,
                     strokeColor: elineStyle.color
                                  || nlineStyle.color
-                                 || emphasis.borderColor 
+                                 || emphasis.borderColor
                                  || normal.borderColor
-                                 || emphasis.color 
+                                 || emphasis.color
                                  || normal.color
                                  || color,
                     lineWidth: eBorderWidth,
@@ -1293,26 +1293,26 @@ define(function (require) {
                 shapeStyle.curveness = smoothness;
                 itemShape.updatePoints(itemShape.style);
             }
-            
+
             itemShape = this.addLabel(
-                itemShape, 
-                mlOption, 
-                data[0], 
+                itemShape,
+                mlOption,
+                data[0],
                 data[0].name + ' : ' + data[1].name
             );
 
             return itemShape;
         },
-        
+
         /**
-         * 大规模标注构造器 
+         * 大规模标注构造器
          */
         getLargeMarkPointShape: function(seriesIndex, mpOption) {
             var serie = this.series[seriesIndex];
             var component = this.component;
             var data = mpOption.data;
             var itemShape;
-            
+
             var dataRange = component.dataRange;
             var legend = component.legend;
             var color;
@@ -1321,7 +1321,7 @@ define(function (require) {
             var nColor;
             var eColor;
             var effect;
-            
+
             // 图例
             if (legend) {
                 color = legend.getColor(serie.name);
@@ -1330,7 +1330,7 @@ define(function (require) {
             if (dataRange) {
                 value = data[0].value != null ? data[0].value : '';
                 color = isNaN(value) ? color : dataRange.getColor(value);
-                
+
                 nColor = this.deepQuery(queryTarget, 'itemStyle.normal.color')
                          || color;
                 eColor = this.deepQuery(queryTarget, 'itemStyle.emphasis.color')
@@ -1340,19 +1340,19 @@ define(function (require) {
                     return;
                 }
             }
-            color = this.deepMerge(queryTarget, 'itemStyle.normal').color 
+            color = this.deepMerge(queryTarget, 'itemStyle.normal').color
                     || color;
-            
+
             var symbol = this.deepQuery(queryTarget, 'symbol') || 'circle';
             symbol = symbol.replace('empty', '').replace(/\d/g, '');
-            
+
             effect = this.deepMerge(
                 [data[0], mpOption],
                 'effect'
             );
-            
+
             var devicePixelRatio = window.devicePixelRatio || 1;
-            
+
             //console.log(data)
             itemShape = new SymbolShape({
                 style: {
@@ -1370,14 +1370,14 @@ define(function (require) {
                 draggable: false,
                 hoverable: false
             });
-            
+
             if (effect.show) {
                 itemShape.effect = effect;
             }
-            
+
             return itemShape;
         },
-        
+
         backupShapeList: function () {
             if (this.shapeList && this.shapeList.length > 0) {
                 this.lastShapeList = this.shapeList;
@@ -1387,7 +1387,7 @@ define(function (require) {
                 this.lastShapeList = [];
             }
         },
-        
+
         addShapeList: function () {
             var maxLenth = this.option.animationThreshold / (this.canvasSupported ? 2 : 4);
             var lastShapeList = this.lastShapeList;
@@ -1401,8 +1401,8 @@ define(function (require) {
             var key;
             var oldMap = {};
             var newMap = {};
-            if (this.option.animation 
-                && !this.option.renderAsImage 
+            if (this.option.animation
+                && !this.option.renderAsImage
                 && shapeList.length < maxLenth
                 && !this.motionlessOnce
             ) {
@@ -1434,7 +1434,7 @@ define(function (require) {
                         newMap[key] = shapeList[i];
                     }
                 }
-                
+
                 for (key in oldMap) {
                     if (!newMap[key]) {
                         // 新的没有 删除
@@ -1475,7 +1475,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         _getAnimationKey: function(shape) {
             if (this.type != ecConfig.CHART_TYPE_MAP
                 && this.type != ecConfig.CHART_TYPE_TREEMAP
@@ -1485,7 +1485,7 @@ define(function (require) {
                 return ecData.get(shape, 'seriesIndex') + '_'
                        + ecData.get(shape, 'dataIndex')
                        + (shape._mark ? shape._mark : '')
-                       + (this.type === ecConfig.CHART_TYPE_RADAR 
+                       + (this.type === ecConfig.CHART_TYPE_RADAR
                           ? ecData.get(shape, 'special') : '');
             }
             else {
@@ -1494,9 +1494,9 @@ define(function (require) {
                        + (shape._mark ? shape._mark : 'undefined');
             }
         },
-        
+
         /**
-         * 动画过渡 
+         * 动画过渡
          */
         _animateMod: function (oldShape, newShape, duration, easing, delay, isUpdate) {
             switch (newShape.type) {
@@ -1527,8 +1527,8 @@ define(function (require) {
                         ecAnimation.ring(
                             this.zr,
                             oldShape,
-                            newShape, 
-                            duration + ((ecData.get(newShape, 'dataIndex') || 0) % 20 * 100), 
+                            newShape,
+                            duration + ((ecData.get(newShape, 'dataIndex') || 0) % 20 * 100),
                             easing
                         );
                     }
@@ -1568,7 +1568,7 @@ define(function (require) {
                     break;
             }
         },
-        
+
         /**
          * 标注动画
          * @param {number} duration 时长
@@ -1616,12 +1616,12 @@ define(function (require) {
                 this.effectList[this.effectList.length - 1]._mark = shape._mark;
             }
         },
-        
+
         clearEffectShape: function (clearMotionBlur) {
             var effectList = this.effectList;
             if (this.zr && effectList && effectList.length > 0) {
                 clearMotionBlur && this.zr.modLayer(
-                    ecConfig.EFFECT_ZLEVEL, 
+                    ecConfig.EFFECT_ZLEVEL,
                     { motionBlur: false }
                 );
                 this.zr.delShape(effectList);
@@ -1635,7 +1635,7 @@ define(function (require) {
             }
             this.effectList = [];
         },
-        
+
         /**
          * 动态标线标注添加
          * @param {number} seriesIndex 系列索引
@@ -1650,7 +1650,7 @@ define(function (require) {
                 // 备份，复用_buildMarkX
                 var oriMarkData = serie[markType].data;
                 var lastLength = this.shapeList.length;
-                
+
                 serie[markType].data = markData.data;
                 this['_build' + markType.replace('m', 'M')](seriesIndex);
                 if (this.option.animation && !this.option.renderAsImage) {
@@ -1667,7 +1667,7 @@ define(function (require) {
                 serie[markType].data = oriMarkData;
             }
         },
-        
+
         /**
          * 动态标线标注删除
          * @param {number} seriesIndex 系列索引
@@ -1694,7 +1694,7 @@ define(function (require) {
                         }
                     }
                 }
-                
+
                 needRefresh && this.zr.refreshNextFrame();
             }
         }
@@ -1702,5 +1702,6 @@ define(function (require) {
 
     zrUtil.inherits(Base, ComponentBase);
 
-    return Base;
-});
+    require('../chart').define('chord', Chord);
+
+    module.exports = Base;

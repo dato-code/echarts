@@ -13,15 +13,15 @@
  *    纵轴通常为数值型，但条形图时则纵轴为类目型。
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
-    var LineShape = require('zrender/shape/Line');
+    var LineShape = require('zrender/src/shape/Line');
 
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -341,5 +341,4 @@ define(function (require) {
 
     require('../component').define('axis', Axis);
 
-    return Axis;
-});
+    module.exports = Axis;

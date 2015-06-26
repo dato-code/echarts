@@ -5,15 +5,15 @@
  * @author Neil (杨骥, 511415343@qq.com)
  *
  */
-define(function (require) {
+
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var LineShape = require('zrender/shape/Line');
-    var PolygonShape = require('zrender/shape/Polygon');
-    var Circle = require('zrender/shape/Circle');
-    var Ring = require('zrender/shape/Ring');
+    var TextShape = require('zrender/src/shape/Text');
+    var LineShape = require('zrender/src/shape/Line');
+    var PolygonShape = require('zrender/src/shape/Polygon');
+    var Circle = require('zrender/src/shape/Circle');
+    var Ring = require('zrender/src/shape/Ring');
 
     var ecConfig = require('../config');
     ecConfig.polar = {
@@ -63,7 +63,7 @@ define(function (require) {
         // indicator: []
     };
 
-    var zrUtil = require('zrender/tool/util');
+    var zrUtil = require('zrender/src/tool/util');
     var ecCoordinates = require('../util/coordinates');
 
     function Polar(ecTheme, messageCenter, zr, option, myChart) {
@@ -975,5 +975,4 @@ define(function (require) {
 
     require('../component').define('polar', Polar);
 
-    return Polar;
-});
+    module.exports = Polar;

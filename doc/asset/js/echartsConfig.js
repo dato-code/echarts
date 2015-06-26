@@ -5,7 +5,7 @@
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
  *
  */
-//define(function() {
+//
     // 请原谅我这样写，这显然可以直接返回个对象，但那样的话outline就显示不出来了~~
     var echartsConfig = {
         // 全图默认背景
@@ -394,7 +394,7 @@
                 }
             },
             splitLine: {           // 分隔线
-                show: true,        // 默认显示，属性show控制显示与否
+                show: true,        // 默认显���，属性show控制显示与否
                 lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                     color: ['#ccc'],
                     width: 1,

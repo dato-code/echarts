@@ -1,11 +1,11 @@
 /**
  * 地图文本位置修正
  */
-define(function() {
+
     // fix = [xFixed, yFixed, scale]
     // textX += fix[0];
     // textY += fix[1];
-    return {
+    module.exports = {
         //'南海诸岛' : [32, 83],
         // 全国
         '广东': [0, -10],
@@ -30,4 +30,3 @@ define(function() {
         // 陕西
         '渭南市': [0,20]
     };
-});

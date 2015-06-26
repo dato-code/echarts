@@ -1,12 +1,12 @@
 /**
  * Tree data structure
- * 
+ *
  * @module echarts/data/Tree
  * @author Yi Shen(https://www.github.com/pissang)
  */
-define(function(require) {
 
-    var zrUtil = require('zrender/tool/util');
+
+    var zrUtil = require('zrender/src/tool/util');
 
     /**
      * @constructor module:echarts/data/Tree~TreeNode
@@ -237,5 +237,4 @@ define(function(require) {
         return treeList;
     };
 
-    return Tree;
-});
+    module.exports = Tree;

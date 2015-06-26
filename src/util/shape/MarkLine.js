@@ -19,18 +19,18 @@
  * @property {Array.<string>} symbol
  * @property {Array.<number>} symbolRotate
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
+
+    var Base = require('zrender/src/shape/Base');
     var IconShape = require('./Icon');
-    var LineShape = require('zrender/shape/Line');
+    var LineShape = require('zrender/src/shape/Line');
     var lineInstance = new LineShape({});
-    var CurveShape = require('zrender/shape/BezierCurve');
+    var CurveShape = require('zrender/src/shape/BezierCurve');
     var curveInstance = new CurveShape({});
 
-    var area = require('zrender/tool/area');
-    var dashedLineTo = require('zrender/shape/util/dashedLineTo');
-    var zrUtil = require('zrender/tool/util');
-    var curveTool = require('zrender/tool/curve');
+    var area = require('zrender/src/tool/area');
+    var dashedLineTo = require('zrender/src/shape/util/dashedLineTo');
+    var zrUtil = require('zrender/src/tool/util');
+    var curveTool = require('zrender/src/tool/curve');
 
     function MarkLine(options) {
         Base.call(this, options);
@@ -105,7 +105,7 @@ define(function (require) {
                 if (lineDash && ctx.setLineDash) {
                     ctx.setLineDash(lineDash);
                 }
-                
+
                 ctx.quadraticCurveTo(
                     style.cpX1, style.cpY1, style.xEnd, style.yEnd
                 );
@@ -115,7 +115,7 @@ define(function (require) {
                     ctx.lineTo(style.xEnd, style.yEnd);
                 }
                 else {
-                    var dashLength = (style.lineWidth || 1) 
+                    var dashLength = (style.lineWidth || 1)
                         * (style.lineType == 'dashed' ? 5 : 1);
                     dashedLineTo(
                         ctx, style.xStart, style.yStart,
@@ -176,7 +176,7 @@ define(function (require) {
 
             if (symbol == 'arrow' && rotate === 0) {
                 if (curveness === 0) {
-                    var sign = idx === 0 ? -1 : 1; 
+                    var sign = idx === 0 ? -1 : 1;
                     rotate = Math.PI / 2 + Math.atan2(
                         sign * (y2 - y0), sign * (x2 - x0)
                     );
@@ -192,7 +192,7 @@ define(function (require) {
                     rotate = Math.PI / 2 + Math.atan2(dy, dx);
                 }
             }
-            
+
             ctx.translate(x, y);
 
             if (rotate !== 0) {
@@ -244,5 +244,4 @@ define(function (require) {
 
     zrUtil.inherits(MarkLine, Base);
 
-    return MarkLine;
-});
+    module.exports = MarkLine;

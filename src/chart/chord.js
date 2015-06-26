@@ -2,23 +2,23 @@
  * echarts图表类：chord diagram
  *
  * @author pissang (https://github.com/pissang/)
- * 
+ *
  * TODO 非Ribbon Type 支持 undirected graph ?
  */
 
-define(function (require) {
+
     'use strict';
-    
+
     var ChartBase = require('./base');
-    
+
     // 图形依赖
-    var TextShape = require('zrender/shape/Text');
-    var LineShape = require('zrender/shape/Line');
-    var SectorShape = require('zrender/shape/Sector');
+    var TextShape = require('zrender/src/shape/Text');
+    var LineShape = require('zrender/src/shape/Line');
+    var SectorShape = require('zrender/src/shape/Sector');
     var RibbonShape = require('../util/shape/Ribbon');
     var IconShape = require('../util/shape/Icon');
-    var BezierCurveShape = require('zrender/shape/BezierCurve');
-    
+    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
+
     var ecConfig = require('../config');
     // 和弦图默认参数
     ecConfig.chord = {
@@ -33,7 +33,7 @@ define(function (require) {
         startAngle: 90,
         clockWise: true,
         ribbonType: true,
-        
+
         /***************** 下面的配置项在 ribbonType 为 false 时有效 */
         // 同force类似
         minRadius: 10,
@@ -101,7 +101,7 @@ define(function (require) {
          *
          *  Relation ship from source to target
          *  https://github.com/mbostock/d3/wiki/Chord-Layout#wiki-chord
-         *  
+         *
          *  Row based
          */
         // matrix: [],
@@ -113,11 +113,11 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var vec2 = require('zrender/tool/vector');
+    var zrUtil = require('zrender/src/tool/util');
+    var vec2 = require('zrender/src/tool/vector');
     var Graph = require('../data/Graph');
     var ChordLayout = require('../layout/Chord');
-    
+
     function Chord(ecTheme, messageCenter, zr, option, myChart) {
         // 图表基类
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
@@ -128,7 +128,7 @@ define(function (require) {
 
         this.refresh(option);
     }
-    
+
     Chord.prototype = {
         type: ecConfig.CHART_TYPE_CHORD,
         /**
@@ -187,7 +187,7 @@ define(function (require) {
             for (var name in chordSeriesGroups) {
                 this._buildChords(chordSeriesGroups[name]);
             }
-            
+
             this.addShapeList();
         },
 
@@ -842,7 +842,7 @@ define(function (require) {
 
         _buildEdgeCurves: function (series, serieIdx, graph, mainSerie, mainGraph) {
             var serie = series[serieIdx];
-            
+
             var center = this.parseCenter(this.zr, mainSerie.center);
 
             graph.eachEdge(function (e, idx) {
@@ -1007,11 +1007,11 @@ define(function (require) {
                         z: this.getZBase() - 1,
                         hoverable: false,
                         style: {
-                            x: isRightSide 
-                                    ? radius[1] + this.scaleLineLength + 4 
+                            x: isRightSide
+                                    ? radius[1] + this.scaleLineLength + 4
                                     : -radius[1] - this.scaleLineLength - 4,
                             y: 0,
-                            text: Math.round(scaleValue * 10) / 10 
+                            text: Math.round(scaleValue * 10) / 10
                                     + unitPostfix,
                             textAlign: isRightSide ? 'left' : 'right'
                         },
@@ -1037,7 +1037,7 @@ define(function (require) {
                 this.option = newOption;
                 this.series = newOption.series;
             }
-            
+
             this.legend = this.component.legend;
             if (this.legend) {
                 this.getColor = function(param) {
@@ -1064,7 +1064,7 @@ define(function (require) {
                     return true;
                 };
             }
-            
+
             this.backupShapeList();
             this._init();
         },
@@ -1085,11 +1085,7 @@ define(function (require) {
             this.zlevel = opt.zlevel;
         }
     };
-    
+
     zrUtil.inherits(Chord, ChartBase);
     
-    // 图表注册
-    require('../chart').define('chord', Chord);
-
-    return Chord;
-});
+    module.exports = Chord;

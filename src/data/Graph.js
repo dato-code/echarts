@@ -1,12 +1,12 @@
 /**
  * Graph data structure
- * 
+ *
  * @module echarts/data/Graph
  * @author Yi Shen(https://www.github.com/pissang)
  */
-define(function(require) {
 
-    var util = require('zrender/tool/util');
+
+    var util = require('zrender/src/tool/util');
 
     'use strict';
 
@@ -58,7 +58,7 @@ define(function(require) {
         this._nodesMap[id] = node;
         return node;
     };
-    
+
     /**
      * 获取节点
      * @param  {string} id
@@ -95,7 +95,7 @@ define(function(require) {
 
         if (this._directed) {
             n1.outEdges.push(edge);
-            n2.inEdges.push(edge);   
+            n2.inEdges.push(edge);
         }
         n1.edges.push(edge);
         if (n1 !== n2) {
@@ -118,7 +118,7 @@ define(function(require) {
         var key = n1.id + '-' + n2.id;
         if (this._directed) {
             n1.outEdges.splice(util.indexOf(n1.outEdges, edge), 1);
-            n2.inEdges.splice(util.indexOf(n2.inEdges, edge), 1);   
+            n2.inEdges.splice(util.indexOf(n2.inEdges, edge), 1);
         }
         n1.edges.splice(util.indexOf(n1.edges, edge), 1);
         if (n1 !== n2) {
@@ -223,7 +223,7 @@ define(function(require) {
             }
         }
     };
-    
+
     /**
      * 线性遍历所有边
      * @param  {Function} cb
@@ -237,7 +237,7 @@ define(function(require) {
             }
         }
     };
-    
+
     /**
      * 清空图
      */
@@ -248,7 +248,7 @@ define(function(require) {
         this._nodesMap = {};
         this._edgesMap = {};
     };
-    
+
     /**
      * 广度优先遍历
      * @param {Function} cb
@@ -272,7 +272,7 @@ define(function(require) {
         } else if (direction === 'in') {
             edgeType = 'inEdges';
         }
-        
+
         for (var i = 0; i < this.nodes.length; i++) {
             this.nodes[i].__visited = false;
         }
@@ -288,7 +288,7 @@ define(function(require) {
 
             for (var i = 0; i < edges.length; i++) {
                 var e = edges[i];
-                var otherNode = e.node1 === currentNode 
+                var otherNode = e.node1 === currentNode
                     ? e.node2 : e.node1;
                 if (!otherNode.__visited) {
                     if (cb.call(otherNode, otherNode, currentNode)) {
@@ -350,15 +350,15 @@ define(function(require) {
          */
         this.edges = [];
     };
-    
+
     /**
      * 度
      * @return {number}
      */
     Node.prototype.degree = function() {
-        return this.edges.length; 
+        return this.edges.length;
     };
-    
+
     /**
      * 入度，只在有向图上有效
      * @return {number}
@@ -366,7 +366,7 @@ define(function(require) {
     Node.prototype.inDegree = function() {
         return this.inEdges.length;
     };
-    
+
     /**
      * 出度，只在有向图上有效
      * @return {number}
@@ -419,7 +419,7 @@ define(function(require) {
      * 对于有向图会计算每一行的和写到`node.data.outValue`,
      * 计算每一列的和写到`node.data.inValue`。
      * 边的权重会被然后写到`edge.data.weight`。
-     * 
+     *
      * @method module:echarts/data/Graph.fromMatrix
      * @param {Array.<Object>} nodesData 节点信息，必须有`id`属性, 会保存到`node.data`中
      * @param {Array} matrix 邻接矩阵
@@ -484,5 +484,4 @@ define(function(require) {
         return graph;
     };
 
-    return Graph;
-});
+    module.exports = Graph;

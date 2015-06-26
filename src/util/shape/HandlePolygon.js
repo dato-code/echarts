@@ -5,10 +5,10 @@
  *
  * shape类：handlePolygon，dataRange手柄
  */
-define(function (require) {
-    var Base = require('zrender/shape/Base');
-    var PolygonShape = require('zrender/shape/Polygon');
-    var zrUtil = require('zrender/tool/util');
+
+    var Base = require('zrender/src/shape/Base');
+    var PolygonShape = require('zrender/src/shape/Polygon');
+    var zrUtil = require('zrender/src/tool/util');
 
     function HandlePolygon(options) {
         Base.call(this, options);
@@ -48,5 +48,4 @@ define(function (require) {
     };
     zrUtil.inherits(HandlePolygon, Base);
 
-    return HandlePolygon;
-});
+    module.exports = HandlePolygon;

@@ -5,18 +5,18 @@
  *
  */
 
-define(function (require) {
+
     'use strict';
-    
+
     var ChartBase = require('./base');
 
     var Graph = require('../data/Graph');
     var ForceLayout = require('../layout/Force');
-    
+
     // 图形依赖
-    var LineShape = require('zrender/shape/Line');
-    var BezierCurveShape = require('zrender/shape/BezierCurve');
-    var ImageShape = require('zrender/shape/Image');
+    var LineShape = require('zrender/src/shape/Line');
+    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
+    var ImageShape = require('zrender/src/shape/Image');
     var IconShape = require('../util/shape/Icon');
 
     var ecConfig = require('../config');
@@ -32,10 +32,10 @@ define(function (require) {
 
         // 防止节点和节点，节点和边之间的重叠
         preventOverlap: false,
-        
+
         // 布局冷却因子，值越小结束时间越短，值越大时间越长但是结果也越收敛
         coolDown: 0.99,
-        
+
         // 数据映射到圆的半径的最小值和最大值
         minRadius: 10,
         maxRadius: 20,
@@ -129,11 +129,11 @@ define(function (require) {
         //      target: 'ooo'
         // }]
     };
-    
+
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/tool/util');
-    var zrConfig = require('zrender/config');
-    var vec2 = require('zrender/tool/vector');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrConfig = require('zrender/src/config');
+    var vec2 = require('zrender/src/tool/vector');
 
     /**
      * 构造函数
@@ -199,17 +199,17 @@ define(function (require) {
                 if (serie.type === ecConfig.CHART_TYPE_FORCE) {
                     series[i] = this.reformOption(series[i]);
                     serieName = series[i].name || '';
-                    
+
                     // 系列图例开关
-                    this.selectedMap[serieName] = 
+                    this.selectedMap[serieName] =
                         legend ? legend.isSelected(serieName) : true;
                     if (!this.selectedMap[serieName]) {
                         continue;
                     }
 
                     this.buildMark(i);
-                    
-                    // TODO 多个 force 
+
+                    // TODO 多个 force
                     this._initSerie(serie, i);
                     break;
                 }
@@ -438,7 +438,7 @@ define(function (require) {
             for (var i = 0; i < len; i++) {
                 var gNode = graph.nodes[i];
                 if (divider > 0) {
-                    gNode.layout.size = 
+                    gNode.layout.size =
                         (gNode.layout.size - min) * (maxRadius - minRadius) / divider
                         + minRadius;
                     // 节点质量是归一的
@@ -532,7 +532,7 @@ define(function (require) {
                     z: this.getZBase()
                 });
                 if (!shape.style.color) {
-                    shape.style.color = category 
+                    shape.style.color = category
                         ? this.getColor(category.name) : this.getColor(node.id);
                 }
 
@@ -557,7 +557,7 @@ define(function (require) {
                         z: this.getZBase()
                     });
                 }
-                
+
                 // 节点标签样式
                 if (this.deepQuery(queryTarget, 'itemStyle.normal.label.show')) {
                     shape.style.text = node.data.label == null ? node.id : node.data.label;
@@ -592,7 +592,7 @@ define(function (require) {
                     shape.ondragstart = this.shapeHandler.ondragstart;
                     shape.ondragover = null;
                 }
-                
+
                 var categoryName = '';
                 if (typeof(node.category) !== 'undefined') {
                     var category = categories[node.category];
@@ -613,7 +613,7 @@ define(function (require) {
                     // special
                     node.category
                 );
-                
+
                 this.shapeList.push(shape);
                 this.zr.addShape(shape);
 
@@ -938,7 +938,7 @@ define(function (require) {
         this._layout.temperature = 0.8;
         this._step();
     }
-    
+
     /**
      * 数据项被拖拽出去，重载基类方法
      */
@@ -960,18 +960,17 @@ define(function (require) {
 
         this.zr.un(zrConfig.EVENT.MOUSEMOVE, this.onmousemove);
     }
-   
+
     function _randomInSquare(x, y, size) {
         var v = vec2.create();
         v[0] = (Math.random() - 0.5) * size + x;
         v[1] = (Math.random() - 0.5) * size + y;
         return v;
     }
-    
+
     zrUtil.inherits(Force, ChartBase);
-    
+
     // 图表注册
     require('../chart').define('force', Force);
 
-    return Force;
-});
+    module.exports = Force;

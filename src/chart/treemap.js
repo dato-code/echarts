@@ -5,14 +5,14 @@
  * @author Loutongbing (娄同兵, loutongbing@126.com)
  */
 
-define(function (require) {
+
     var ChartBase = require('./base');
     // 图形依赖
-    var toolArea = require('zrender/tool/area');
+    var toolArea = require('zrender/src/tool/area');
     // 图形依赖
-    var RectangleShape = require('zrender/shape/Rectangle');
-    var TextShape = require('zrender/shape/Text');
-    var LineShape = require('zrender/shape/Line');
+    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var TextShape = require('zrender/src/shape/Text');
+    var LineShape = require('zrender/src/shape/Line');
     // 布局依赖
     var TreeMapLayout = require('../layout/TreeMap');
     // 数据依赖
@@ -58,10 +58,10 @@ define(function (require) {
     };
 
     var ecData = require('../util/ecData');
-    var zrConfig = require('zrender/config');
-    var zrEvent = require('zrender/tool/event');
-    var zrUtil = require('zrender/tool/util');
-    var zrColor = require('zrender/tool/color');
+    var zrConfig = require('zrender/src/config');
+    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('zrender/src/tool/util');
+    var zrColor = require('zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -106,7 +106,7 @@ define(function (require) {
                     series[i] = this.reformOption(series[i]);
 
                     var seriesName = series[i].name || '';
-                    this.selectedMap[seriesName] = 
+                    this.selectedMap[seriesName] =
                         legend ? legend.isSelected(seriesName) : true;
                     if (!this.selectedMap[seriesName]) {
                         continue;
@@ -208,7 +208,7 @@ define(function (require) {
             if (this.query(series, 'itemStyle.normal.breadcrumb.show')) {
                 this._buildBreadcrumb(
                     treeRoot, seriesIndex, treemapX, treemapY + treemapHeight
-                );   
+                );
             }
 
             for (var i = currentShapeLen; i < shapeList.length; i++) {
@@ -301,7 +301,7 @@ define(function (require) {
          * 获取label样式
          * @param {Object} itemStyle 合并后的样式
          * @param {Object} rect 矩形信息
-         * @param {string} name 数据名称
+         * @param {string} name ���据名称
          * @param {number} value 数据值
          * @return {Object} 返回label的样式
          */
@@ -525,7 +525,7 @@ define(function (require) {
 
             var series = this.series[seriesIndex];
             var textStyle = this.query(series, 'itemStyle.normal.breadcrumb.textStyle') || {};
-            var textEmphasisStyle = 
+            var textEmphasisStyle =
                 this.query(series, 'itemStyle.emphasis.breadcrumb.textStyle') || {};
 
             var commonStyle = {
@@ -579,8 +579,6 @@ define(function (require) {
 
     zrUtil.inherits(Treemap, ChartBase);
 
-    // 图表注册
     require('../chart').define('treemap', Treemap);
 
-    return Treemap;
-});
+    module.exports = Treemap;
