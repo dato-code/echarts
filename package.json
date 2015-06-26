@@ -9,7 +9,7 @@
         { "name": "Yangji", "email": "511415343@qq.com" }
     ],
     "dependencies": {
-        "zrender": "~2.0.9"
+        "zrender": "dato-code/zrender#d8fb561"
     },
     "repository": "git://github.com/ecomfe/echarts",
     "main": "src/echarts.js",
