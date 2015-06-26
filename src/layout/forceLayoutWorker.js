@@ -1,7 +1,5 @@
 // 1. Graph Drawing by Force-directed Placement
 // 2. http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf
-define(function __echartsForceLayoutWorker(require) {
-
     'use strict';
 
     var vec2;

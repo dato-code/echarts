@@ -239,13 +239,41 @@
             this._toolbox = new Toolbox(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.component.toolbox = this._toolbox;
 
+            var chartLibrary = require('./chart');
+            chartLibrary.define('bar', require('./chart/bar') );
+            chartLibrary.define('chord', require('./chart/chord') );
+            chartLibrary.define('eventRiver', require('./chart/bar') );
+            chartLibrary.define('force', require('./chart/force') );
+            chartLibrary.define('funnel', require('./chart/funnel') );
+            chartLibrary.define('gauge', require('./chart/gauge') );
+            chartLibrary.define('island', require('./chart/island') );
+            chartLibrary.define('k', require('./chart/k') );
+            chartLibrary.define('line', require('./chart/line') );
+            chartLibrary.define('map', require('./chart/map') );
+            chartLibrary.define('pie', require('./chart/pie') );
+            chartLibrary.define('radar', require('./chart/radar') );
+            chartLibrary.define('scatter', require('./chart/scatter') );
+            chartLibrary.define('tree', require('./chart/tree') );
+            chartLibrary.define('treemap', require('./chart/treemap') );
+            chartLibrary.define('venn', require('./chart/venn') );
+            chartLibrary.define('wordCloud', require('./chart/wordCloud') );
+
+
             var componentLibrary = require('./component');
-            componentLibrary.define('title', require('./component/title'));
-            componentLibrary.define('tooltip', require('./component/tooltip'));
-            componentLibrary.define('legend', require('./component/legend'));
+            componentLibrary.define('title', require('./component/title') );
+            componentLibrary.define('legend', require('./component/legend') );
+            componentLibrary.define('tooltip', require('./component/tooltip') );
+            componentLibrary.define('dataRange', require('./component/dataRange') );
+            componentLibrary.define('roamController', require('./component/roamController') );
+            componentLibrary.define('grid', require('./component/grid') );
+            componentLibrary.define('dataZoom', require('./component/dataZoom') );
+            componentLibrary.define('polar', require('./component/polar') );
+            componentLibrary.define('axis', require('./component/axis') );
+            componentLibrary.define('timeline', require('./component/timeline') );
+            componentLibrary.define('dataView', require('./component/dataView') );
 
             if (_zr.getWidth() === 0 || _zr.getHeight() === 0) {
-                console.error('Dom’s width & height should be ready before init.');
+                console.error('Dom width & height should be ready before init.');
             }
         },
 

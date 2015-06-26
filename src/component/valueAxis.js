@@ -941,6 +941,6 @@
 
     zrUtil.inherits(ValueAxis, Base);
 
-    require('../component').define('valueAxis', valueAxis);
+    require('../component').define('valueAxis', ValueAxis);
 
     module.exports = ValueAxis;
