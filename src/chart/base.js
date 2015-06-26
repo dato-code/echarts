@@ -1702,6 +1702,4 @@
 
     zrUtil.inherits(Base, ComponentBase);
 
-    require('../chart').define('chord', Chord);
-
     module.exports = Base;

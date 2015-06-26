@@ -1087,5 +1087,7 @@
     };
 
     zrUtil.inherits(Chord, ChartBase);
-    
+
+    require('../chart').define('chord', Chord);
+
     module.exports = Chord;
