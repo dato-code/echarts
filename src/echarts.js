@@ -239,6 +239,12 @@
             this._toolbox = new Toolbox(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.component.toolbox = this._toolbox;
 
+            require('./chart/bar');
+            require('./chart/line');
+            require('./chart/pie');
+            require('./chart/scatter');
+            require('./chart/venn');
+
             var componentLibrary = require('./component');
             componentLibrary.define('title', require('./component/title') );
             componentLibrary.define('legend', require('./component/legend') );
