@@ -239,26 +239,6 @@
             this._toolbox = new Toolbox(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.component.toolbox = this._toolbox;
 
-            var chartLibrary = require('./chart');
-            chartLibrary.define('bar', require('./chart/bar') );
-            chartLibrary.define('chord', require('./chart/chord') );
-            chartLibrary.define('eventRiver', require('./chart/bar') );
-            chartLibrary.define('force', require('./chart/force') );
-            chartLibrary.define('funnel', require('./chart/funnel') );
-            chartLibrary.define('gauge', require('./chart/gauge') );
-            chartLibrary.define('island', require('./chart/island') );
-            chartLibrary.define('k', require('./chart/k') );
-            chartLibrary.define('line', require('./chart/line') );
-            chartLibrary.define('map', require('./chart/map') );
-            chartLibrary.define('pie', require('./chart/pie') );
-            chartLibrary.define('radar', require('./chart/radar') );
-            chartLibrary.define('scatter', require('./chart/scatter') );
-            chartLibrary.define('tree', require('./chart/tree') );
-            chartLibrary.define('treemap', require('./chart/treemap') );
-            chartLibrary.define('venn', require('./chart/venn') );
-            chartLibrary.define('wordCloud', require('./chart/wordCloud') );
-
-
             var componentLibrary = require('./component');
             componentLibrary.define('title', require('./component/title') );
             componentLibrary.define('legend', require('./component/legend') );
