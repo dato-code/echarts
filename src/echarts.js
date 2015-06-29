@@ -239,24 +239,6 @@
             this._toolbox = new Toolbox(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.component.toolbox = this._toolbox;
 
-            require('./chart/bar');
-            require('./chart/line');
-            require('./chart/pie');
-            require('./chart/scatter');
-            require('./chart/venn');
-
-            var componentLibrary = require('./component');
-            componentLibrary.define('title', require('./component/title') );
-            componentLibrary.define('legend', require('./component/legend') );
-            componentLibrary.define('tooltip', require('./component/tooltip') );
-            componentLibrary.define('dataRange', require('./component/dataRange') );
-            componentLibrary.define('roamController', require('./component/roamController') );
-            componentLibrary.define('grid', require('./component/grid') );
-            componentLibrary.define('dataZoom', require('./component/dataZoom') );
-            componentLibrary.define('polar', require('./component/polar') );
-            componentLibrary.define('axis', require('./component/axis') );
-            componentLibrary.define('timeline', require('./component/timeline') );
-            componentLibrary.define('dataView', require('./component/dataView') );
 
             if (_zr.getWidth() === 0 || _zr.getHeight() === 0) {
                 console.error('Dom width & height should be ready before init.');

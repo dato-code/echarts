@@ -1,17 +1,24 @@
 {
-    "name": "echarts",
-    "description": "Enterprise Charts，基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据可视化表。",
-    "version": "2.2.4",
-    "maintainers": [
-        { "name": "Kener", "email": "kener.linfeng@gmail.com" },
-        { "name": "Pissang", "email": "shenyi.914@gmail.com" },
-        { "name": "Erik", "email": "errorrik@gmail.com" },
-        { "name": "Yangji", "email": "511415343@qq.com" }
-    ],
-    "dependencies": {
-        "zrender": "dato-code/zrender#d8fb561"
-    },
-    "repository": "git://github.com/ecomfe/echarts",
-    "main": "src/echarts.js",
-    "homepage": "http://echarts.baidu.com"
+  "name": "echarts",
+  "description": "Enterprise Charts，基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据可视化表。",
+  "version": "2.2.4",
+  "maintainers": [{
+    "name": "Kener",
+    "email": "kener.linfeng@gmail.com"
+  }, {
+    "name": "Pissang",
+    "email": "shenyi.914@gmail.com"
+  }, {
+    "name": "Erik",
+    "email": "errorrik@gmail.com"
+  }, {
+    "name": "Yangji",
+    "email": "511415343@qq.com"
+  }],
+  "dependencies": {
+    "zrender": "dato-code/zrender#d8fb561"
+  },
+  "repository": "git://github.com/ecomfe/echarts",
+  "main": "index.js",
+  "homepage": "http://echarts.baidu.com"
 }
