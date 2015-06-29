@@ -416,8 +416,8 @@
             var queryTarget = [data, serie];
 
             var itemShape = {
-                zlevel: this.getZlevelBase(),
-                z: this.getZBase(),
+                zlevel: serie.zlevel,
+                z: serie.z,
                 clickable: this.deepQuery(queryTarget, 'clickable'),
                 hoverable: this.deepQuery(queryTarget, 'hoverable'),
                 style: {

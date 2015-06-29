@@ -427,8 +427,8 @@
                     break;
             }
             var polygon = {
-                zlevel: this.getZlevelBase(),
-                z: this.getZBase(),
+                zlevel: serie.zlevel,
+                z: serie.z,
                 clickable: this.deepQuery(queryTarget, 'clickable'),
                 style: {
                     pointList: [
@@ -504,8 +504,8 @@
             }
 
             var textShape = {
-                zlevel: this.getZlevelBase(),
-                z: this.getZBase() + 1,
+                zlevel: serie.zlevel,
+                z: serie.z + 1,
                 style: {
                     x: this._getLabelPoint(
                            labelControl.position, x, location,
@@ -634,8 +634,8 @@
                                     || itemStyle.normal.label.position;
 
             var lineShape = {
-                zlevel: this.getZlevelBase(),
-                z: this.getZBase() + 1,
+                zlevel: serie.zlevel,
+                z: serie.z + 1,
                 hoverable: false,
                 style: {
                     xStart: this._getLabelLineStartPoint(x, location, topWidth, bottomWidth, align),

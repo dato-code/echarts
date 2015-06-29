@@ -62,9 +62,29 @@
                + (x.length > 1 ? ('.' + x[1]) : '');
     }
 
+    /**
+     * 获取数字的小数位数
+     * @param {number} val
+     */
+
+    // It is much faster than methods converting number to string as follows
+    //      var tmp = val.toString();
+    //      return tmp.length - 1 - tmp.indexOf('.');
+    // especially when precision is low
+    function getPrecision(val) {
+        var e = 1;
+        var count = 0;
+        while (((val * e) | 0) / e !== val) {
+            e *= 10;
+            count++;
+        }
+        return count;
+    }
+
     module.exports = {
-        parsePercent : parsePercent,
-        parseCenter : parseCenter,
-        parseRadius : parseRadius,
-        addCommas : addCommas
+        parsePercent: parsePercent,
+        parseCenter: parseCenter,
+        parseRadius: parseRadius,
+        addCommas: addCommas,
+        getPrecision: getPrecision
     };
