@@ -9,9 +9,9 @@
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
 
     var ecConfig = require('../config');
     // 数值型坐标轴默认参数
@@ -73,7 +73,7 @@
     };
 
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -464,6 +464,7 @@
                         && this.series[i].type != ecConfig.CHART_TYPE_BAR
                         && this.series[i].type != ecConfig.CHART_TYPE_SCATTER
                         && this.series[i].type != ecConfig.CHART_TYPE_K
+                        && this.series[i].type != ecConfig.CHART_TYPE_BOXWHISKER
                         && this.series[i].type != ecConfig.CHART_TYPE_EVENTRIVER
                     ) {
                         // 非坐标轴支持的不算极值
@@ -584,6 +585,12 @@
                             data[key].push(value[1]);
                             data[key].push(value[2]);
                             data[key].push(value[3]);
+                        } else if (this.series[i].type === ecConfig.CHART_TYPE_BOXWHISKER) {
+                            data[key].push(value[0]);
+                            data[key].push(value[1]);
+                            data[key].push(value[2]);
+                            data[key].push(value[3]);
+                            data[key].push(value[4]);
                         }
                         else if (value instanceof Array) {
                             // scatter 、 不等距 line bar

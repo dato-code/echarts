@@ -9,11 +9,11 @@
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var PolygonShape = require('zrender/src/shape/Polygon');
-    var Circle = require('zrender/src/shape/Circle');
-    var Ring = require('zrender/src/shape/Ring');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var PolygonShape = require('dato-zrender/src/shape/Polygon');
+    var Circle = require('dato-zrender/src/shape/Circle');
+    var Ring = require('dato-zrender/src/shape/Ring');
 
     var ecConfig = require('../config');
     ecConfig.polar = {
@@ -63,7 +63,7 @@
         // indicator: []
     };
 
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
     var ecCoordinates = require('../util/coordinates');
 
     function Polar(ecTheme, messageCenter, zr, option, myChart) {

@@ -5,7 +5,7 @@
  */
 
 
-    var vec2 = require('zrender/src/tool/vector');
+    var vec2 = require('dato-zrender/src/tool/vector');
 
     function TreeLayout(opts) {
 

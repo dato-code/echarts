@@ -14,9 +14,9 @@
     var ForceLayout = require('../layout/Force');
 
     // 图形依赖
-    var LineShape = require('zrender/src/shape/Line');
-    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
-    var ImageShape = require('zrender/src/shape/Image');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var BezierCurveShape = require('dato-zrender/src/shape/BezierCurve');
+    var ImageShape = require('dato-zrender/src/shape/Image');
     var IconShape = require('../util/shape/Icon');
 
     var ecConfig = require('../config');
@@ -131,9 +131,9 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrConfig = require('zrender/src/config');
-    var vec2 = require('zrender/src/tool/vector');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrConfig = require('dato-zrender/src/config');
+    var vec2 = require('dato-zrender/src/tool/vector');
 
     /**
      * 构造函数

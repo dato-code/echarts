@@ -10,11 +10,11 @@
 
     // 图形依赖
     var GaugePointerShape = require('../util/shape/GaugePointer');
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var CircleShape = require('zrender/src/shape/Circle');
-    var SectorShape = require('zrender/src/shape/Sector');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
+    var SectorShape = require('dato-zrender/src/shape/Sector');
 
     var ecConfig = require('../config');
     // 仪表盘默认参数
@@ -95,7 +95,7 @@
 
     var ecData = require('../util/ecData');
     var accMath = require('../util/accMath');
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数

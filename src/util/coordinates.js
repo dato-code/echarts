@@ -4,7 +4,7 @@
  * @author Neil (杨骥, 511415343@qq.com)
  */
 
-        var zrMath = require('zrender/src/tool/math');
+        var zrMath = require('dato-zrender/src/tool/math');
 
         /**
          * 极坐标转直角坐标

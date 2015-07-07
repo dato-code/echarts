@@ -9,8 +9,8 @@
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
     var HandlePolygonShape = require('../util/shape/HandlePolygon');
 
     var ecConfig = require('../config');
@@ -61,10 +61,10 @@
         }
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrEvent = require('zrender/src/tool/event');
-    var zrArea = require('zrender/src/tool/area');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrEvent = require('dato-zrender/src/tool/event');
+    var zrArea = require('dato-zrender/src/tool/area');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -298,7 +298,7 @@
                 }
             }
 
-            var zrColor = require('zrender/src/tool/color');
+            var zrColor = require('dato-zrender/src/tool/color');
             var per = 1 / (this.dataRangeOption.color.length - 1);
             var colorList = [];
             for (var i = 0, l = this.dataRangeOption.color.length; i < l; i++) {

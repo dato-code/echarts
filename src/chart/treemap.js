@@ -8,11 +8,11 @@
 
     var ChartBase = require('./base');
     // 图形依赖
-    var toolArea = require('zrender/src/tool/area');
+    var toolArea = require('dato-zrender/src/tool/area');
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
     // 布局依赖
     var TreeMapLayout = require('../layout/TreeMap');
     // 数据依赖
@@ -58,10 +58,10 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrConfig = require('zrender/src/config');
-    var zrEvent = require('zrender/src/tool/event');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrConfig = require('dato-zrender/src/config');
+    var zrEvent = require('dato-zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数

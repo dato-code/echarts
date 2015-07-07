@@ -8,7 +8,7 @@
    {
        // 基础属性
        shape  : 'halfSmoothPolygon',      // 必须，shape类标识，需要显式指定
-       id     : {string},       // 必须，图形唯一标识，可通过'zrender/tool/guid'方法生成
+       id     : {string},       // 必须，图形唯一标识，可通过'dato-zrender/tool/guid'方法生成
        zlevel : {number},       // 默认为0，z层level，决定绘画在哪层canvas中
        invisible : {boolean},   // 默认为false，是否可见
 
@@ -45,9 +45,9 @@
    }
  */
 
-    var Base = require('zrender/src/shape/Base');
-    var smoothBezier = require('zrender/src/shape/util/smoothBezier');
-    var zrUtil = require('zrender/src/tool/util');
+    var Base = require('dato-zrender/src/shape/Base');
+    var smoothBezier = require('dato-zrender/src/shape/util/smoothBezier');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     function HalfSmoothPolygon(options) {
         Base.call(this, options);
@@ -89,7 +89,7 @@
                 ctx.lineTo(pointList[0][0], pointList[0][1]);
             }
             else {
-                require('zrender/src/shape/Polygon').prototype.buildPath(
+                require('dato-zrender/src/shape/Polygon').prototype.buildPath(
                     ctx, style
                 );
             }

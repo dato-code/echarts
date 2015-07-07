@@ -4,6 +4,7 @@ require('./src/chart/line');
 require('./src/chart/scatter');
 require('./src/chart/pie');
 require('./src/chart/venn');
+require('./src/chart/boxwhisker');
 
 require('./src/component/title');
 require('./src/component/legend');

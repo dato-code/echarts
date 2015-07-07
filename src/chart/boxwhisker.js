@@ -9,7 +9,8 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var CandleShape = require('../util/shape/Candle');
+    var BoxWhiskerShape = require('../util/shape/BoxWhisker');
+    var LineShape = require('dato-zrender/src/shape/Line');
     // 组件依赖
     require('../component/axis');
     require('../component/grid');
@@ -17,7 +18,7 @@
 
     var ecConfig = require('../config');
     // K线图默认参数
-    ecConfig.k = {
+    ecConfig.boxwhisker = {
         zlevel: 0,                  // 一级层叠
         z: 2,                       // 二级层叠
         clickable: true,
@@ -30,11 +31,11 @@
         itemStyle: {
             normal: {
                 color: '#fff',          // 阳线填充颜色
-                color0: '#00aa11',      // 阴线填充颜色
                 lineStyle: {
                     width: 1,
+                    widthMedian: 3,
                     color: '#ff3200',   // 阳线边框颜色
-                    color0: '#00aa11'   // 阴线边框颜色
+                    colorMedian: '#00aa11'   // 阴线边框颜色
                 },
                 label: {
                     show: false
@@ -46,7 +47,7 @@
             },
             emphasis: {
                 // color: 各异,
-                // color0: 各异,
+                // colorMedian: 各异,
                 label: {
                     show: false
                     // formatter: 标签文本格式器，同Tooltip.formatter，不支持异步回调
@@ -68,15 +69,15 @@
      * @param {Object} series 数据
      * @param {Object} component 组件
      */
-    function K(ecTheme, messageCenter, zr, option, myChart) {
+    function BoxWhisker(ecTheme, messageCenter, zr, option, myChart) {
         // 图表基类
         ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.refresh(option);
     }
 
-    K.prototype = {
-        type: ecConfig.CHART_TYPE_K,
+    BoxWhisker.prototype = {
+        type: ecConfig.CHART_TYPE_BOXWHISKER,
         /**
          * 绘制图形
          */
@@ -91,7 +92,7 @@
             };
             var xAxis;
             for (var i = 0, l = series.length; i < l; i++) {
-                if (series[i].type === ecConfig.CHART_TYPE_K) {
+                if (series[i].type === ecConfig.CHART_TYPE_BOXWHISKER) {
                     series[i] = this.reformOption(series[i]);
                     this.legendHoverLink = series[i].legendHoverLink || this.legendHoverLink;
                     xAxis = this.component.xAxis.getAxis(series[i].xAxisIndex);
@@ -206,7 +207,7 @@
 
                     data = serie.data[i];
                     value = this.getDataFromOption(data, '-');
-                    if (value === '-' || value.length != 4) {
+                    if (value === '-' || value.length != 5) {
                         // 数据格式不符
                         continue;
                     }
@@ -217,40 +218,40 @@
                         valueAxis.getCoord(value[1]),       // 纵坐标：收盘
                         valueAxis.getCoord(value[2]),       // 纵坐标：最低
                         valueAxis.getCoord(value[3]),       // 纵坐标：最高
+                        valueAxis.getCoord(value[4]),       // 纵坐标：最高
                         i,                                  // 数据index
                         categoryAxis.getNameByIndex(i)      // 类目名称
                     ]);
                 }
             }
             // console.log(pointList)
-            this._buildKLine(seriesArray, pointList);
+            this._buildBoxWhiskerLine(seriesArray, pointList);
         },
 
         /**
          * 生成K线
          */
-        _buildKLine: function (seriesArray, pointList) {
+        _buildBoxWhiskerLine: function (seriesArray, pointList) {
             var series = this.series;
             // normal:
             var nLineWidth;
+            var nLineWidthMedian;
             var nLineColor;
-            var nLineColor0;    // 阴线
+            var nLineColorMedian;    // 阴线
             var nColor;
-            var nColor0;        // 阴线
 
             // emphasis:
             var eLineWidth;
             var eLineColor;
-            var eLineColor0;
+            var eLineColorMedian;
+            var eLineWidthMedian;
             var eColor;
-            var eColor0;
 
             var serie;
             var queryTarget;
             var data;
             var seriesPL;
             var singlePoint;
-            var candleType;
 
             var seriesIndex;
             for (var sIdx = 0, len = seriesArray.length; sIdx < len; sIdx++) {
@@ -262,39 +263,39 @@
                     seriesPL = this._getLargePointList(seriesPL);
                 }
 
-                if (serie.type === ecConfig.CHART_TYPE_K && seriesPL != null) {
+                if (serie.type === ecConfig.CHART_TYPE_BOXWHISKER && seriesPL != null) {
                     // 多级控制
                     queryTarget = serie;
                     nLineWidth = this.query(
                         queryTarget, 'itemStyle.normal.lineStyle.width'
                     );
+                    nLineWidthMedian = this.query(
+                        queryTarget, 'itemStyle.normal.lineStyle.widthMedian'
+                    );
                     nLineColor = this.query(
                         queryTarget, 'itemStyle.normal.lineStyle.color'
                     );
-                    nLineColor0 = this.query(
-                        queryTarget, 'itemStyle.normal.lineStyle.color0'
+                    nLineColorMedian = this.query(
+                        queryTarget, 'itemStyle.normal.lineStyle.colorMedian'
                     );
                     nColor = this.query(
                         queryTarget, 'itemStyle.normal.color'
-                    );
-                    nColor0 = this.query(
-                        queryTarget, 'itemStyle.normal.color0'
                     );
 
                     eLineWidth = this.query(
                         queryTarget, 'itemStyle.emphasis.lineStyle.width'
                     );
+                    eLineWidthMedian = this.query(
+                        queryTarget, 'itemStyle.emphasis.lineStyle.widthMedian'
+                    );
                     eLineColor = this.query(
                         queryTarget, 'itemStyle.emphasis.lineStyle.color'
                     );
-                    eLineColor0 = this.query(
-                        queryTarget, 'itemStyle.emphasis.lineStyle.color0'
+                    eLineColorMedian = this.query(
+                        queryTarget, 'itemStyle.emphasis.lineStyle.colorMedian'
                     );
                     eColor = this.query(
                         queryTarget, 'itemStyle.emphasis.color'
-                    );
-                    eColor0 = this.query(
-                        queryTarget, 'itemStyle.emphasis.color0'
                     );
 
                     /*
@@ -311,72 +312,96 @@
                      */
                     for (var i = 0, l = seriesPL.length; i < l; i++) {
                         singlePoint = seriesPL[i];
-                        data = serie.data[singlePoint[6]];
+                        data = serie.data[singlePoint[7]];
                         queryTarget = data;
-                        candleType = singlePoint[3] < singlePoint[2];
-                        this.shapeList.push(this._getCandle(
+                        this.shapeList.push(this._getBoxWhisker(
                             seriesIndex,    // seriesIndex
-                            singlePoint[6], // dataIndex
-                            singlePoint[7], // name
+                            singlePoint[7], // dataIndex
+                            singlePoint[8], // name
 
                             singlePoint[0], // x
                             singlePoint[1], // width
                             singlePoint[2], // y - opening
                             singlePoint[3], // y - close
                             singlePoint[4], // y - lowest
-                            singlePoint[5], // y- highest
+                            singlePoint[5], // y - highest
 
                             // 填充颜色
-                            candleType
-                            ? (this.query(          // 阳
-                                   queryTarget, 'itemStyle.normal.color'
-                               ) || nColor)
-                            : (this.query(          // 阴
-                                   queryTarget, 'itemStyle.normal.color0'
-                               ) || nColor0),
+
+                            this.query(          // 阳
+                               queryTarget, 'itemStyle.normal.color'
+                               ) || nColor,
 
                             // 线宽
                             this.query(
                                queryTarget, 'itemStyle.normal.lineStyle.width'
-                            ) || nLineWidth,
+                               ) || nLineWidth,
 
                             // 线色
-                            candleType
-                            ? (this.query(          // 阳
-                                   queryTarget,
-                                   'itemStyle.normal.lineStyle.color'
-                               ) || nLineColor)
-                            : (this.query(          // 阴
-                                   queryTarget,
-                                   'itemStyle.normal.lineStyle.color0'
-                               ) || nLineColor0),
+                           this.query(          // 阳
+                               queryTarget,
+                               'itemStyle.normal.lineStyle.color'
+                               ) || nLineColor,
 
                             //------------高亮
 
                             // 填充颜色
-                            candleType
-                            ? (this.query(          // 阳
-                                   queryTarget, 'itemStyle.emphasis.color'
-                               ) || eColor || nColor)
-                            : (this.query(          // 阴
-                                   queryTarget, 'itemStyle.emphasis.color0'
-                               ) || eColor0 || nColor0),
+                            this.query(          // 阳
+                               queryTarget, 'itemStyle.emphasis.color'
+                               ) || eColor || nColor,
 
                             // 线宽
                             this.query(
-                               queryTarget, 'itemStyle.emphasis.lineStyle.width'
-                            ) || eLineWidth || nLineWidth,
+                                queryTarget, 'itemStyle.emphasis.lineStyle.width'
+                                ) || eLineWidth || nLineWidth,
 
                             // 线色
-                            candleType
-                            ? (this.query(          // 阳
-                                   queryTarget,
-                                   'itemStyle.emphasis.lineStyle.color'
-                               ) || eLineColor || nLineColor)
-                            : (this.query(          // 阴
-                                   queryTarget,
-                                   'itemStyle.emphasis.lineStyle.color0'
-                               ) || eLineColor0 || nLineColor0)
+                            this.query(          // 阳
+                               queryTarget,
+                               'itemStyle.emphasis.lineStyle.color'
+                               ) || eLineColor || nLineColor
+                        ));
+                        this.shapeList.push(this._getLine(
+                            seriesIndex,    // seriesIndex
+                            singlePoint[7], // dataIndex
+                            singlePoint[8], // name
+
+                            singlePoint[0] - singlePoint[1] / 2, // x0
+                            singlePoint[0] + singlePoint[1] / 2, // x1
+                            singlePoint[6], // y0 - median
+                            singlePoint[6], // y1 - median
+                            // 填充颜色
+
+                            this.query(          // 阳
+                               queryTarget, 'itemStyle.normal.color'
+                               ) || nColor,
+
+                           // 线宽
+                           this.query(
+                              queryTarget, 'itemStyle.normal.lineStyle.widthMedian'
+                          ) || nLineWidthMedian,
+
+                           this.query(          // 阳
+                              queryTarget,
+                              'itemStyle.normal.lineStyle.colorMedian'
+                              ) || nLineColorMedian,
+
+                            //------------高亮
+
+                            // 填充颜色
+                            this.query(          // 阳
+                               queryTarget, 'itemStyle.emphasis.color'
+                               ) || eColor || nColor,
+
+                            // 线宽
+                            this.query(
+                                queryTarget, 'itemStyle.emphasis.lineStyle.widthMedian'
+                                ) || eLineWidthMedian || nLineWidthMedian,
+
+                           this.query(          // 阳
+                              queryTarget,
+                              'itemStyle.emphasis.lineStyle.colorMedian'
+                              ) || eLineColorMedian || nLineColorMedian
                         ));
                     }
                 }
@@ -401,10 +426,54 @@
             return newList;
         },
 
+        _getLine: function(
+        seriesIndex, dataIndex, name,
+        x0, x1, y0, y1,
+        nColor, nLinewidth, nLineColor,
+        eColor, eLinewidth, eLineColor)
+        {
+            var series = this.series;
+            var serie = series[seriesIndex];
+            var data = serie.data[dataIndex];
+
+            var medianShape = new LineShape({
+                zlevel: serie.zlevel,
+                z: serie.z,
+                style: {
+                    xStart: x0,
+                    yStart: y0,
+                    xEnd: x1,
+                    yEnd: y1,
+                    lineCap: 'round',
+                    brushType: 'stroke',
+                    strokeColor: nLineColor,
+                    lineWidth: nLinewidth
+                },
+                highlightStyle: {
+                    color: eColor,
+                    strokeColor: eLineColor,
+                    lineWidth: eLinewidth
+                }
+            });
+
+            medianShape = new LineShape(medianShape);
+
+            medianShape = this.addLabel(medianShape, serie, data, name);
+
+            ecData.pack(
+                medianShape,
+                serie, seriesIndex,
+                data, dataIndex,
+                name
+            );
+
+            return medianShape;
+        },
+
         /**
          * 生成K线图上的图形
          */
-        _getCandle: function (
+        _getBoxWhisker: function (
             seriesIndex, dataIndex, name,
             x, width, y0, y1, y2, y3,
             nColor, nLinewidth, nLineColor,
@@ -415,11 +484,10 @@
             var data = serie.data[dataIndex];
             var queryTarget = [data, serie];
 
-            var itemShape = {
+            var rectShape = {
                 zlevel: serie.zlevel,
-                z: serie.z,
+                z: serie.z - 1,
                 clickable: this.deepQuery(queryTarget, 'clickable'),
-                hoverable: this.deepQuery(queryTarget, 'hoverable'),
                 style: {
                     x: x,
                     y: [y0, y1, y2, y3],
@@ -437,18 +505,18 @@
                 _seriesIndex: seriesIndex
             };
 
-            itemShape = this.addLabel(itemShape, serie, data, name);
+            rectShape = this.addLabel(rectShape, serie, data, name);
 
             ecData.pack(
-                itemShape,
+                rectShape,
                 serie, seriesIndex,
                 data, dataIndex,
                 name
             );
 
-            itemShape = new CandleShape(itemShape);
+            rectShape = new BoxWhiskerShape(rectShape);
 
-            return itemShape;
+            return rectShape;
         },
 
         // 位置转换
@@ -509,7 +577,7 @@
                 seriesIndex = this.shapeList[i]._seriesIndex;
                 if (aniMap[seriesIndex] && !aniMap[seriesIndex][3]) {
                     // 有数据删除才有移动的动画
-                    if (this.shapeList[i].type === 'candle') {
+                    if (this.shapeList[i].type === 'boxwhisker') {
                         dataIndex = ecData.get(this.shapeList[i], 'dataIndex');
                         serie = series[seriesIndex];
                         if (aniMap[seriesIndex][2]
@@ -548,8 +616,8 @@
         }
     };
 
-    zrUtil.inherits(K, ChartBase);
+    zrUtil.inherits(BoxWhisker, ChartBase);
 
-    require('../chart').define('k', K);
+    require('../chart').define('boxwhisker', BoxWhisker);
 
-    module.exports = K;
+    module.exports = BoxWhisker;

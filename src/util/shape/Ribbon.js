@@ -32,10 +32,10 @@
  *                                可以是top, bottom, middle, alphabetic, hanging, ideographic
  */
 
-    var Base = require('zrender/src/shape/Base');
-    var PathProxy = require('zrender/src/shape/util/PathProxy');
-    var zrUtil = require('zrender/src/tool/util');
-    var area = require('zrender/src/tool/area');
+    var Base = require('dato-zrender/src/shape/Base');
+    var PathProxy = require('dato-zrender/src/shape/util/PathProxy');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var area = require('dato-zrender/src/tool/area');
 
     // var _ctx = zrUtil.getContext();
 

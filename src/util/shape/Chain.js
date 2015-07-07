@@ -6,12 +6,12 @@
  * shape类：时间轴线
  */
 
-    var Base = require('zrender/src/shape/Base');
+    var Base = require('dato-zrender/src/shape/Base');
     var IconShape = require('./Icon');
 
-    var dashedLineTo = require('zrender/src/shape/util/dashedLineTo');
-    var zrUtil = require('zrender/src/tool/util');
-    var matrix = require('zrender/src/tool/matrix');
+    var dashedLineTo = require('dato-zrender/src/shape/util/dashedLineTo');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var matrix = require('dato-zrender/src/tool/matrix');
 
     function Chain(options) {
         Base.call(this, options);

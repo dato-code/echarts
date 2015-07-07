@@ -8,16 +8,16 @@
 
     var ecData = require('../util/ecData');
 
-    var CircleShape = require('zrender/src/shape/Circle');
-    var ImageShape = require('zrender/src/shape/Image');
-    var curveTool = require('zrender/src/tool/curve');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
+    var ImageShape = require('dato-zrender/src/shape/Image');
+    var curveTool = require('dato-zrender/src/tool/curve');
     var IconShape = require('../util/shape/Icon');
     var SymbolShape = require('../util/shape/Symbol');
-    var ShapeBundle = require('zrender/src/shape/ShapeBundle');
-    var Polyline = require('zrender/src/shape/Polyline');
-    var vec2 = require('zrender/src/tool/vector');
+    var ShapeBundle = require('dato-zrender/src/shape/ShapeBundle');
+    var Polyline = require('dato-zrender/src/shape/Polyline');
+    var vec2 = require('dato-zrender/src/tool/vector');
 
-    var canvasSupported = require('zrender/src/tool/env').canvasSupported;
+    var canvasSupported = require('dato-zrender/src/tool/env').canvasSupported;
 
     function point(zr, effectList, shape, zlevel) {
         var effect = shape.effect;

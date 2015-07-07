@@ -9,11 +9,11 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var RingShape = require('zrender/src/shape/Ring');
-    var CircleShape = require('zrender/src/shape/Circle');
-    var SectorShape = require('zrender/src/shape/Sector');
-    var PolylineShape = require('zrender/src/shape/Polyline');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var RingShape = require('dato-zrender/src/shape/Ring');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
+    var SectorShape = require('dato-zrender/src/shape/Sector');
+    var PolylineShape = require('dato-zrender/src/shape/Polyline');
 
     var ecConfig = require('../config');
     // 饼图默认参数
@@ -77,9 +77,9 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrMath = require('zrender/src/tool/math');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrMath = require('dato-zrender/src/tool/math');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数
@@ -248,7 +248,7 @@
             var roseType = serie.roseType;
             var center;
             var radius;
-            var r0;     // 扇形内半径
+            var r0;     // ���形内半径
             var r1;     // 扇形外半径
 
             for (var i = 0, l = data.length; i < l; i++) {
@@ -1013,7 +1013,7 @@
                              || backupShapeList[i].type === 'polyline'
                     ) {
                         if (targeSector === 'delete') {
-                            // 删除逻辑一样
+                            // 删除���辑一样
                             this.zr.delShape(backupShapeList[i].id);
                         }
                         else {

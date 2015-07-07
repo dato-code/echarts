@@ -9,13 +9,13 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var PathShape = require('zrender/src/shape/Path');
-    var CircleShape = require('zrender/src/shape/Circle');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var LineShape = require('zrender/src/shape/Line');
-    var PolygonShape = require('zrender/src/shape/Polygon');
-    var EllipseShape = require('zrender/src/shape/Ellipse');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var PathShape = require('dato-zrender/src/shape/Path');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var PolygonShape = require('dato-zrender/src/shape/Polygon');
+    var EllipseShape = require('dato-zrender/src/shape/Ellipse');
     // 组件依赖
     require('../component/dataRange');
     require('../component/roamController');
@@ -75,9 +75,9 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrConfig = require('zrender/src/config');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrConfig = require('dato-zrender/src/config');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     var _mapParams = require('../util/mapData/params').params;
     var _textFixed = require('../util/mapData/textFixed');

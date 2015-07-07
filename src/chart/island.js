@@ -9,7 +9,7 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var CircleShape = require('zrender/src/shape/Circle');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
 
     var ecConfig = require('../config');
     ecConfig.island = {
@@ -20,8 +20,8 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     /**
      * 构造函数
@@ -78,7 +78,7 @@
          * @param {Object} srcShape 源目标，合入目标后删除
          */
         _combine: function (tarShape, srcShape) {
-            var zrColor = require('zrender/src/tool/color');
+            var zrColor = require('dato-zrender/src/tool/color');
             var accMath = require('../util/accMath');
             var value = accMath.accAdd(
                             ecData.get(tarShape, 'value'),

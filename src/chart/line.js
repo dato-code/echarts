@@ -9,7 +9,7 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var PolylineShape = require('zrender/src/shape/Polyline');
+    var PolylineShape = require('dato-zrender/src/shape/Polyline');
     var IconShape = require('../util/shape/Icon');
     var HalfSmoothPolygonShape = require('../util/shape/HalfSmoothPolygon');
     // 组件依赖
@@ -67,8 +67,8 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数

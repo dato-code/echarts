@@ -9,7 +9,7 @@
 
 
     var KDTree = require('../data/KDTree');
-    var vec2 = require('zrender/src/tool/vector');
+    var vec2 = require('dato-zrender/src/tool/vector');
     var v2Create = vec2.create;
     var v2DistSquare = vec2.distSquare;
     var v2Dist = vec2.dist;

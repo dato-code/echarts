@@ -7,12 +7,12 @@
  */
 
     // 图形依赖
-    var ImageShape = require('zrender/src/shape/Image');
+    var ImageShape = require('dato-zrender/src/shape/Image');
     var IconShape = require('../util/shape/Icon');
     var MarkLineShape = require('../util/shape/MarkLine');
     var SymbolShape = require('../util/shape/Symbol');
-    var PolylineShape = require('zrender/src/shape/Polyline');
-    var ShapeBundle = require('zrender/src/shape/ShapeBundle');
+    var PolylineShape = require('dato-zrender/src/shape/Polyline');
+    var ShapeBundle = require('dato-zrender/src/shape/ShapeBundle');
 
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
@@ -22,8 +22,8 @@
     var ComponentBase = require('../component/base');
     var EdgeBundling = require('../layout/EdgeBundling');
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrArea = require('zrender/src/tool/area');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrArea = require('dato-zrender/src/tool/area');
 
     // Some utility functions
     function isCoordAvailable(coord) {
@@ -1514,6 +1514,14 @@
                 case 'candle' :
                     if (!isUpdate) {
                         ecAnimation.candle(this.zr, oldShape, newShape, duration, easing);
+                    }
+                    else {
+                        this.zr.addShape(newShape);
+                    }
+                    break;
+                case 'boxwhisker' :
+                    if (!isUpdate) {
+                        ecAnimation.boxwhisker(this.zr, oldShape, newShape, duration, easing);
                     }
                     else {
                         this.zr.addShape(newShape);

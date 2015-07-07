@@ -20,17 +20,17 @@
  * @property {Array.<number>} symbolRotate
  */
 
-    var Base = require('zrender/src/shape/Base');
+    var Base = require('dato-zrender/src/shape/Base');
     var IconShape = require('./Icon');
-    var LineShape = require('zrender/src/shape/Line');
+    var LineShape = require('dato-zrender/src/shape/Line');
     var lineInstance = new LineShape({});
-    var CurveShape = require('zrender/src/shape/BezierCurve');
+    var CurveShape = require('dato-zrender/src/shape/BezierCurve');
     var curveInstance = new CurveShape({});
 
-    var area = require('zrender/src/tool/area');
-    var dashedLineTo = require('zrender/src/shape/util/dashedLineTo');
-    var zrUtil = require('zrender/src/tool/util');
-    var curveTool = require('zrender/src/tool/curve');
+    var area = require('dato-zrender/src/tool/area');
+    var dashedLineTo = require('dato-zrender/src/shape/util/dashedLineTo');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var curveTool = require('dato-zrender/src/tool/curve');
 
     function MarkLine(options) {
         Base.call(this, options);

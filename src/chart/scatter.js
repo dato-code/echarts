@@ -54,8 +54,8 @@
         }
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数

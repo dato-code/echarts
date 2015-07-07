@@ -11,7 +11,7 @@
     var eventRiverLayout = require('../layout/eventRiver');
 
     // 图形依赖
-    var PolygonShape = require('zrender/src/shape/Polygon');
+    var PolygonShape = require('dato-zrender/src/shape/Polygon');
 
     // 组件依赖
     require('../component/axis');
@@ -50,8 +50,8 @@
 
     var ecData = require('../util/ecData');
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数

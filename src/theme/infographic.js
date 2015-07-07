@@ -139,6 +139,20 @@ var theme = {
     },
 
     // K线图默认参数
+    boxwhisker: {
+        itemStyle: {
+            normal: {
+                color: '#C1232B',       // 阳线填充颜色
+                lineStyle: {
+                    width: 1,
+                    color: '#C1232B',   // 阳线边框颜色
+                    colorMedian: '#B5C334'   // 阴线边框颜色
+                }
+            }
+        }
+    },
+
+    // K线图默认参数
     k: {
         itemStyle: {
             normal: {

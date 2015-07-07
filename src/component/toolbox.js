@@ -9,9 +9,9 @@
     var Base = require('./base');
 
     // 图形依赖
-    var LineShape = require('zrender/src/shape/Line');
-    var ImageShape = require('zrender/src/shape/Image');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var ImageShape = require('dato-zrender/src/shape/Image');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
     var IconShape = require('../util/shape/Icon');
 
     var ecConfig = require('../config');
@@ -106,9 +106,9 @@
         }
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrConfig = require('zrender/src/config');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrConfig = require('dato-zrender/src/config');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     var _MAGICTYPE_STACK = 'stack';
     var _MAGICTYPE_TILED = 'tiled';

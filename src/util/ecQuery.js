@@ -6,7 +6,7 @@
  *
  */
 
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 获取嵌套选项的基础方法

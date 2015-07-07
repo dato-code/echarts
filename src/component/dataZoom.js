@@ -9,8 +9,8 @@
     var Base = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var PolygonShape = require('zrender/src/shape/Polygon');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var PolygonShape = require('dato-zrender/src/shape/Polygon');
     var IconShape = require('../util/shape/Icon');
 
     var ecConfig = require('../config');
@@ -42,7 +42,7 @@
     };
 
     var ecDate = require('../util/date');
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数
@@ -213,6 +213,7 @@
                     && serie.type != ecConfig.CHART_TYPE_BAR
                     && serie.type != ecConfig.CHART_TYPE_SCATTER
                     && serie.type != ecConfig.CHART_TYPE_K
+                    && serie.type != ecConfig.CHART_TYPE_BOXWHISKER
                 ) {
                     continue;
                 }
@@ -235,7 +236,8 @@
                     && this.getDataFromOption(serie.data[0]) instanceof Array
                     && (serie.type == ecConfig.CHART_TYPE_SCATTER
                         || serie.type == ecConfig.CHART_TYPE_LINE
-                        || serie.type == ecConfig.CHART_TYPE_BAR)
+                        || serie.type == ecConfig.CHART_TYPE_BAR
+                        || serie.type == ecConfig.CHART_TYPE_BOXWHISKER)
                 ) {
                     zoomSeriesIndex.push(i);
                 }
@@ -414,6 +416,9 @@
                 if (this.option.series[seriesIndex].type == ecConfig.CHART_TYPE_K) {
                     value = value[1];   // 收盘价
                 }
+                if (this.option.series[seriesIndex].type == ecConfig.CHART_TYPE_BOXWHISKER) {
+                    value = value[4];   // median
+                }
                 if (isNaN(value)) {
                     value = 0;
                 }
@@ -437,6 +442,9 @@
                 value = this.getDataFromOption(data[i], 0);
                 if (this.option.series[seriesIndex].type == ecConfig.CHART_TYPE_K) {
                     value = value[1];   // 收盘价
+                }
+                if (this.option.series[seriesIndex].type == ecConfig.CHART_TYPE_BOXWHISKER) {
+                    value = value[4];   // 收盘价
                 }
                 if (isNaN(value)) {
                     value = 0;
@@ -537,7 +545,7 @@
                 brushType: 'fill',
                 color : 'rgba(0,0,0,0)'
                 /*
-                color : require('zrender/src/tool/color').alpha(
+                color : require('dato-zrender/src/tool/color').alpha(
                             this._fillerShae.style.color, 0
                         )
                 */
@@ -780,6 +788,7 @@
 
                     if (!(this.getDataFromOption(data[0]) instanceof Array)
                         || this.option[key][idx].type == ecConfig.CHART_TYPE_K
+                        || this.option[key][idx].type == ecConfig.CHART_TYPE_BOXWHISKER
                     ) {
                         this.option[key][idx].data = data.slice(start, end);
                     }

@@ -12,12 +12,12 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var SectorShape = require('zrender/src/shape/Sector');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var SectorShape = require('dato-zrender/src/shape/Sector');
     var RibbonShape = require('../util/shape/Ribbon');
     var IconShape = require('../util/shape/Icon');
-    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
+    var BezierCurveShape = require('dato-zrender/src/shape/BezierCurve');
 
     var ecConfig = require('../config');
     // 和弦图默认参数
@@ -113,8 +113,8 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var vec2 = require('zrender/src/tool/vector');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var vec2 = require('dato-zrender/src/tool/vector');
     var Graph = require('../data/Graph');
     var ChordLayout = require('../layout/Chord');
 
@@ -728,7 +728,7 @@
                     labelShape.style.y = start[1];
                 }
 
-                // zrender/Text并没有textColor属性，ctx fillStyle使用的是color
+                // dato-zrender/Text并没有textColor属性，ctx fillStyle使用的是color
                 labelShape.style.color = this.deepQuery(
                     [node.data, mainSerie],
                     'itemStyle.normal.label.textStyle.color'

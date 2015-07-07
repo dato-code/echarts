@@ -10,9 +10,9 @@
     var GOLDEN_SECTION = 0.618;
     // 图形依赖
     var IconShape = require('../util/shape/Icon');
-    var ImageShape = require('zrender/src/shape/Image');
-    var LineShape = require('zrender/src/shape/Line');
-    var BezierCurveShape = require('zrender/src/shape/BezierCurve');
+    var ImageShape = require('dato-zrender/src/shape/Image');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var BezierCurveShape = require('dato-zrender/src/shape/BezierCurve');
     // 布局依赖
     var TreeLayout = require('../layout/Tree');
     // 数据依赖
@@ -54,9 +54,9 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrConfig = require('zrender/src/config');
-    var zrEvent = require('zrender/src/tool/event');
-    var zrUtil = require('zrender/src/tool/util');
+    var zrConfig = require('dato-zrender/src/config');
+    var zrEvent = require('dato-zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数

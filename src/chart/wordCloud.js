@@ -6,15 +6,15 @@
 
     var ChartBase = require('./base');
 
-    var TextShape = require('zrender/src/shape/Text');
+    var TextShape = require('dato-zrender/src/shape/Text');
     var CloudLayout = require('../layout/WordCloud');
 
     require('../component/grid');
     require('../component/dataRange');
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     ecConfig.wordCloud = {
         zlevel: 0,

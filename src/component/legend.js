@@ -9,12 +9,13 @@
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var SectorShape = require('zrender/src/shape/Sector');
-    //var BeziercurveShape = require('zrender/src/shape/Beziercurve');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var SectorShape = require('dato-zrender/src/shape/Sector');
+    //var BeziercurveShape = require('dato-zrender/src/shape/Beziercurve');
     var IconShape = require('../util/shape/Icon');
     var CandleShape = require('../util/shape/Candle');
+    var BoxWhiskerShape = require('../util/shape/BoxWhisker');
 
     var ecConfig = require('../config');
      // 图例
@@ -47,8 +48,8 @@
         // data: [],               // 图例内容（详见legend.data，数组中每一项代表一个item
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrArea = require('zrender/src/tool/area');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrArea = require('dato-zrender/src/tool/area');
 
     /**
      * 构造函数
@@ -901,6 +902,18 @@
             var width = style.width;
             var height = style.height;
             CandleShape.prototype.buildPath(ctx, {
+                x: x + width / 2,
+                y: [y + 1, y + 1, y + height - 6, y + height],
+                width: width - 6
+            });
+        },
+
+        boxwhisker: function (ctx, style) {
+            var x = style.x;
+            var y = style.y;
+            var width = style.width;
+            var height = style.height;
+            BoxWhiskerShape.prototype.buildPath(ctx, {
                 x: x + width / 2,
                 y: [y + 1, y + 1, y + height - 6, y + height],
                 width: width - 6

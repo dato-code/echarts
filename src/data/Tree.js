@@ -6,7 +6,7 @@
  */
 
 
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * @constructor module:echarts/data/Tree~TreeNode

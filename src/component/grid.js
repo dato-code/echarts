@@ -9,7 +9,7 @@
     var Base = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
 
     var ecConfig = require('../config');
     // 网格
@@ -27,7 +27,7 @@
         borderColor: '#ccc'
     };
 
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数

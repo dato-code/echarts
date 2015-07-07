@@ -8,7 +8,7 @@
    {
        // 基础属性
        shape  : 'icon',       // 必须，shape类标识，需要显式指定
-       id     : {string},       // 必须，图形唯一标识，可通过'zrender/tool/guid'方法生成
+       id     : {string},       // 必须，图形唯一标识，可通过'dato-zrender/tool/guid'方法生成
        zlevel : {number},       // 默认为0，z层level，决定绘画在哪层canvas中
        invisible : {boolean},   // 默认为false，是否可见
 
@@ -32,7 +32,7 @@
    }
  */
 
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     function _iconMark(ctx, style) {
         var x = style.x;
@@ -441,7 +441,7 @@
     }
 
     function _iconStar(ctx, style) {
-        var StarShape = require('zrender/src/shape/Star');
+        var StarShape = require('dato-zrender/src/shape/Star');
         var width = style.width / 2;
         var height = style.height / 2;
         StarShape.prototype.buildPath(ctx, {
@@ -453,7 +453,7 @@
     }
 
     function _iconHeart(ctx, style) {
-        var HeartShape = require('zrender/src/shape/Heart');
+        var HeartShape = require('dato-zrender/src/shape/Heart');
         HeartShape.prototype.buildPath(ctx, {
             x : style.x + style.width / 2,
             y : style.y + style.height * 0.2,
@@ -463,7 +463,7 @@
     }
 
     function _iconDroplet(ctx, style) {
-        var DropletShape = require('zrender/src/shape/Droplet');
+        var DropletShape = require('dato-zrender/src/shape/Droplet');
         DropletShape.prototype.buildPath(ctx, {
             x : style.x + style.width * 0.5,
             y : style.y + style.height * 0.5,
@@ -490,7 +490,7 @@
     }
 
     function _iconImage(ctx, style, refreshNextFrame) {
-        var ImageShape = require('zrender/src/shape/Image');
+        var ImageShape = require('dato-zrender/src/shape/Image');
         this._imageShape = this._imageShape || new ImageShape({
             style: {}
         });
@@ -500,7 +500,7 @@
         this._imageShape.brush(ctx, false, refreshNextFrame);
     }
 
-    var Base = require('zrender/src/shape/Base');
+    var Base = require('dato-zrender/src/shape/Base');
 
     function Icon(options) {
         Base.call(this, options);
@@ -543,7 +543,7 @@
             style = style || {};
             var iconType = style.iconType || this.style.iconType;
             if (iconType === 'image') {
-                var ImageShape = require('zrender/src/shape/Image');
+                var ImageShape = require('dato-zrender/src/shape/Image');
                 ImageShape.prototype.brush.call(this, ctx, isHighlight, refreshNextFrame);
 
             } else {

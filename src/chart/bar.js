@@ -9,7 +9,7 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
     // 组件依赖
     require('../component/axis');
     require('../component/grid');
@@ -60,8 +60,8 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
 
     /**
      * 构造函数

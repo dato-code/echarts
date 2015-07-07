@@ -17,12 +17,12 @@
  */
 
     var ecConfig = require('./config');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     var self = {};
 
-    var _canvasSupported = require('zrender/src/tool/env').canvasSupported;
+    var _canvasSupported = require('dato-zrender/src/tool/env').canvasSupported;
     var _idBase = new Date() - 0;
     var _instances = {};    // ECharts实例map索引
     var DOM_ATTRIBUTE_KEY = '_echarts_instance_';
@@ -35,7 +35,7 @@
      * 入口方法
      */
     self.init = function (dom, theme) {
-        var zrender = require('zrender');
+        var zrender = require('dato-zrender');
         if ((zrender.version.replace('.', '') - 0) < (self.dependencies.zrender.replace('.', '') - 0)) {
             console.error(
                 'ZRender ' + zrender.version
@@ -128,7 +128,7 @@
      * @const
      * @type {Object}
      */
-    var ZR_EVENT = require('zrender/src/config').EVENT;
+    var ZR_EVENT = require('dato-zrender/src/config').EVENT;
 
     /**
      * 要绑定监听的zrender事件列表
@@ -172,7 +172,7 @@
          */
         _init: function () {
             var self = this;
-            var _zr = require('zrender').init(this.dom);
+            var _zr = require('dato-zrender').init(this.dom);
             this._zr = _zr;
 
             // wrap: n,e,d,t for name event data this
@@ -913,7 +913,7 @@
             }
 
             this._zr.getColor = function (idx) {
-                var zrColor = require('zrender/src/tool/color');
+                var zrColor = require('dato-zrender/src/tool/color');
                 return zrColor.getColor(idx, themeColor);
             };
 
@@ -1429,9 +1429,9 @@
             zrDom.style.height = (maxBottom - minTop) + 'px';
             document.body.appendChild(zrDom);
 
-            var zrImg = require('zrender').init(zrDom);
+            var zrImg = require('dato-zrender').init(zrDom);
 
-            var ImageShape = require('zrender/src/shape/Image');
+            var ImageShape = require('dato-zrender/src/shape/Image');
             for (var c in imgList) {
                 zrImg.addShape(new ImageShape({
                     style: {
@@ -1567,12 +1567,12 @@
          */
         showLoading: function (loadingOption) {
             var effectList = {
-                bar: require('zrender/src/loadingEffect/Bar'),
-                bubble: require('zrender/src/loadingEffect/Bubble'),
-                dynamicLine: require('zrender/src/loadingEffect/DynamicLine'),
-                ring: require('zrender/src/loadingEffect/Ring'),
-                spin: require('zrender/src/loadingEffect/Spin'),
-                whirling: require('zrender/src/loadingEffect/Whirling')
+                bar: require('dato-zrender/src/loadingEffect/Bar'),
+                bubble: require('dato-zrender/src/loadingEffect/Bubble'),
+                dynamicLine: require('dato-zrender/src/loadingEffect/DynamicLine'),
+                ring: require('dato-zrender/src/loadingEffect/Ring'),
+                spin: require('dato-zrender/src/loadingEffect/Spin'),
+                whirling: require('dato-zrender/src/loadingEffect/Whirling')
             };
             this._toolbox.hideDataView();
 

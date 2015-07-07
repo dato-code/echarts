@@ -10,8 +10,8 @@
 
     // 图形依赖
     var CrossShape = require('../util/shape/Cross');
-    var LineShape = require('zrender/src/shape/Line');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
     var rectangleInstance = new RectangleShape({});
 
     var ecConfig = require('../config');
@@ -59,12 +59,12 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrConfig = require('zrender/src/config');
-    var zrEvent = require('zrender/src/tool/event');
-    var zrArea = require('zrender/src/tool/area');
-    var zrColor = require('zrender/src/tool/color');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrShapeBase = require('zrender/src/shape/Base');
+    var zrConfig = require('dato-zrender/src/config');
+    var zrEvent = require('dato-zrender/src/tool/event');
+    var zrArea = require('dato-zrender/src/tool/area');
+    var zrColor = require('dato-zrender/src/tool/color');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrShapeBase = require('dato-zrender/src/shape/Base');
 
     /**
      * 构造函数
@@ -1483,6 +1483,7 @@
                     case ecConfig.CHART_TYPE_LINE :
                     case ecConfig.CHART_TYPE_BAR :
                     case ecConfig.CHART_TYPE_K :
+                    case ecConfig.CHART_TYPE_BOXWHISKER :
                     case ecConfig.CHART_TYPE_RADAR :
                         if (this.component.polar == null
                             || serie.data[0].value.length <= dataIndex
@@ -1512,6 +1513,7 @@
                 switch (chart.type) {
                     case ecConfig.CHART_TYPE_LINE :
                     case ecConfig.CHART_TYPE_BAR :
+                    case ecConfig.CHART_TYPE_BOXWHISKER :
                     case ecConfig.CHART_TYPE_K :
                     case ecConfig.CHART_TYPE_TREEMAP :
                     case ecConfig.CHART_TYPE_SCATTER :

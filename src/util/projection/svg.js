@@ -8,7 +8,7 @@
  */
 
 
-    var PathShape = require('zrender/src/shape/Path');
+    var PathShape = require('dato-zrender/src/shape/Path');
     function toFloat(str) {
         return parseFloat(str || 0);
     }

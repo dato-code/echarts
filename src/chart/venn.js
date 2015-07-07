@@ -9,9 +9,9 @@
     var ChartBase = require('./base');
     // 图形依赖
 
-    var TextShape = require('zrender/src/shape/Text');
-    var CircleShape = require('zrender/src/shape/Circle');
-    var PathShape = require('zrender/src/shape/Path');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
+    var PathShape = require('dato-zrender/src/shape/Path');
 
     var ecConfig = require('../config');
     // 维恩图默认参数
@@ -22,7 +22,7 @@
     };
 
     var ecData = require('../util/ecData');
-    var zrUtil = require('zrender/src/tool/util');
+    var zrUtil = require('dato-zrender/src/tool/util');
 
     /**
      * 构造函数

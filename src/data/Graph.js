@@ -6,7 +6,7 @@
  */
 
 
-    var util = require('zrender/src/tool/util');
+    var util = require('dato-zrender/src/tool/util');
 
     'use strict';
 

@@ -1,35 +1,35 @@
 /**
  * zrender
  *
- * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
+ * @author Dick Kreisberg (github/rbkreisberg, kreisberg@dato.com)
  *
- * shape类：蜡烛
- * 可配图形属性：
+ * shape Category：BoxWhisker
+ * Attributes：
    {
-       // 基础属性
-       shape  : 'candle',       // 必须，shape类标识，需要显式指定
-       id     : {string},       // 必须，图形唯一标识，可通过'dato-zrender/tool/guid'方法生成
-       zlevel : {number},       // 默认为0，z层level，决定绘画在哪层canvas中
-       invisible : {boolean},   // 默认为false，是否可见
+       // Basic Properties
+       shape  : 'boxwhisker',       // required, explicitly defined
+       id     : {string},       // required，unique identifier，generate with 'dato-zrender/tool/guid'
+       zlevel : {number},       // default is 0, layer at which to paint on canvas
+       invisible : {boolean},   // default is false
 
-       // 样式属性，默认状态样式样式属性
+       // style attributes with default style
        style  : {
-           x             : {number},  // 必须，横坐标
-           y             : {Array},   // 必须，纵坐标数组
+           x             : {number},  // required
+           y             : {Array},   // required
        },
 
-       // 样式属性，高亮样式属性，当不存在highlightStyle时使用基于默认样式扩展显示
+       // highlighting style，extends the default style when highlighted
        highlightStyle : {
-           // 同style
+           // style properties
        }
 
-       // 交互属性，详见shape.Base
+       // Interaction attributes, see shape.Base
 
-       // 事件属性，详见shape.Base
+       // Event properties, see shape.Base
    }
-         例子：
+         Examples：
    {
-       shape  : 'candle',
+       shape  : 'boxwhisker',
        id     : '123456',
        zlevel : 1,
        style  : {
@@ -39,7 +39,7 @@
            color : '#eee',
            text : 'Baidu'
        },
-       myName : 'kener',  // 可自带任何有效自定义属性
+       myName : 'bob',  // any valid custom properties
 
        clickable : true,
        onClick : function (eventPacket) {
@@ -51,27 +51,37 @@
     var Base = require('dato-zrender/src/shape/Base');
     var zrUtil = require('dato-zrender/src/tool/util');
 
-    function Candle(options) {
+    function BoxWhisker(options) {
         Base.call(this, options);
     }
 
-    Candle.prototype =  {
-        type: 'candle',
+    BoxWhisker.prototype =  {
+        type: 'boxwhisker',
         _numberOrder : function (a, b) {
             return b - a;
         },
 
         /**
-         * 创建矩形路径
-         * @param {Context2D} ctx Canvas 2D上下文
-         * @param {Object} style 样式
+         * Create a rectangular path
+         * @param {Context2D} ctx Canvas 2D Context
+         * @param {Object} style
          */
         buildPath : function (ctx, style) {
             var yList = zrUtil.clone(style.y).sort(this._numberOrder);
 
+            var whiskerOffset = style.width / 4;
+
+            //draw first/top whisker cap
+            ctx.moveTo(style.x - whiskerOffset, yList[3]);
+            ctx.lineTo(style.x + whiskerOffset, yList[3]);
+
+            // draw whisker down to bottom
             ctx.moveTo(style.x, yList[3]);
             ctx.lineTo(style.x, yList[2]);
+
             ctx.moveTo(style.x - style.width / 2, yList[2]);
+            //rectangle of width (style.width)
+            // height yList[2] - yList[1]
             ctx.rect(
                 style.x - style.width / 2,
                 yList[2],
@@ -80,10 +90,14 @@
             );
             ctx.moveTo(style.x, yList[1]);
             ctx.lineTo(style.x, yList[0]);
+
+            //draw second/bottom whisker cap
+            ctx.moveTo(style.x - whiskerOffset, yList[0]);
+            ctx.lineTo(style.x + whiskerOffset, yList[0]);
         },
 
         /**
-         * 返回矩形区域，用于局部刷新和文字定位
+         * Returns a rectangular area for partial refresh, and text positioning
          * @param {Object} style
          */
         getRect : function (style) {
@@ -105,10 +119,9 @@
             return style.__rect;
         },
 
-
         isCover : require('./normalIsCover')
     };
 
-    zrUtil.inherits(Candle, Base);
+    zrUtil.inherits(BoxWhisker, Base);
 
-    module.exports = Candle;
+    module.exports = BoxWhisker;

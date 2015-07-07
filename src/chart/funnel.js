@@ -9,9 +9,9 @@
     var ChartBase = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var PolygonShape = require('zrender/src/shape/Polygon');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var PolygonShape = require('dato-zrender/src/shape/Polygon');
 
     var ecConfig = require('../config');
     // 漏斗图默认参数
@@ -70,9 +70,9 @@
 
     var ecData = require('../util/ecData');
     var number = require('../util/number');
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
-    var zrArea = require('zrender/src/tool/area');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
+    var zrArea = require('dato-zrender/src/tool/area');
 
     /**
      * 构造函数

@@ -9,9 +9,9 @@
     var Base = require('./base');
 
     // 图形依赖
-    var TextShape = require('zrender/src/shape/Text');
-    var LineShape = require('zrender/src/shape/Line');
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var TextShape = require('dato-zrender/src/shape/Text');
+    var LineShape = require('dato-zrender/src/shape/Line');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
 
     var ecConfig = require('../config');
     // 类目轴
@@ -73,8 +73,8 @@
         }
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrArea = require('zrender/src/tool/area');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrArea = require('dato-zrender/src/tool/area');
 
     /**
      * 构造函数

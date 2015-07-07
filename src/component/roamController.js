@@ -9,9 +9,9 @@
     var Base = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
-    var SectorShape = require('zrender/src/shape/Sector');
-    var CircleShape = require('zrender/src/shape/Circle');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
+    var SectorShape = require('dato-zrender/src/shape/Sector');
+    var CircleShape = require('dato-zrender/src/shape/Circle');
 
     var ecConfig = require('../config');
     ecConfig.roamController = {
@@ -37,9 +37,9 @@
         mapTypeControl: null
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrColor = require('zrender/src/tool/color');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrColor = require('dato-zrender/src/tool/color');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     /**
      * 构造函数

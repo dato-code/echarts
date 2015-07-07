@@ -10,6 +10,7 @@
         // 图表类型
         CHART_TYPE_LINE: 'line',
         CHART_TYPE_BAR: 'bar',
+        CHART_TYPE_BOXWHISKER: 'boxwhisker',
         CHART_TYPE_SCATTER: 'scatter',
         CHART_TYPE_PIE: 'pie',
         CHART_TYPE_RADAR: 'radar',

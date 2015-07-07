@@ -9,7 +9,7 @@
     var Base = require('./base');
 
     // 图形依赖
-    var RectangleShape = require('zrender/src/shape/Rectangle');
+    var RectangleShape = require('dato-zrender/src/shape/Rectangle');
     var IconShape = require('../util/shape/Icon');
     var ChainShape = require('../util/shape/Chain');
 
@@ -74,9 +74,9 @@
         // data: []
     };
 
-    var zrUtil = require('zrender/src/tool/util');
-    var zrArea = require('zrender/src/tool/area');
-    var zrEvent = require('zrender/src/tool/event');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var zrArea = require('dato-zrender/src/tool/area');
+    var zrEvent = require('dato-zrender/src/tool/event');
 
     /**
      * 构造函数

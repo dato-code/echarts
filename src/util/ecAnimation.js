@@ -6,8 +6,8 @@
  *
  */
 
-    var zrUtil = require('zrender/src/tool/util');
-    var curveTool = require('zrender/src/tool/curve');
+    var zrUtil = require('dato-zrender/src/tool/util');
+    var curveTool = require('dato-zrender/src/tool/curve');
 
     /**
      * 折线型动画
@@ -154,6 +154,36 @@
                     width: newWidth,
                     height: newHeight
                 }
+            )
+            .done(function() {
+                newShape.__animating = false;
+            })
+            .start(easing);
+    }
+
+    /**
+     * 蜡烛动画
+     *
+     * @param {ZRender} zr
+     * @param {shape} oldShape
+     * @param {shape} newShape
+     * @param {number} duration
+     * @param {tring} easing
+     */
+    function boxwhisker(zr, oldShape, newShape, duration, easing) {
+        if (!oldShape) {        // add
+            var y = newShape.style.y;
+            oldShape = {style : {y : [y[0], y[0], y[0], y[0]]}};
+        }
+
+        var newY = newShape.style.y;
+        newShape.style.y = oldShape.style.y;
+        zr.addShape(newShape);
+        newShape.__animating = true;
+        zr.animate(newShape.id, 'style')
+            .when(
+                duration,
+                { y: newY }
             )
             .done(function() {
                 newShape.__animating = false;
@@ -354,7 +384,7 @@
      * @param {tring} easing
      */
     function polygon(zr, oldShape, newShape, duration, easing) {
-        var rect = require('zrender/src/shape/Polygon').prototype.getRect(newShape.style);
+        var rect = require('dato-zrender/src/shape/Polygon').prototype.getRect(newShape.style);
         var x = rect.x + rect.width / 2;
         var y = rect.y + rect.height / 2;
 
@@ -610,6 +640,7 @@
     module.exports = {
         pointList : pointList,
         rectangle : rectangle,
+        boxwhisker : boxwhisker,
         candle : candle,
         ring : ring,
         sector : sector,
