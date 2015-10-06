@@ -611,11 +611,30 @@
 
         __legendSelected: function (param) {
             var itemName = param.target._name;
+	    var doHighlight = this.legendOption.selectedMode === 'highlight';
+
             if (this.legendOption.selectedMode === 'single') {
                 for (var k in this._selectedMap) {
                     this._selectedMap[k] = false;
                 }
             }
+
+	    if (doHighlight) {
+                for (var k in this._selectedMap) {
+                    this._selectedMap[k] = true;
+                }
+	        this.messageCenter.dispatch(
+	             ecConfig.EVENT.LEGEND_HIGHLIGHTED,
+                     param.event,
+	            {
+               		highlighted: itemName,
+        	        target: itemName
+	            },
+                    this.myChart
+            	);
+		return;
+            }
+
             this._selectedMap[itemName] = !this._selectedMap[itemName];
             this.messageCenter.dispatch(
                 ecConfig.EVENT.LEGEND_SELECTED,

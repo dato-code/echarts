@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.dato.com"
   },
-  "version": "2.2.5",
+  "version": "2.2.6",
   "maintainers": [{
     "name": "Kener",
     "email": "kener.linfeng@gmail.com"
